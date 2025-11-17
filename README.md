@@ -1,4 +1,18 @@
-# tracejs
+# tsTRACE
+
+## Project History
+
+tsTRACE is a TypeScript implementation of the TRACE model of speech perception. This project has a rich lineage:
+
+- **tsTRACE** (this repository): An independent fork migrated from the [tracejs](https://github.com/andrew0/tracejs) repository. While the git commit history has been preserved for context, this fork will diverge independently with no ongoing synchronization between repositories.
+
+- **tracejs**: A JavaScript/TypeScript reimplementation by Andrew Curtice that modernized the TRACE model for web-based applications.
+
+- **jTRACE**: A Java implementation available at [magnuson.psy.uconn.edu/jtrace](https://magnuson.psy.uconn.edu/jtrace/) that brought TRACE to the Java platform.
+
+- **TRACE**: The original implementation written in C by McClelland & Elman (1986), available at [magnuson.psy.uconn.edu](http://magnuson.psy.uconn.edu/wp-content/uploads/sites/1140/2015/01/ctrace.zip).
+
+We credit Andrew Curtice for the excellent tracejs foundation upon which this project builds, and acknowledge the contributions of all developers in the TRACE lineage.
 
 ## Getting started
 
@@ -23,8 +37,8 @@ To build the project, you can run the following commands:
 
 ```console
 # clone project
-$ git clone https://github.com/andrew0/tracejs
-$ cd tracejs
+$ git clone https://github.com/comp-cogneuro-lang/tsTRACE
+$ cd tsTRACE
 
 # install dependencies
 $ yarn install
@@ -71,3 +85,27 @@ package that you can use to write code that uses the tracejs library to run
 simulations. To run the code in the playground package, all you have to do is
 build the tracejs package, then change directories to packages/playground, and
 run the command `node index.js`.
+
+## Credits & Acknowledgments
+
+### tracejs (jsTRACE)
+
+Development of tracejs was supported by NSF grant 1754284 to James Magnuson and Jay Rueckl.
+
+tracejs was engineered in TypeScript by **Andrew Curtice** with input and user testing from Jim Magnuson. Samantha Grubb and Anne Marie Crinnion worked with Magnuson to create the first JavaScript scripts for tracejs simulations.
+
+Curtice used jTRACE as his starting point, recycling code whenever possible. He streamlined aspects of the core TRACE code and used Vite to implement the GUI, inspired by the look and feel of jTRACE.
+
+### jTRACE
+
+jTRACE was developed by (in alphabetical order) **Harlan D. Harris**, **Raphael Pelossof**, and **Ted Strauss**, with input from Jim Magnuson. Ted Strauss did much subsequent fine-tuning and bug handling. jTRACE was based on cTRACE, the original C implementation of TRACE.
+
+Development of jTRACE was supported by National Institute on Deafness and Other Communication Disorders Grant DC-005765 to James S. Magnuson.
+
+### TRACE
+
+We are grateful to **Jay McClelland** and **Jeff Elman** for developing TRACE (among all their myriad contributions to science), for making the TRACE C source code (including McClelland's 1991 'stochastic' extensions to TRACE) freely available, and for helpful comments they made that were essential to the success of the jTRACE project and its successors.
+
+### tsTRACE
+
+This independent fork continues the TRACE lineage with gratitude to all previous contributors who made this work possible.
