@@ -534,30 +534,60 @@ export default class TraceNet {
   public phonToFeat() {
     const fSlices = this.config.fSlices;
     const fpp = this.config.slicesPerPhon;
+    const alpha_pf = this.config.alpha.PF || 0;
     this.globalPhonToFeatSum = 0;
-    for (let fslice = 0; fslice < fSlices; fslice++) {
-      for (let cont = 0; cont < this.config.continuaPerFeature; cont++) {
-        //loop over all continua (7)
-        for (let feat = 0; feat < this.config.numFeatures; feat++) {
-          let activation = 0; //activation is basically <PFEXp,ps,c,f,fs>
-          for (let phon = 0; phon < this.config.phonology.length; phon++) {
-            // loop over phonemes
-            for (let pslice = 0; pslice < this.getPSlices(); pslice++) {
-              // loop over phoneme slices (original configuration 33)
-              let d = Math.floor(Math.abs(pslice * fpp - fslice));
-              if (d >= fSlices) d = fSlices - 1;
-              if (this.phonLayer[phon][pslice] > 0)
-                //aLPHA connections=only excitatory
-                activation +=
-                  this.pfw[phon][cont][d] *
-                  this.phonLayer[phon][pslice] *
-                  (this.phonemes.byIndex(phon)?.features[cont * this.config.numFeatures + feat] ||
-                    0);
+
+    // Loop over phonemes and their time slices
+    for (let phon = 0; phon < this.config.phonology.length; phon++) {
+      const phon_features = this.phonemes.byIndex(phon)?.features || [];
+
+      for (let pslice = 0; pslice < this.getPSlices(); pslice++) {
+        const phonActivation = this.phonLayer[phon][pslice];
+        if (phonActivation <= 0) continue; // Only active phonemes provide feedback
+
+        // Convert phoneme slice to feature slice
+        const fpeak = Math.round(pslice * fpp);
+
+        // Apply feedback for each feature continuum
+        for (let cont = 0; cont < this.config.continuaPerFeature; cont++) {
+          const spread = this.config.spread[cont];
+          const ispr = Math.floor(spread);
+          const pfw_len = 2 * ispr;
+
+          // Calculate window bounds (following cTRACE: fbegin = 1 + fpeak - spread)
+          let fbegin = 1 + fpeak - ispr;
+          let fend = fpeak + ispr + 1; // exclusive upper bound
+          let winstart = 1; // offset into pfw array
+
+          // Clamp fbegin and adjust window start if needed
+          if (fbegin < 0) {
+            winstart = 1 - fbegin; // Shift window into pfw array
+            fbegin = 0;
+          }
+
+          // Clamp fend to valid range
+          if (fend > fSlices) {
+            fend = fSlices;
+          }
+
+          // Apply feedback to each feature in this continuum
+          for (let feat = 0; feat < this.config.numFeatures; feat++) {
+            const featureValue = phon_features[cont * this.config.numFeatures + feat] || 0;
+            if (featureValue <= 0) continue; // Only present features can receive feedback
+
+            const feat_idx = cont * this.config.numFeatures + feat;
+            const activationBase = phonActivation * featureValue * alpha_pf;
+
+            // Apply weights across the feature time window
+            let windex = winstart;
+            for (let fslice = fbegin; fslice < fend && windex < pfw_len; fslice++, windex++) {
+              const weight = this.pfw[phon][cont][windex];
+              const contribution = weight * activationBase;
+
+              this.featNet[feat_idx][fslice] += contribution;
+              this.globalPhonToFeatSum += contribution;
             }
           }
-          const n = (this.config.alpha.PF || 0) * activation;
-          this.featNet[cont * this.config.numFeatures + feat][fslice] += n;
-          this.globalPhonToFeatSum += n;
         }
       }
     }
@@ -949,7 +979,7 @@ export default class TraceNet {
     for (let i = 0; i < cycles; i++) {
       this.featToPhon();
       this.phonToPhon();
-      // this.phonToFeat()  //not yet implemented correctly; no one has ever been interested in this aspect.
+      this.phonToFeat();
       this.phonToWord();
       this.wordToPhon();
       this.wordToWord();
