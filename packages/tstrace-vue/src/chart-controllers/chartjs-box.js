@@ -70,21 +70,27 @@ Chart.controllers.box = Chart.DatasetController.extend({
 
     for (const dataElement of data) {
       const { word, getPixelForCharacterAtIndex, y, height, borderColor } = dataElement._model;
+      if (!word.length) continue;
 
       ctx.save();
       ctx.textBaseline = 'middle';
       ctx.textAlign = 'center';
-      ctx.font = 'bold 16px monospace';
       ctx.fillStyle = borderColor;
-      for (let i = 0; i < word.length; i++) {
-        const actualWidth = ctx.measureText(word[i]).width;
-        const desiredWidth = getPixelForCharacterAtIndex(i + 1) - getPixelForCharacterAtIndex(i);
-        const scaleX = desiredWidth / actualWidth;
 
+      // Pick a font size that naturally fills the per-character tick width
+      // (no horizontal-only scaling, which would distort the glyph aspect ratio).
+      // Cap the size at the box height so letters don't overflow the row vertically.
+      const baseFontSize = 16;
+      ctx.font = `bold ${baseFontSize}px monospace`;
+      const referenceWidth = ctx.measureText('m').width;
+      const desiredWidth = getPixelForCharacterAtIndex(1) - getPixelForCharacterAtIndex(0);
+      const widthBasedSize = (baseFontSize * desiredWidth) / referenceWidth;
+      const fontSize = Math.max(8, Math.min(widthBasedSize, height));
+      ctx.font = `bold ${Math.round(fontSize)}px monospace`;
+
+      for (let i = 0; i < word.length; i++) {
         const x = getPixelForCharacterAtIndex(i) + desiredWidth / 2;
-        ctx.scale(scaleX, 1);
-        ctx.fillText(word[i], x / scaleX, y - height / 2);
-        ctx.scale(1 / scaleX, 1);
+        ctx.fillText(word[i], x, y - height / 2);
       }
       ctx.restore();
 
