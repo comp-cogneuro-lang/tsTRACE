@@ -129,27 +129,44 @@ export default abstract class TraceSimBase {
 
   public serializeInputData(prefix: string[] = []) {
     const fullPrefix = [this.config.modelInput, ...prefix];
-    return serializeData(this.getAllInputData(), fullPrefix);
+    const data = this.getAllInputData();
+    const numTimeSlices = data[0]?.[0]?.length - 1 || 0;
+    const timeHeaders = Array.from({ length: numTimeSlices }, (_, i) => `t${i}`).join(', ');
+    const header = `cycle, input, feature_index, ${timeHeaders}`;
+    return serializeData(data, fullPrefix, header);
   }
 
   public serializeFeatureData(prefix: string[] = []) {
     const fullPrefix = [this.config.modelInput, ...prefix];
-    return serializeData(this.getAllFeatureData(), fullPrefix);
+    const data = this.getAllFeatureData();
+    const numTimeSlices = data[0]?.[0]?.length - 1 || 0;
+    const timeHeaders = Array.from({ length: numTimeSlices }, (_, i) => `t${i}`).join(', ');
+    const header = `cycle, input, feature_index, ${timeHeaders}`;
+    return serializeData(data, fullPrefix, header);
   }
 
   public serializePhonemeData(prefix: string[] = []) {
     const fullPrefix = [this.config.modelInput, ...prefix];
-    return serializeData(this.getAllPhonemeData(), fullPrefix);
+    const data = this.getAllPhonemeData();
+    const numTimeSlices = data[0]?.[0]?.length - 1 || 0;
+    const timeHeaders = Array.from({ length: numTimeSlices }, (_, i) => `t${i}`).join(', ');
+    const header = `cycle, input, phoneme, ${timeHeaders}`;
+    return serializeData(data, fullPrefix, header);
   }
 
   public serializeWordData(prefix: string[] = []) {
     const fullPrefix = [this.config.modelInput, ...prefix];
-    return serializeData(this.getAllWordData(), fullPrefix);
+    const data = this.getAllWordData();
+    const numTimeSlices = data[0]?.[0]?.length - 1 || 0;
+    const timeHeaders = Array.from({ length: numTimeSlices }, (_, i) => `t${i}`).join(', ');
+    const header = `cycle, input, word, ${timeHeaders}`;
+    return serializeData(data, fullPrefix, header);
   }
 
   public serializeLevelsAndFlowData(prefix: string[] = []) {
     const fullPrefix = [this.config.modelInput, ...prefix];
-    return serializeData(this.getAllLevelsAndFlowData(), fullPrefix);
+    const header = 'cycle, input, feature_sum_all, feature_sum_pos, feature_competition, phon_sum_all, phon_sum_pos, phon_competition, word_sum_all, word_sum_pos, lexical_competition, feat_to_phon, phon_to_feat, phon_to_word, word_to_phon';
+    return serializeData(this.getAllLevelsAndFlowData(), fullPrefix, header);
   }
 
   public getSimData() {
@@ -177,7 +194,7 @@ export default abstract class TraceSimBase {
   abstract appendFiles(files: Writable[], prefix?: string[]): Promise<void>;
 }
 
-function serializeData(data: any[][][], prefix: string[]) {
+function serializeData(data: any[][][], prefix: string[], header?: string) {
   const numRows = data[0]?.length || 0;
   const allCycles: any[][] = [];
   for (let row = 0; row < numRows; row++) {
@@ -187,5 +204,6 @@ function serializeData(data: any[][][], prefix: string[]) {
   }
 
   // put cycle first, then prefix, then rest of row
-  return allCycles.map((row) => [row[0], ...prefix, row.slice(1)].join(', ')).join('\n') + '\n';
+  const csvContent = allCycles.map((row) => [row[0], ...prefix, row.slice(1)].join(', ')).join('\n') + '\n';
+  return header ? `${header}\n${csvContent}` : csvContent;
 }

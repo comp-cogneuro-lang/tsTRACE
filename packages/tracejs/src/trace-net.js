@@ -1,0 +1,888 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var errors_1 = require("./errors");
+var response_probability_1 = require("./response-probability");
+var trace_param_1 = require("./trace-param");
+var trace_phones_1 = __importDefault(require("./trace-phones"));
+var util = __importStar(require("./util"));
+var TraceNet = /** @class */ (function () {
+    function TraceNet(config) {
+        if (config === void 0) { config = (0, trace_param_1.createDefaultConfig)(); }
+        this.globalFeatureCompetitionIndex = 0;
+        this.globalLexicalCompetitionIndex = 0;
+        this.globalPhonemeCompetitionIndex = 0;
+        this.globalPhonToWordSum = 0;
+        this.globalWordToPhonSum = 0;
+        this.globalFeatToPhonSum = 0;
+        this.globalPhonToFeatSum = 0;
+        this.globalFeatSumAll = 0;
+        this.globalFeatSumPos = 0;
+        this.globalPhonSumAll = 0;
+        this.globalPhonSumPos = 0;
+        this.globalWordSumAll = 0;
+        this.globalWordSumPos = 0;
+        this.inputSlice = 0;
+        this.__nreps = 1;
+        this.config = config;
+        this.phonemes = new trace_phones_1.default(this.config);
+        this.reset();
+    }
+    TraceNet.prototype.reset = function () {
+        //length_normalization_fulcrum=4.5;
+        // a clever way to guess the optimal 'fulcrum' of length normalization
+        this.lengthNormalizationScale = 1 / util.average(this.config.lexicon.map(function (x) { return x.phon.length; }));
+        //System.out.println("length_normalization_scale:"+length_normalization_scale)
+        this.inputSlice = 0;
+        this.inputLayer = util.zeros2D(this.config.continuaPerFeature * this.config.numFeatures, this.config.fSlices);
+        this.featLayer = util.zeros2D(this.config.continuaPerFeature * this.config.numFeatures, this.config.fSlices);
+        this.featNet = util.zeros2D(this.config.continuaPerFeature * this.config.numFeatures, this.config.fSlices);
+        this.phonLayer = util.zeros2D(this.config.phonology.length, this.getPSlices());
+        this.phonNet = util.zeros2D(this.config.phonology.length, this.getPSlices());
+        this.wordLayer = util.zeros2D(this.config.lexicon.length, this.getPSlices());
+        this.wordNet = util.zeros2D(this.config.lexicon.length, this.getPSlices());
+        this.pww = util.zeros2D(this.config.phonology.length, 4);
+        this.wpw = util.zeros2D(this.config.phonology.length, 4);
+        this.fpw = util.zeros3D(this.config.phonology.length, this.config.continuaPerFeature, 0);
+        this.pfw = util.zeros3D(this.config.phonology.length, this.config.continuaPerFeature, 0);
+        for (var p = 0; p < this.config.phonology.length; p++) {
+            for (var c = 0; c < this.config.continuaPerFeature; c++) {
+                this.fpw[p][c] = Array(this.config.spread[c] * 2).fill(0);
+                this.pfw[p][c] = Array(this.config.spread[c] * 2).fill(0);
+            }
+        }
+        // if there is a phoneme continuum defined in the parameters, create it here.
+        if (this.config.continuumSpec && this.config.continuumSpec.trim().length == 3) {
+            var step = +this.config.continuumSpec.trim()[2];
+            if (step > 1 && step < 10) {
+                this.phonemes.makePhonemeContinuum(this.config.continuumSpec.trim()[0], this.config.continuumSpec.trim()[1], step);
+            }
+        }
+        this.phonemes.spreadPhons(this.config.spread, this.config.spreadScale, this.config.min, this.config.max);
+        // init feature layer to resting value
+        var rest = this.clamp(this.config.rest.F || 0);
+        for (var fslice = 0; fslice < this.config.fSlices; fslice++) {
+            for (var feat = 0; feat < this.config.continuaPerFeature * this.config.numFeatures; feat++) {
+                this.featLayer[feat][fslice] = rest;
+            }
+        }
+        // init phon layer to resting value
+        rest = this.clamp(this.config.rest.P || 0);
+        for (var slice = 0; slice < this.getPSlices(); slice++) {
+            for (var phon = 0; phon < this.config.phonology.length; phon++) {
+                this.phonLayer[phon][slice] = rest;
+            }
+        }
+        // init word layer to resting value
+        // Original frequency implementation from cTRACE is being dropped:
+        //  wp->base = rest[W] + fscale*log(1. + wordfreq[i]);
+        rest = this.clamp(this.config.rest.W || 0);
+        for (var wslice = 0; wslice < this.getWSlices(); wslice++) {
+            for (var word = 0; word < this.config.lexicon.length; word++) {
+                this.wordLayer[word][wslice] = rest;
+            }
+        }
+        // frequency applied to the resting level of lexical items
+        if (this.config.freqNode.RDL_rest_s) {
+            for (var wslice = 0; wslice < this.getWSlices(); wslice++) {
+                for (var word = 0; word < this.config.lexicon.length; word++) {
+                    this.wordLayer[word][wslice] += (0, response_probability_1.applyRestScaling)(this.config.freqNode, this.config.lexicon[word].freq);
+                }
+            }
+        }
+        //priming applied to the resting level of lexical items
+        if (this.config.primeNode.RDL_rest_s) {
+            for (var wslice = 0; wslice < this.getWSlices(); wslice++)
+                for (var word = 0; word < this.config.lexicon.length; word++) {
+                    if (this.config.lexicon[word].prime > 0)
+                        this.wordLayer[word][wslice] += (0, response_probability_1.applyRestScaling)(this.config.primeNode, this.config.lexicon[word].prime);
+                }
+        }
+        // from C code: tdur = (float)(PWIDTH + POVERLAP)*pp->wscale/FPP = (((6+6)*1)/3)=4
+        var tdur = 4;
+        this.__nreps = this.config.nreps;
+        if (this.__nreps <= 0)
+            this.__nreps = 1;
+        // calculate the pww and wpw arrays.
+        // how much can a phoneme at slice 4 activate a word at slice 5?
+        // the pww array contains scalars stating how much to scale down per offset slices.
+        // the wpw array is the same idea, except for w->p connections.
+        for (var phon = 0; phon < this.config.phonology.length; phon++) {
+            var denom = 0;
+            for (var pslice = 0; pslice <= 4; pslice++) {
+                var ft = (tdur - Math.abs(2 - pslice)) / tdur;
+                denom += ft * ft;
+            }
+            for (var pslice = 0; pslice < 4; pslice++) {
+                var ft = (tdur - Math.abs(2 - pslice)) / tdur;
+                this.pww[phon][pslice] = ft / denom;
+                this.wpw[phon][pslice] = (1 * ft) / denom;
+            }
+        }
+        // calculate fpw, pfw
+        // how much can a feature influence a phoneme if there are mis-aligned.
+        // these arrays state how much to scale down per offset slice.
+        for (var phon = 0; phon < this.config.phonology.length; phon++) {
+            for (var cont = 0; cont < this.config.continuaPerFeature; cont++) {
+                var denom = 0;
+                var spr = this.config.spread[cont] * 1; // 1 is stand in for pp->wscale (?)
+                var ispr = Math.floor(spr);
+                for (var fslice = 0; fslice < 2 * ispr; fslice++) {
+                    var ft = (spr - Math.abs(ispr - fslice)) / spr;
+                    denom += ft * ft;
+                }
+                for (var fslice = 0; fslice < 2 * ispr; fslice++) {
+                    this.pfw[phon][cont][fslice] = (spr - Math.abs(ispr - fslice)) / spr;
+                    this.fpw[phon][cont][fslice] = this.pfw[phon][cont][fslice] / denom;
+                }
+            }
+        }
+        // create input
+        this.createInput();
+    };
+    TraceNet.prototype.getPSlices = function () {
+        return Math.floor(this.config.fSlices / this.config.slicesPerPhon);
+    };
+    TraceNet.prototype.getWSlices = function () {
+        return this.getPSlices();
+    };
+    TraceNet.prototype.clamp = function (n) {
+        return util.clamp(n, this.config.min, this.config.max);
+    };
+    /**
+     * Create the input layer
+     *  loop through all the phonemes, and copy the corresponding features to it.
+     *  the offset for the phoneme should be used inorder to center
+     * Variables which have been left out from original trace, M&E did not use them:
+     *  WEIGHTp(i),c,fs   STRENGTHp(i)   PEAKp(i)   SUSp(i)   RATEp(i)
+     * converts the model input into a pseudo-spectral input representation, store in inputLayer
+     */
+    TraceNet.prototype.createInput = function () {
+        var phons = this.config.modelInput.trim();
+        // store the target
+        /*if (phons == '-') {
+          inputString = phons
+        } else {
+          inputString = phons.split('-', 1)[0] || '---'
+        }*/
+        // create the input layer.
+        // loop over phoneme input. go to next phoneme and step 6 slices. until the end of the input is reached or
+        // FSLICES is reached
+        var slice = this.config.deltaInput;
+        for (var i = 0; i < phons.length && slice < this.config.fSlices; i++) {
+            // if we encounter a 'splice' phone, proceed accordingly
+            if (phons[i] == '{') {
+                var p1 = this.phonemes.byLabel(phons[++i]);
+                var splicePoint = +phons[++i];
+                var p2 = this.phonemes.byLabel(phons[++i]);
+                i += 1; // skip the } character
+                if (!p1 || !p2 || !p1.spread || !p1.spreadOffset || !p2.spread || !p2.spreadOffset) {
+                    throw new errors_1.ModelInputError();
+                }
+                // first half of the spliced phoneme
+                var inputOffset = slice - p1.spreadOffset;
+                for (var t = inputOffset, phonOffset = 0; t < inputOffset + splicePoint; t++, phonOffset++) {
+                    for (var cont = 0; cont < this.config.numFeatures * this.config.continuaPerFeature; cont++) {
+                        if (t >= 0 && t < this.config.fSlices) {
+                            this.inputLayer[cont][t] += p1.spread[cont][phonOffset];
+                        }
+                    }
+                }
+                // second half of the spliced phoneme
+                for (var t = inputOffset + splicePoint, phonOffset = splicePoint; t < inputOffset + p2.spreadOffset * 2; t++, phonOffset++) {
+                    for (var cont = 0; cont < this.config.numFeatures * this.config.continuaPerFeature; cont++) {
+                        if (t >= 0 && t < this.config.fSlices) {
+                            this.inputLayer[cont][t] += p2.spread[cont][phonOffset];
+                        }
+                    }
+                }
+                slice += this.config.deltaInput;
+            }
+            else {
+                // otherwise, we are dealing with a normal, or ambiguous phoneme input.
+                var phon = this.phonemes.byLabel(phons[i]);
+                if (!phon || !phon.spread || !phon.spreadOffset) {
+                    throw new errors_1.ModelInputError();
+                }
+                //System.out.println("phon->char "+phons.charAt(i+syntactic_incr)+"->"+phon);
+                var inputOffset = slice - Math.round(phon.spreadOffset);
+                // copy the spread phonemes onto the input layer (aligned correctly)
+                for (var t = inputOffset, phonOffset = 0; t < inputOffset + Math.round(phon.spreadOffset * 2); t++, phonOffset++) {
+                    for (var cont = 0; cont < this.config.numFeatures * this.config.continuaPerFeature; cont++) {
+                        if (t >= 0 && t < this.config.fSlices) {
+                            this.inputLayer[cont][t] += phon.spread[cont][phonOffset];
+                        }
+                    }
+                }
+                // duration scaling!
+                slice += Math.round(this.config.deltaInput * phon.durationScalar[0]);
+            }
+        }
+        // apply input noise here.
+        if (this.config.noiseSD != 0) {
+            for (var feat = 0; feat < this.config.numFeatures * this.config.continuaPerFeature; feat++) {
+                for (var islice = 0; islice < this.config.fSlices; islice++) {
+                    this.inputLayer[feat][islice] += util.gauss(0.0, this.config.noiseSD);
+                }
+            }
+        }
+        // apply clamping
+        for (var feat = 0; feat < this.config.numFeatures * this.config.continuaPerFeature; feat++) {
+            for (var islice = 0; islice < this.config.fSlices; islice++) {
+                this.inputLayer[feat][islice] = this.clamp(this.inputLayer[feat][islice]);
+            }
+        }
+        // the next line copies one column of data, forcing the _feature layer_ to undergo one cycle immediately.
+        // this compensates for a discrepency between jTrace and cTrace; keeps things lined up.
+        for (var c = 0; c < this.config.continuaPerFeature; c++) {
+            for (var f = 0; f < this.config.numFeatures; f++) {
+                this.featNet[c * this.config.numFeatures + f][0] +=
+                    this.inputLayer[c * this.config.numFeatures + f][0];
+            }
+        }
+        this.featUpdate();
+    };
+    // variable names taken from cTRACE.
+    // input-to-feature activation, AND feature-to-feature inhibition.
+    TraceNet.prototype.actFeatures = function () {
+        var _this = this;
+        this.globalFeatureCompetitionIndex = 0;
+        // computes total inhibition coming from a continuum to each node at that time slice
+        // sum of prev slice's positive activations summed over each continuum at each fslice
+        var fsum = util.zeros2D(this.config.continuaPerFeature, this.config.fSlices);
+        for (var c = 0; c < this.config.continuaPerFeature; c++)
+            for (var f = 0; f < this.config.numFeatures; f++)
+                for (var fslice = 0; fslice < this.config.fSlices; fslice++)
+                    if (this.featLayer[c * this.config.numFeatures + f][fslice] > 0)
+                        fsum[c][fslice] += this.featLayer[c * this.config.numFeatures + f][fslice];
+        // this block scales down the fsum value by Gamma.F
+        //ff=[c][i]=fsum[c][i]*Gamma.F
+        var ffi = fsum.map(function (row) { return row.map(function (node) { return node * (_this.config.gamma.F || 0); }); });
+        /*const ffi: number[][] = util.zeros2D(this.config.continuaPerFeature, this.config.fSlices)
+        for (let c = 0; c < this.config.continuaPerFeature; c++)
+          for (let fslice = 0; fslice < this.config.fSlices; fslice++)
+            ffi[c][fslice] = fsum[c][fslice] * this.config.gamma.F*/
+        // this block copies input activations to the feature layer
+        if (this.inputSlice < this.config.fSlices) {
+            for (var fIndex = 0; fIndex < this.config.continuaPerFeature * this.config.numFeatures; fIndex++) {
+                for (var fslice = this.inputSlice + 1; fslice < this.config.fSlices && fslice < this.inputSlice + 1 + this.__nreps; fslice++) {
+                    //small variation from original
+                    //input->feature activation
+                    var n = this.clamp((this.config.alpha.IF || 0) * this.inputLayer[fIndex][fslice]);
+                    this.featNet[fIndex][fslice] += n;
+                    this.globalFeatureCompetitionIndex -= n;
+                }
+            }
+        }
+        // this block applies ffi inhibition to each node in the featue layer, and compensates for self-inhibition
+        for (var c = 0; c < this.config.continuaPerFeature; c++) {
+            for (var f = 0; f < this.config.numFeatures; f++) {
+                for (var fslice = 0; fslice < this.config.fSlices; fslice++) {
+                    var n = Math.max(0, ffi[c][fslice] -
+                        Math.max(0, this.featLayer[c * this.config.numFeatures + f][fslice] * (this.config.gamma.F || 0)));
+                    this.featNet[c * this.config.numFeatures + f][fslice] -= n;
+                    this.globalFeatureCompetitionIndex += n;
+                }
+            }
+        }
+    };
+    /**
+     * Feature to phoneme activations
+     */
+    TraceNet.prototype.featToPhon = function () {
+        var FPP = this.config.slicesPerPhon;
+        var pSlices = this.getPSlices();
+        this.globalFeatToPhonSum = 0;
+        // for every feature at every slice, if the units activation is above zero,
+        // then send activation to phonNet from the featLayer scaled by PhonDefs,
+        // spread, fwp and alpha.
+        for (var featIndex = 0; featIndex < this.config.continuaPerFeature * this.config.numFeatures; featIndex++) {
+            for (var fslice = 0; fslice < this.config.fSlices; fslice++) {
+                if (this.featLayer[featIndex][fslice] > 0) {
+                    // for all phonemes affected by the current feature.
+                    // C code appears to ignore the first phoneme affected by feat (why?)
+                    for (var _i = 0, _a = this.phonemes.sorted().entries(); _i < _a.length; _i++) {
+                        var _b = _a[_i], idx = _b[0], phone = _b[1];
+                        if (phone.features[featIndex] == 0) {
+                            continue;
+                        }
+                        // determine, based on current slice and spread, what range of
+                        // phoneme units to send activation to.
+                        var fspr = this.config.spread[Math.floor(featIndex / this.config.numFeatures)];
+                        var fmax = this.config.fSlices - fspr;
+                        var pstart = void 0, pend = void 0;
+                        if (fslice < fspr) {
+                            pstart = 0;
+                            pend = Math.floor((fslice + fspr - 1) / FPP);
+                        }
+                        else {
+                            if (fslice > fmax)
+                                pend = pSlices - 1;
+                            else
+                                pend = Math.floor((fslice + fspr - 1) / FPP);
+                            pstart = Math.floor((fslice - fspr) / FPP + 1);
+                        }
+                        var winstart = fspr - (fslice - FPP * pstart);
+                        // include only positive acoustic evidence
+                        var t = 0;
+                        if (this.featLayer[featIndex][fslice] > 0) {
+                            t =
+                                phone.features[featIndex] *
+                                    this.featLayer[featIndex][fslice] *
+                                    (this.config.alpha.FP || 0);
+                        }
+                        var c = Math.floor(featIndex / this.config.numFeatures);
+                        for (var pslice = pstart; pslice < pend + 1 && pslice < pSlices; pslice++) {
+                            //System.out.println(phon+"\t"+pslice+"\t"+phon+"\t"+c+"\t"+winstart);
+                            var n = this.fpw[idx][c][winstart] * t;
+                            this.phonNet[idx][pslice] += n;
+                            this.globalFeatToPhonSum += n;
+                            //winstart+=3; //changing this hard-coded line...
+                            winstart += FPP; //to this.  (seems to work 04/19/2007)
+                        }
+                    }
+                }
+            }
+        }
+    };
+    /** calculate inhibitions in phoneme layer **/
+    TraceNet.prototype.phonToPhon = function () {
+        var pSlices = this.getPSlices();
+        var ppi = Array(pSlices).fill(0);
+        var pmax = 0, pmin = 0;
+        var halfdur = 1;
+        // the ppi accumulates all of the inhibition at a particular phoneme slice.
+        // this amount of inhibition is later applied equally to all phonemes.
+        for (var slice = 0; slice < pSlices; slice++) {
+            for (var phon = 0; phon < this.config.phonology.length; phon++) {
+                // if the phon unit has activation, determine its extent (does it hit an edge?) ...
+                if (this.phonLayer[phon][slice] > 0) {
+                    pmax = slice + halfdur;
+                    if (pmax >= pSlices) {
+                        pmax = pSlices - 1;
+                        pmin = slice - halfdur;
+                    }
+                    else {
+                        pmin = slice - halfdur;
+                        if (pmin < 0)
+                            pmin = 0;
+                    }
+                    // then add its activation to ppi, scaled by gamma.
+                    for (var i = pmin; i < pmax; i++)
+                        ppi[i] += this.phonLayer[phon][slice] * (this.config.gamma.P || 0);
+                }
+            }
+        }
+        // now, determine again the extent of each phoneme unit,
+        // then apply inhibition equally to phons lying on the same phon slice.
+        this.globalPhonemeCompetitionIndex = 0;
+        for (var phon = 0; phon < this.config.phonology.length; phon++) {
+            //loop over phonemes
+            for (var slice = 0; slice < pSlices; slice++) {
+                // loop over phoneme slices (original configuration 33)
+                pmax = slice + halfdur;
+                if (pmax >= pSlices) {
+                    pmax = pSlices - 1;
+                    pmin = slice - halfdur;
+                }
+                else {
+                    pmin = slice - halfdur;
+                    if (pmin < 0)
+                        pmin = 0;
+                }
+                for (var i = pmin; i < pmax; i++) {
+                    // application of inhibition occurs here
+                    if (ppi[i] > 0) {
+                        this.phonNet[phon][slice] -= ppi[i];
+                        this.globalPhonemeCompetitionIndex += ppi[i];
+                    }
+                }
+                // here, we make up for self-inhibition, reimbursing nodes for inhibition that
+                // originated from themselves.
+                if (this.phonLayer[phon][slice] * (this.config.gamma.P || 0) > 0 && ppi[slice] > 0) {
+                    var n = (pmax - pmin) * this.phonLayer[phon][slice] * (this.config.gamma.P || 0);
+                    this.phonNet[phon][slice] += n;
+                    this.globalPhonemeCompetitionIndex -= n;
+                }
+                // here, we make up for allophone-inhibition, reimbursing nodes for inhibition
+                // that originate from allophones of the target, as defined in the allophon matrix.
+                // note that this is an experimental feature of jtrace, implemented by tjs, 07/19/2007.
+                for (var allophone = 0; allophone < this.config.phonology.length; allophone++) {
+                    // loop over phonemes
+                    // TODO:
+                    //if (tp.getPhonology().getAllophoneRelation(phon, allophone)) {
+                    //  phonNet[phon][slice] += ((pmax - pmin) * phonLayer[allophone][slice]) * tp.getGamma().P;
+                    //}
+                }
+            }
+        }
+    };
+    TraceNet.prototype.phonToFeat = function () {
+        var _a;
+        var fSlices = this.config.fSlices;
+        var fpp = this.config.slicesPerPhon;
+        var alpha_pf = this.config.alpha.PF || 0;
+        this.globalPhonToFeatSum = 0;
+        // Loop over phonemes and their time slices
+        for (var phon = 0; phon < this.config.phonology.length; phon++) {
+            var phon_features = ((_a = this.phonemes.byIndex(phon)) === null || _a === void 0 ? void 0 : _a.features) || [];
+            for (var pslice = 0; pslice < this.getPSlices(); pslice++) {
+                var phonActivation = this.phonLayer[phon][pslice];
+                if (phonActivation <= 0)
+                    continue; // Only active phonemes provide feedback
+                // Convert phoneme slice to feature slice
+                var fpeak = Math.round(pslice * fpp);
+                // Apply feedback for each feature continuum
+                for (var cont = 0; cont < this.config.continuaPerFeature; cont++) {
+                    var spread = this.config.spread[cont];
+                    var ispr = Math.floor(spread);
+                    var pfw_len = 2 * ispr;
+                    // Calculate window bounds (following cTRACE: fbegin = 1 + fpeak - spread)
+                    var fbegin = 1 + fpeak - ispr;
+                    var fend = fpeak + ispr + 1; // exclusive upper bound
+                    var winstart = 1; // offset into pfw array
+                    // Clamp fbegin and adjust window start if needed
+                    if (fbegin < 0) {
+                        winstart = 1 - fbegin; // Shift window into pfw array
+                        fbegin = 0;
+                    }
+                    // Clamp fend to valid range
+                    if (fend > fSlices) {
+                        fend = fSlices;
+                    }
+                    // Apply feedback to each feature in this continuum
+                    for (var feat = 0; feat < this.config.numFeatures; feat++) {
+                        var featureValue = phon_features[cont * this.config.numFeatures + feat] || 0;
+                        if (featureValue <= 0)
+                            continue; // Only present features can receive feedback
+                        var feat_idx = cont * this.config.numFeatures + feat;
+                        var activationBase = phonActivation * featureValue * alpha_pf;
+                        // Apply weights across the feature time window
+                        var windex = winstart;
+                        for (var fslice = fbegin; fslice < fend && windex < pfw_len; fslice++, windex++) {
+                            var weight = this.pfw[phon][cont][windex];
+                            var contribution = weight * activationBase;
+                            this.featNet[feat_idx][fslice] += contribution;
+                            this.globalPhonToFeatSum += contribution;
+                        }
+                    }
+                }
+            }
+        }
+    };
+    //lexical to phoneme feedback.
+    TraceNet.prototype.wordToPhon = function () {
+        // initialize variables
+        var dict = this.config.lexicon;
+        var str;
+        var wslot, pmin, pwin, pmax;
+        var pSlices = this.getPSlices();
+        this.globalWordToPhonSum = 0;
+        // for every word in the lexicon
+        for (var word = 0; word < dict.length; word++) {
+            // for each word slice
+            for (var wslice = 0; wslice < this.getWSlices(); wslice++) {
+                // if the word has activation above zero
+                if (this.wordLayer[word][wslice] <= 0)
+                    continue;
+                // determine what range of slices (for that word unit) can be
+                // fed back to the phoneme layer.
+                str = dict[word].phon;
+                for (var wstart = 0; wstart < str.length; wstart++) {
+                    var currPhon = this.phonemes.byLabel(str[wstart]);
+                    wslot = wslice + wstart * 2;
+                    pmin = wslot - 1; //??
+                    if (pmin >= pSlices)
+                        break;
+                    if (pmin < 0) {
+                        pwin = 1 - pmin;
+                        pmin = 0;
+                        pmax = wslot + 2; //from +2
+                    }
+                    else {
+                        pmax = wslot + 2; //from +2
+                        if (pmax > pSlices - 1)
+                            pmax = pSlices - 1;
+                        pwin = 1;
+                    }
+                    //now that we know the range to iterator over, iterate over the appropriate phoneme slices
+                    for (var pslice = pmin; pslice < pmax && pslice < pSlices && pwin < 4; pslice++, pwin++) {
+                        //this check makes sure that ambiguous phonemes do not feedback
+                        // jTRACE implements this as "currChar > pd.NPHONS && currChar < 0" which is always false??
+                        /*if (currPhon.phonologicalRole == TracePhoneRole.AMBIG) {
+                          const contIdx = +this.config.continuumSpec[2]
+                          if (currChar == 50) { //this is the bottom of the continuum.
+                            currChar = pd.mapPhon(tp.getContinuumSpec().toCharArray()[0]);
+                          } else if (currChar == (50 + contIdx - 1)) { //this is the top of the continuum
+                            currChar = pd.mapPhon(tp.getContinuumSpec().toCharArray()[2]);
+                          } else { //in the middle of the continuum
+                            //feedback will not be accumulated for any ambiguous phonemes representations
+                            break;
+                          }
+                        }*/
+                        // if the current word activation is above zero
+                        if (this.wordLayer[word][wslice] > 0) {
+                            //if lexical frequency is in effect.
+                            //if(tp.getFreqNode().RDL_wt_s!=0&&dict.get(word).getFrequency()>0){
+                            var wfrq = 0;
+                            if (dict[word].freq && this.config.freqNode.RDL_wt_s)
+                                wfrq = this.config.freqNode.RDL_wt_s * Math.log10(dict[word].freq);
+                            var wprim = 0;
+                            if (dict[word].prime && this.config.primeNode.RDL_wt_s)
+                                wprim = this.config.primeNode.RDL_wt_s * Math.log10(dict[word].prime);
+                            // scale the activation by alpha and wpw
+                            var n = (1 + wfrq + wprim) *
+                                this.wordLayer[word][wslice] *
+                                (this.config.alpha.WP || 0) *
+                                this.wpw[currPhon.index][pwin];
+                            this.phonNet[currPhon.index][pslice] += n;
+                            this.globalWordToPhonSum += n;
+                        }
+                    }
+                }
+            }
+        }
+    };
+    //This implementation actually depends on pdur being 2, re: pww dynamics.
+    TraceNet.prototype.phonToWord = function () {
+        var dict = this.config.lexicon;
+        var pSlices = this.getPSlices();
+        var wpeak, wmin, winstart, wmax, pdur, strlen;
+        this.globalPhonToWordSum = 0;
+        // for each phoneme
+        for (var phon = 0; phon < this.config.phonology.length; phon++) {
+            pdur = 2;
+            //hack
+            if (this.config.deltaInput != 6 || this.config.slicesPerPhon != 3)
+                pdur = Math.floor(this.config.deltaInput / this.config.slicesPerPhon);
+            //end hack
+            // and for each phoneme slice
+            for (var pslice = 0; pslice < pSlices; pslice++) {
+                // if the current unit is below zero, skip it.
+                if (this.phonLayer[phon][pslice] <= 0)
+                    continue;
+                // iterate over each word in the dictionary
+                words: for (var word = 0; word < dict.length; word++) {
+                    var str = dict[word].phon;
+                    strlen = str.length;
+                    //for each letter in the current word
+                    for (var offset = 0; offset < strlen; offset++) {
+                        //if that letter corresponds to the phoneme we're now considering...
+                        if (str.charAt(offset) == this.phonemes.byIndex(phon).label.charAt(0)) {
+                            //then determine the temporal range of word units for which it
+                            //makes sense that the current phoneme should send activation to it.
+                            wpeak = pslice - pdur * offset;
+                            if (wpeak < -pdur)
+                                continue words;
+                            wmin = 1 + wpeak - pdur;
+                            if (wmin < 0) {
+                                winstart = 1 - wmin;
+                                wmin = 0;
+                                wmax = wpeak + pdur;
+                            }
+                            else {
+                                wmax = wpeak + pdur;
+                                if (wmax > pSlices - 1)
+                                    wmax = pSlices - 1;
+                                winstart = 1;
+                            }
+                            //determine the raw amount of activation that is sent to the word units
+                            var t = 2 * this.phonLayer[phon][pslice] * (this.config.alpha.PW || 0); //cTRACE: the 2 stands for word->scale
+                            var wfrq = 0;
+                            if (this.config.freqNode.RDL_wt_s && dict[word].freq) {
+                                wfrq = this.config.freqNode.RDL_wt_s * Math.log10(dict[word].freq);
+                            }
+                            var wprm = 0;
+                            if (this.config.primeNode.RDL_wt_s && dict[word].prime) {
+                                wprm = this.config.primeNode.RDL_wt_s * Math.log10(dict[word].prime);
+                                //t = tp.getPrimeNode().applyWeightPrimeScaling(tp.getLexicon().get(word), t);
+                            }
+                            //now iterate over the temporal range determined about 15 lines above
+                            for (var wslice = wmin; wslice < wmax && wslice < this.getWSlices(); wslice++, winstart++) {
+                                if (winstart >= 0 && winstart < 4) {
+                                    //scale activation by pww; this determines how temporal offset should affect excitation
+                                    var n = (1 + wfrq + wprm) * this.pww[phon][winstart] * t;
+                                    this.wordNet[word][wslice] += n;
+                                    this.globalPhonToWordSum += n;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    };
+    /**
+     * word to word inhibition: operates the same as phoneme inhibition -- calculate
+     * the total amount of inhibition at each slice and apply that equally to all words
+     * that overlap with that slice somewhere.  this means that word length increases
+     * the amount of lexical inhibition linearly.
+     */
+    TraceNet.prototype.wordToWord = function () {
+        var pSlices = this.getPSlices();
+        var wwi = Array(pSlices).fill(0);
+        var wisum = Array(pSlices).fill(0);
+        var dict = this.config.lexicon;
+        // for all word slices
+        for (var wstart = 0; wstart < pSlices; wstart++) {
+            // for all words
+            for (var word = 0; word < dict.length; word++) {
+                // determine how many slices the current word lies on
+                var wmin = wstart; //wstart - (1/2 phone width))
+                if (wmin < 0)
+                    wmin = 0;
+                var wmax = wstart + dict[word].phon.length * 2; //!! wstart + (wlength*phone width) + (1/2 phone width)
+                if (wmax > pSlices)
+                    wmax = pSlices - 1;
+                for (var l = wmin; l < wmax; l++) {
+                    // then add that word unit's activation to the wisum array,
+                    if (this.wordLayer[word][wstart] > 0) {
+                        wisum[l] += this.wordLayer[word][wstart] * this.wordLayer[word][wstart];
+                    }
+                }
+            }
+        }
+        // next, scale the wisum array by gamma, and it is now called the wwi array.
+        // there is also a built-in ceiling here, preventing inhibition over 3.0d.
+        for (var wstart = 0; wstart < pSlices; wstart++) {
+            if (wisum[wstart] > 3.0)
+                wisum[wstart] = 3.0;
+            wwi[wstart] = wisum[wstart] * (this.config.gamma.W || 0);
+        }
+        // now, repeat the looping over words and slices and apply the inhibition
+        // accumulated at each slice to every word unit that overlaps with that slice.
+        this.globalLexicalCompetitionIndex = 0;
+        for (var wstart = 0; wstart < pSlices; wstart++) {
+            for (var word = 0; word < dict.length; word++) {
+                var wmin = wstart; //wstart - (1/2 phone width))
+                if (wmin < 0)
+                    wmin = 0;
+                var wmax = wstart + dict[word].phon.length * 2; //!! wstart + (wlength*phone width) + (1/2 phone width)
+                if (wmax > pSlices)
+                    wmax = pSlices - 1;
+                // length_normalization_scale = 1/(14  -dict.get(word).getPhon().length());
+                // inhibition applied in this loop.
+                for (var l = wmin; l < wmax; l++) {
+                    // EXTENSION
+                    if (this.config.lengthNormalization) {
+                        var compensation_factor = 1 / (dict[word].phon.length * this.lengthNormalizationScale);
+                        if (compensation_factor > 1)
+                            compensation_factor = 1;
+                        //double compensation_factor = (((dict.get(word).getPhon().length() / length_normalization_fulcrum ) - 1) * length_normalization_scale) + 1
+                        //if(compensation_factor<0) compensation_factor=1;
+                        var n = wwi[l] * compensation_factor;
+                        this.wordNet[word][wstart] -= n; //if(wwi[l]>0) //inhibition applied here
+                        this.globalLexicalCompetitionIndex += n;
+                    }
+                    //END EXTENSION
+                    else {
+                        this.wordNet[word][wstart] -= wwi[l]; //if(wwi[l]>0) //inhibition applied here
+                        this.globalLexicalCompetitionIndex += wwi[l];
+                    }
+                }
+                // re-imbursement of self-inhibition occurs here.
+                if (this.wordLayer[word][wstart] > 0) {
+                    //self-inhibitiopn prevented here.
+                    // EXTENSION
+                    if (this.config.lengthNormalization) {
+                        var compensation_factor = 1 / (dict[word].phon.length * this.lengthNormalizationScale);
+                        if (compensation_factor > 1)
+                            compensation_factor = 1;
+                        var n = (wmax - wmin) *
+                            (this.wordLayer[word][wstart] *
+                                this.wordLayer[word][wstart] *
+                                (this.config.gamma.W || 0)) *
+                            compensation_factor;
+                        this.wordNet[word][wstart] += n;
+                        this.globalLexicalCompetitionIndex -= n;
+                    }
+                    //END EXTENSION
+                    else {
+                        var n = (wmax - wmin) *
+                            (this.wordLayer[word][wstart] *
+                                this.wordLayer[word][wstart] *
+                                (this.config.gamma.W || 0));
+                        this.wordNet[word][wstart] += n;
+                        this.globalLexicalCompetitionIndex -= n;
+                    }
+                }
+            }
+        }
+    };
+    /**
+     * final processing of feature units incorporates stochasticity (if on) and
+     * implements decay to resting level behavior.
+     */
+    TraceNet.prototype.featUpdate = function () {
+        var _a = this.config, min = _a.min, max = _a.max;
+        this.globalFeatSumAll = 0;
+        this.globalFeatSumPos = 0;
+        for (var slice = 0; slice < this.config.fSlices; slice++) {
+            for (var feat = 0; feat < this.config.numFeatures * this.config.continuaPerFeature; feat++) {
+                if (this.config.stochasticitySD) {
+                    //apply gaussian noise here
+                    this.featNet[feat][slice] += util.gauss(0.0, this.config.stochasticitySD); //this adds the noise
+                }
+                var t = this.featLayer[feat][slice];
+                if (this.featNet[feat][slice] > 0)
+                    t += (max - t) * this.featNet[feat][slice];
+                else if (this.featNet[feat][slice] < 0)
+                    t += (t - min) * this.featNet[feat][slice];
+                var tt = this.featLayer[feat][slice] - (this.config.rest.F || 0);
+                //if(t!=0)
+                t -= (this.config.decay.F || 0) * tt;
+                if (t > max)
+                    t = max;
+                if (t < min)
+                    t = min;
+                //final update for feature layer
+                this.featLayer[feat][slice] = t;
+                this.globalFeatSumAll += t;
+                if (t > 0) {
+                    this.globalFeatSumPos += t;
+                }
+            }
+        }
+        this.featNet = util.zeros2D(this.config.numFeatures * this.config.continuaPerFeature, this.config.fSlices);
+    };
+    /**
+     * final processing of phoneme units incorporates stochasticity (if on) and
+     * implements decay to resting level behavior.
+     */
+    TraceNet.prototype.phonUpdate = function () {
+        var pSlices = this.getPSlices();
+        this.globalPhonSumAll = 0;
+        this.globalPhonSumPos = 0;
+        for (var pslice = 0; pslice < pSlices; pslice++) {
+            for (var phon = 0; phon < this.config.phonology.length; phon++) {
+                if (this.config.stochasticitySD) {
+                    //apply gaussian noise here
+                    this.phonNet[phon][pslice] += util.gauss(0.0, this.config.stochasticitySD); // this adds the noise
+                }
+                var diff = void 0;
+                if (this.phonNet[phon][pslice] >= 0)
+                    diff = this.config.max - this.phonLayer[phon][pslice];
+                else
+                    diff = this.phonLayer[phon][pslice] - this.config.min;
+                var rest = this.phonLayer[phon][pslice] - (this.config.rest.P || 0);
+                // final update for phoneme layer
+                this.phonLayer[phon][pslice] +=
+                    diff * this.phonNet[phon][pslice] - (this.config.decay.P || 0) * rest;
+                this.phonLayer[phon][pslice] = this.clamp(this.phonLayer[phon][pslice]);
+                this.globalPhonSumAll += this.phonLayer[phon][pslice];
+                if (this.phonLayer[phon][pslice] > 0) {
+                    this.globalPhonSumPos += this.phonLayer[phon][pslice];
+                }
+            }
+        }
+        this.phonNet = util.zeros2D(this.config.phonology.length, pSlices);
+    };
+    /**
+     * final processing of word units incorporates stochasticity (if on) and
+     * implements decay to resting level behavior.
+     */
+    TraceNet.prototype.wordUpdate = function () {
+        var wSlices = this.getWSlices();
+        var _a = this.config, min = _a.min, max = _a.max;
+        this.globalWordSumAll = 0;
+        this.globalWordSumPos = 0;
+        for (var word = 0; word < this.config.lexicon.length; word++) {
+            for (var slice = 0; slice < wSlices; slice++) {
+                // apply attention modulation (cf. Mirman et al., 2005)
+                this.wordNet[word][slice] *= this.config.atten;
+                this.wordNet[word][slice] -= this.config.bias;
+                if (this.config.stochasticitySD) {
+                    // apply gaussian noise here
+                    this.wordNet[word][slice] += util.gauss(0.0, this.config.stochasticitySD); // this adds the noise
+                }
+                var t = this.wordLayer[word][slice];
+                if (this.wordNet[word][slice] > 0)
+                    t += (max - t) * this.wordNet[word][slice];
+                else if (this.wordNet[word][slice] < 0)
+                    t += (t - min) * this.wordNet[word][slice];
+                // resting prime & resting freq effects
+                var tt = void 0;
+                if (this.config.freqNode.RDL_rest_s &&
+                    this.config.lexicon[word].freq > 0 &&
+                    this.config.primeNode.RDL_rest_s &&
+                    this.config.lexicon[word].prime > 0)
+                    tt =
+                        this.wordLayer[word][slice] -
+                            ((this.config.rest.W || 0) +
+                                (0, response_probability_1.applyRestScaling)(this.config.freqNode, this.config.lexicon[word].freq)) +
+                            ((this.config.rest.W || 0) +
+                                (0, response_probability_1.applyRestScaling)(this.config.primeNode, this.config.lexicon[word].prime));
+                //resting freq effects
+                else if (this.config.freqNode.RDL_rest_s && this.config.lexicon[word].freq > 0)
+                    tt =
+                        this.wordLayer[word][slice] -
+                            ((this.config.rest.W || 0) +
+                                (0, response_probability_1.applyRestScaling)(this.config.freqNode, this.config.lexicon[word].freq));
+                //resting prime
+                else if (this.config.primeNode.RDL_rest_s && this.config.lexicon[word].prime > 0)
+                    tt =
+                        this.wordLayer[word][slice] -
+                            ((this.config.rest.W || 0) +
+                                (0, response_probability_1.applyRestScaling)(this.config.primeNode, this.config.lexicon[word].prime));
+                //no resting prime or resting freq effects
+                else
+                    tt = this.wordLayer[word][slice] - (this.config.rest.W || 0);
+                //if(tt != 0)
+                t -= (this.config.decay.W || 0) * tt;
+                if (t > max)
+                    t = max;
+                if (t < min)
+                    t = min;
+                this.wordLayer[word][slice] = t;
+                this.globalWordSumAll += t;
+                if (t > 0) {
+                    this.globalWordSumPos += t;
+                }
+            }
+        }
+        this.wordNet = util.zeros2D(this.config.lexicon.length, wSlices);
+    };
+    TraceNet.prototype.cycle = function () {
+        this.actFeatures();
+        var cycles = this.config.nreps < 0 ? Math.abs(this.config.nreps) : 1;
+        for (var i = 0; i < cycles; i++) {
+            this.featToPhon();
+            this.phonToPhon();
+            this.phonToFeat();
+            this.phonToWord();
+            this.wordToPhon();
+            this.wordToWord();
+            this.featUpdate();
+            this.phonUpdate();
+            this.wordUpdate();
+        }
+        this.inputSlice += this.__nreps;
+    };
+    return TraceNet;
+}());
+exports.default = TraceNet;

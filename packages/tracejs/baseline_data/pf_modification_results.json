@@ -1,0 +1,7062 @@
+{
+  "timestamp": "2026-04-25T20:12:25.805Z",
+  "modification": {
+    "parameter": "alpha.PF",
+    "originalValue": 0,
+    "modifiedValue": 0.05,
+    "description": "Phoneme-to-Feature feedback strength"
+  },
+  "testCount": 100,
+  "files": {
+    "unchanged": 100,
+    "changed": 300
+  },
+  "words": [
+    {
+      "word": "it",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9445,
+              "meanDiff": 0.013219446918237975,
+              "stdDiff": 0.06701891269057891
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8411000000000001,
+              "meanDiff": 0.0075670854514646255,
+              "stdDiff": 0.0378424070250895
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.2851,
+              "meanDiff": 0.0054898275150796075,
+              "stdDiff": 0.012399033772971201
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9445
+    },
+    {
+      "word": "ad",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.938,
+              "meanDiff": 0.012799553747263073,
+              "stdDiff": 0.06577375572083366
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7996,
+              "meanDiff": 0.008260343742435276,
+              "stdDiff": 0.03898520424427678
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.2998,
+              "meanDiff": 0.005627602701663283,
+              "stdDiff": 0.01303053485009425
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.938
+    },
+    {
+      "word": "but",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9315,
+              "meanDiff": 0.015563513211993226,
+              "stdDiff": 0.071251458422472
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.773,
+              "meanDiff": 0.009035841200677724,
+              "stdDiff": 0.03992973930161355
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.2538,
+              "meanDiff": 0.005189582715369446,
+              "stdDiff": 0.01108135534390177
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9315
+    },
+    {
+      "word": "bi",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9314,
+              "meanDiff": 0.01251093668449859,
+              "stdDiff": 0.06509163890161912
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8059,
+              "meanDiff": 0.007580418784797844,
+              "stdDiff": 0.03917080218924867
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.31779999999999997,
+              "meanDiff": 0.003457286030391546,
+              "stdDiff": 0.008979587621972708
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9314
+    },
+    {
+      "word": "b^k",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9310999999999999,
+              "meanDiff": 0.015605255305073649,
+              "stdDiff": 0.07123805791450996
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7514000000000001,
+              "meanDiff": 0.008861549261679834,
+              "stdDiff": 0.041028888384103054
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.34269999999999995,
+              "meanDiff": 0.005277227148902917,
+              "stdDiff": 0.01125115011057006
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9310999999999999
+    },
+    {
+      "word": "b^s",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9310999999999999,
+              "meanDiff": 0.014209665640287337,
+              "stdDiff": 0.06826001644253066
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7318,
+              "meanDiff": 0.008134301621883253,
+              "stdDiff": 0.038756007071276626
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.31980000000000003,
+              "meanDiff": 0.004635429643950562,
+              "stdDiff": 0.010026529530407583
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9310999999999999
+    },
+    {
+      "word": "b^t",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9310999999999999,
+              "meanDiff": 0.015503804013560232,
+              "stdDiff": 0.0708714313988534
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7371,
+              "meanDiff": 0.009045318324860803,
+              "stdDiff": 0.04043627675239803
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.31220000000000003,
+              "meanDiff": 0.005215698037170643,
+              "stdDiff": 0.011007827752157405
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9310999999999999
+    },
+    {
+      "word": "du",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9310999999999999,
+              "meanDiff": 0.012596028932700265,
+              "stdDiff": 0.06515203580929964
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7722,
+              "meanDiff": 0.007682791091745405,
+              "stdDiff": 0.03859083555232192
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3762,
+              "meanDiff": 0.0032800919533173614,
+              "stdDiff": 0.008445848977202953
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9310999999999999
+    },
+    {
+      "word": "bit",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9309999999999999,
+              "meanDiff": 0.015738407809036587,
+              "stdDiff": 0.07156885586901254
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7588,
+              "meanDiff": 0.008882340837569573,
+              "stdDiff": 0.040471926819819315
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3254,
+              "meanDiff": 0.004931642408312204,
+              "stdDiff": 0.010478947911902807
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9309999999999999
+    },
+    {
+      "word": "blu",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9309999999999999,
+              "meanDiff": 0.013978198807536438,
+              "stdDiff": 0.06697516656935551
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7314,
+              "meanDiff": 0.008393384168482206,
+              "stdDiff": 0.039554971624883514
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3708,
+              "meanDiff": 0.003689853597498306,
+              "stdDiff": 0.009022817661688201
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9309999999999999
+    },
+    {
+      "word": "brid",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9309999999999999,
+              "meanDiff": 0.016195169023077185,
+              "stdDiff": 0.07111642613922596
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7281000000000001,
+              "meanDiff": 0.00884958605664482,
+              "stdDiff": 0.038924798530535244
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4903,
+              "meanDiff": 0.004809686465440818,
+              "stdDiff": 0.009869599588208664
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9309999999999999
+    },
+    {
+      "word": "brud",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9309999999999999,
+              "meanDiff": 0.01598913025341575,
+              "stdDiff": 0.07061547461446552
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7267,
+              "meanDiff": 0.008760951343500259,
+              "stdDiff": 0.038741466434687774
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4679,
+              "meanDiff": 0.00473932700536388,
+              "stdDiff": 0.00977891515647944
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9309999999999999
+    },
+    {
+      "word": "br^S",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9309,
+              "meanDiff": 0.014751897253219121,
+              "stdDiff": 0.06766595644481281
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7257,
+              "meanDiff": 0.008051706608569317,
+              "stdDiff": 0.0371616009309111
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4834,
+              "meanDiff": 0.0043478835735308976,
+              "stdDiff": 0.009329488032369207
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9309
+    },
+    {
+      "word": "bist",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9308,
+              "meanDiff": 0.016606548467898902,
+              "stdDiff": 0.07198092469126877
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7293999999999999,
+              "meanDiff": 0.008705676591624158,
+              "stdDiff": 0.03968304995965308
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4637,
+              "meanDiff": 0.004701110292839792,
+              "stdDiff": 0.009678990710211917
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9308
+    },
+    {
+      "word": "bust",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9308,
+              "meanDiff": 0.016486713115757622,
+              "stdDiff": 0.07174291610745764
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7259000000000001,
+              "meanDiff": 0.008817424352457004,
+              "stdDiff": 0.039515791161259015
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5148999999999999,
+              "meanDiff": 0.004723655050614615,
+              "stdDiff": 0.009647665422259233
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9308
+    },
+    {
+      "word": "blak",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9307,
+              "meanDiff": 0.016517614371667228,
+              "stdDiff": 0.07133835396770423
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.725,
+              "meanDiff": 0.00882158557250047,
+              "stdDiff": 0.039776196686652554
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5376000000000001,
+              "meanDiff": 0.004814023648062311,
+              "stdDiff": 0.009985063661513078
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9307
+    },
+    {
+      "word": "bl^d",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9307,
+              "meanDiff": 0.01609848468092092,
+              "stdDiff": 0.07067556706627351
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7259,
+              "meanDiff": 0.009124686516581857,
+              "stdDiff": 0.040535814524088436
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5641,
+              "meanDiff": 0.004852051817076615,
+              "stdDiff": 0.01014098901625269
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9307
+    },
+    {
+      "word": "badi",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9307,
+              "meanDiff": 0.015648832661045744,
+              "stdDiff": 0.06923955120797101
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7287,
+              "meanDiff": 0.008309491648511202,
+              "stdDiff": 0.03970764010062369
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5651,
+              "meanDiff": 0.004303426514059382,
+              "stdDiff": 0.009527596014754242
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9307
+    },
+    {
+      "word": "baks",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9307,
+              "meanDiff": 0.016208407789634966,
+              "stdDiff": 0.07091837496257156
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7245,
+              "meanDiff": 0.00873112321471796,
+              "stdDiff": 0.03843270497618003
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4235,
+              "meanDiff": 0.004617041708007767,
+              "stdDiff": 0.009081817482221033
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9307
+    },
+    {
+      "word": "bar",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9306,
+              "meanDiff": 0.014431840908960413,
+              "stdDiff": 0.06842672279671687
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7907,
+              "meanDiff": 0.008888528201403994,
+              "stdDiff": 0.040021865457287524
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4365,
+              "meanDiff": 0.0046688823086188345,
+              "stdDiff": 0.01065282704852125
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9306
+    },
+    {
+      "word": "bab",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9306,
+              "meanDiff": 0.015409733354289573,
+              "stdDiff": 0.07065888831701539
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7666999999999999,
+              "meanDiff": 0.009353708545146314,
+              "stdDiff": 0.04146608919417835
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4388,
+              "meanDiff": 0.004993255733871441,
+              "stdDiff": 0.011083171592224637
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9306
+    },
+    {
+      "word": "bark",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9305,
+              "meanDiff": 0.016979468881633694,
+              "stdDiff": 0.0728484763410515
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7230000000000001,
+              "meanDiff": 0.008966957153231656,
+              "stdDiff": 0.04033470355334284
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.49150000000000005,
+              "meanDiff": 0.0046141477526504835,
+              "stdDiff": 0.009558195199026988
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9305
+    },
+    {
+      "word": "babi",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9305,
+              "meanDiff": 0.015880307448735902,
+              "stdDiff": 0.06976541102039933
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7241,
+              "meanDiff": 0.008320384894698593,
+              "stdDiff": 0.039138590825315844
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3881,
+              "meanDiff": 0.004081951135523074,
+              "stdDiff": 0.008772956437708023
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9305
+    },
+    {
+      "word": "bat^l",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9305,
+              "meanDiff": 0.016678923289155472,
+              "stdDiff": 0.07016268243056983
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7247,
+              "meanDiff": 0.00875792060033886,
+              "stdDiff": 0.039464565558516684
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6164999999999999,
+              "meanDiff": 0.004414989890932107,
+              "stdDiff": 0.008641217165224965
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9305
+    },
+    {
+      "word": "b^b^l",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9305,
+              "meanDiff": 0.01705672124531765,
+              "stdDiff": 0.07096313887366287
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7238,
+              "meanDiff": 0.00898463083999026,
+              "stdDiff": 0.03941936375047611
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.544,
+              "meanDiff": 0.004313039164544989,
+              "stdDiff": 0.008302367100255895
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9305
+    },
+    {
+      "word": "did",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9304,
+              "meanDiff": 0.015692803689541755,
+              "stdDiff": 0.07153984213788334
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7322,
+              "meanDiff": 0.009356548051319202,
+              "stdDiff": 0.0412947889552903
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.25899999999999995,
+              "meanDiff": 0.00523505852349721,
+              "stdDiff": 0.011127873741143919
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9304
+    },
+    {
+      "word": "duti",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9302,
+              "meanDiff": 0.015542823382869202,
+              "stdDiff": 0.0688814559471906
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7288000000000001,
+              "meanDiff": 0.008224935850883635,
+              "stdDiff": 0.03925133211071739
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5273,
+              "meanDiff": 0.004283131833850769,
+              "stdDiff": 0.009482624072091387
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9302
+    },
+    {
+      "word": "dip",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9300999999999999,
+              "meanDiff": 0.015404833693247421,
+              "stdDiff": 0.07062647685755585
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7372,
+              "meanDiff": 0.008754843863471242,
+              "stdDiff": 0.03996990855111537
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.318,
+              "meanDiff": 0.005155509868703822,
+              "stdDiff": 0.010639929293191769
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9300999999999999
+    },
+    {
+      "word": "dru",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9300999999999999,
+              "meanDiff": 0.013655280042996612,
+              "stdDiff": 0.06607715029193814
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7218,
+              "meanDiff": 0.00774245219075293,
+              "stdDiff": 0.03759425504814129
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3127,
+              "meanDiff": 0.0035149811967906527,
+              "stdDiff": 0.008330789539352125
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9300999999999999
+    },
+    {
+      "word": "dil",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9299999999999999,
+              "meanDiff": 0.014323796912320745,
+              "stdDiff": 0.06807278030917485
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7254,
+              "meanDiff": 0.00854859356088106,
+              "stdDiff": 0.038964354227241794
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.31429999999999997,
+              "meanDiff": 0.005116783611376266,
+              "stdDiff": 0.01084456764749403
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9299999999999999
+    },
+    {
+      "word": "drap",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9299999999999999,
+              "meanDiff": 0.016534277642932978,
+              "stdDiff": 0.0716510637130564
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7213999999999999,
+              "meanDiff": 0.009075795206971512,
+              "stdDiff": 0.03974216402933864
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5274,
+              "meanDiff": 0.004884608814837395,
+              "stdDiff": 0.009814711861688825
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9299999999999999
+    },
+    {
+      "word": "dr^g",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9299999999999999,
+              "meanDiff": 0.016139596587526284,
+              "stdDiff": 0.07048051899169797
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7205999999999999,
+              "meanDiff": 0.008626410070200876,
+              "stdDiff": 0.03941900111202545
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5216999999999999,
+              "meanDiff": 0.004982253555222765,
+              "stdDiff": 0.010146644327079212
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9299999999999999
+    },
+    {
+      "word": "d^k",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9299,
+              "meanDiff": 0.01534528805614373,
+              "stdDiff": 0.07051266426653013
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7330000000000001,
+              "meanDiff": 0.008739341563785924,
+              "stdDiff": 0.0405752842818743
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3369,
+              "meanDiff": 0.005154465889991709,
+              "stdDiff": 0.011028571429344474
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9299
+    },
+    {
+      "word": "dark",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9298,
+              "meanDiff": 0.016823850850694762,
+              "stdDiff": 0.0726692709013732
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7242999999999999,
+              "meanDiff": 0.00911594287097544,
+              "stdDiff": 0.040579063810720295
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5151,
+              "meanDiff": 0.004929711627306127,
+              "stdDiff": 0.010068932643181375
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9298
+    },
+    {
+      "word": "dart",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9298,
+              "meanDiff": 0.01652843406033775,
+              "stdDiff": 0.07173773101632268
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7245,
+              "meanDiff": 0.009088472524812347,
+              "stdDiff": 0.04005505001828434
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5198,
+              "meanDiff": 0.004849342825290088,
+              "stdDiff": 0.009906427154714402
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9298
+    },
+    {
+      "word": "dal",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9298,
+              "meanDiff": 0.0141872666631753,
+              "stdDiff": 0.06746411974992005
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.726,
+              "meanDiff": 0.008831263616557722,
+              "stdDiff": 0.03896105962191854
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3079,
+              "meanDiff": 0.005180828909551248,
+              "stdDiff": 0.011070626342890645
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9298
+    },
+    {
+      "word": "dat",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9298,
+              "meanDiff": 0.01571628686678345,
+              "stdDiff": 0.07181979587012534
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8060999999999999,
+              "meanDiff": 0.009085766158315134,
+              "stdDiff": 0.04140668129812424
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3127,
+              "meanDiff": 0.00541167333217604,
+              "stdDiff": 0.01154453043989744
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9298
+    },
+    {
+      "word": "d^b^l",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9298,
+              "meanDiff": 0.01667661286410932,
+              "stdDiff": 0.06999893366283555
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7236,
+              "meanDiff": 0.008724115226337368,
+              "stdDiff": 0.039147309271534564
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6134000000000001,
+              "meanDiff": 0.004463603260814935,
+              "stdDiff": 0.008684343338912076
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9298
+    },
+    {
+      "word": "d^st",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9298,
+              "meanDiff": 0.016439141215709753,
+              "stdDiff": 0.07164302249248333
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7233,
+              "meanDiff": 0.00885216654563056,
+              "stdDiff": 0.03999020715305819
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5225,
+              "meanDiff": 0.004770938217054628,
+              "stdDiff": 0.009772728383055724
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9298
+    },
+    {
+      "word": "pap^",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9298,
+              "meanDiff": 0.01618665917738242,
+              "stdDiff": 0.0708840737940921
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7289000000000001,
+              "meanDiff": 0.008280426046961829,
+              "stdDiff": 0.03899308808289242
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4914,
+              "meanDiff": 0.004265447952786108,
+              "stdDiff": 0.008992613509090185
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9298
+    },
+    {
+      "word": "d^l",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9297,
+              "meanDiff": 0.014090702809259342,
+              "stdDiff": 0.0671652468965543
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7872,
+              "meanDiff": 0.008969034132171344,
+              "stdDiff": 0.03962390842435489
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4373,
+              "meanDiff": 0.005008616574782925,
+              "stdDiff": 0.011046438853138826
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9297
+    },
+    {
+      "word": "park",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9296,
+              "meanDiff": 0.01693341579307939,
+              "stdDiff": 0.07297222978635488
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7308,
+              "meanDiff": 0.00897711207939947,
+              "stdDiff": 0.0397530989428755
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.311,
+              "meanDiff": 0.004793845571615304,
+              "stdDiff": 0.009668040252151837
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9296
+    },
+    {
+      "word": "gad",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9244,
+              "meanDiff": 0.015611931440059007,
+              "stdDiff": 0.07164298128302185
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7837,
+              "meanDiff": 0.008777383200193513,
+              "stdDiff": 0.04060219711460082
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3561,
+              "meanDiff": 0.005621683185534489,
+              "stdDiff": 0.011838206026147534
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9244
+    },
+    {
+      "word": "kip",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9238,
+              "meanDiff": 0.015736424506649322,
+              "stdDiff": 0.07147441867607829
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7484999999999999,
+              "meanDiff": 0.008151825223916626,
+              "stdDiff": 0.03950036911151698
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.36110000000000003,
+              "meanDiff": 0.005004789618857374,
+              "stdDiff": 0.010489634548768207
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9238
+    },
+    {
+      "word": "ki",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9235,
+              "meanDiff": 0.012518269005031769,
+              "stdDiff": 0.06525595679972664
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7977,
+              "meanDiff": 0.007226661825223904,
+              "stdDiff": 0.039098521367780574
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.30500000000000005,
+              "meanDiff": 0.004180235662340587,
+              "stdDiff": 0.01064693067686299
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9235
+    },
+    {
+      "word": "kap",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9228,
+              "meanDiff": 0.01569066516881109,
+              "stdDiff": 0.07160003969369363
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7507,
+              "meanDiff": 0.008902442507867205,
+              "stdDiff": 0.04104631416639972
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4895,
+              "meanDiff": 0.005640319671602878,
+              "stdDiff": 0.012158926291882258
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9228
+    },
+    {
+      "word": "k^t",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9225,
+              "meanDiff": 0.015169736303437096,
+              "stdDiff": 0.07008674215474013
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7426,
+              "meanDiff": 0.008788675865407875,
+              "stdDiff": 0.04095919348481075
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3831,
+              "meanDiff": 0.005640037879177008,
+              "stdDiff": 0.011941773721956796
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9225
+    },
+    {
+      "word": "ist",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9223,
+              "meanDiff": 0.014303795670573698,
+              "stdDiff": 0.06744514511506354
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7741,
+              "meanDiff": 0.007442084241103922,
+              "stdDiff": 0.035792177140849854
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.252,
+              "meanDiff": 0.005304569367306645,
+              "stdDiff": 0.011144101006014312
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9223
+    },
+    {
+      "word": "kl^b",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9221,
+              "meanDiff": 0.016329719268224574,
+              "stdDiff": 0.07139901032355157
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7393,
+              "meanDiff": 0.008436473008956545,
+              "stdDiff": 0.03858110263979922
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.42390000000000005,
+              "meanDiff": 0.0048021058571239995,
+              "stdDiff": 0.009717981153809056
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9221
+    },
+    {
+      "word": "klak",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9219999999999999,
+              "meanDiff": 0.016516107977641758,
+              "stdDiff": 0.07147853296692172
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7386999999999999,
+              "meanDiff": 0.008202672476397839,
+              "stdDiff": 0.03834552938661557
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.45309999999999995,
+              "meanDiff": 0.004806999294241729,
+              "stdDiff": 0.00978347736253352
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9219999999999999
+    },
+    {
+      "word": "kr^S",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9219999999999999,
+              "meanDiff": 0.015285829535336047,
+              "stdDiff": 0.06932400509008581
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7398,
+              "meanDiff": 0.007765436940208154,
+              "stdDiff": 0.037926800291678255
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.48340000000000005,
+              "meanDiff": 0.004401240363995273,
+              "stdDiff": 0.009184734603777498
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9219999999999999
+    },
+    {
+      "word": "k^p",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9219999999999999,
+              "meanDiff": 0.015605905087864538,
+              "stdDiff": 0.07085537422999673
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8306,
+              "meanDiff": 0.00864551924473484,
+              "stdDiff": 0.04144088565957293
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3034,
+              "meanDiff": 0.0040794006839391965,
+              "stdDiff": 0.008672999106905796
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9219999999999999
+    },
+    {
+      "word": "lak",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9218999999999999,
+              "meanDiff": 0.01459744355388062,
+              "stdDiff": 0.06778477658457643
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.777,
+              "meanDiff": 0.00805978939724031,
+              "stdDiff": 0.037077796696891804
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.2929,
+              "meanDiff": 0.0055862893409862864,
+              "stdDiff": 0.011745500262488974
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9218999999999999
+    },
+    {
+      "word": "klu",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9218,
+              "meanDiff": 0.014189350663462389,
+              "stdDiff": 0.06750690161957294
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7451,
+              "meanDiff": 0.007824466230936787,
+              "stdDiff": 0.038237039061406554
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3017,
+              "meanDiff": 0.003552817412828106,
+              "stdDiff": 0.008359898474928885
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9218
+    },
+    {
+      "word": "krip",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9218,
+              "meanDiff": 0.016499869422569674,
+              "stdDiff": 0.07184856444178254
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7405999999999999,
+              "meanDiff": 0.008423275236020173,
+              "stdDiff": 0.039141940665020754
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5131,
+              "meanDiff": 0.004592377455243061,
+              "stdDiff": 0.009183158330550806
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9218
+    },
+    {
+      "word": "kul",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9216,
+              "meanDiff": 0.014757106380833131,
+              "stdDiff": 0.0691409614715579
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7363999999999999,
+              "meanDiff": 0.008855487775356967,
+              "stdDiff": 0.03993881494260066
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.43010000000000004,
+              "meanDiff": 0.005525373251371526,
+              "stdDiff": 0.011630856853494496
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9216
+    },
+    {
+      "word": "kapi",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9216,
+              "meanDiff": 0.01580659871983821,
+              "stdDiff": 0.06974979023701608
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7372,
+              "meanDiff": 0.00754744129750662,
+              "stdDiff": 0.03760850652927567
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4127,
+              "meanDiff": 0.003886010787552664,
+              "stdDiff": 0.00834971401517809
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9216
+    },
+    {
+      "word": "krap",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9216,
+              "meanDiff": 0.016884607966970805,
+              "stdDiff": 0.07300048787756136
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7389,
+              "meanDiff": 0.008637308157830884,
+              "stdDiff": 0.039545252440413535
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5193,
+              "meanDiff": 0.004597353401455766,
+              "stdDiff": 0.0092030199936541
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9216
+    },
+    {
+      "word": "kru",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9215,
+              "meanDiff": 0.014209035065765194,
+              "stdDiff": 0.0675323059558532
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7557999999999999,
+              "meanDiff": 0.007259220527717354,
+              "stdDiff": 0.03753168566399415
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4064,
+              "meanDiff": 0.0033421524304379046,
+              "stdDiff": 0.007175077154910893
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9215
+    },
+    {
+      "word": "kar",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9214,
+              "meanDiff": 0.014411928723737887,
+              "stdDiff": 0.06814344475443053
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8019000000000001,
+              "meanDiff": 0.008038838053739929,
+              "stdDiff": 0.03828663057846909
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3469,
+              "meanDiff": 0.004154642500367113,
+              "stdDiff": 0.009386484949621578
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9214
+    },
+    {
+      "word": "k^p^l",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9214,
+              "meanDiff": 0.01708592014404344,
+              "stdDiff": 0.0710377937094549
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7348,
+              "meanDiff": 0.008363035584604061,
+              "stdDiff": 0.038540171610601096
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4171,
+              "meanDiff": 0.004091219600342222,
+              "stdDiff": 0.007989229130540083
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9214
+    },
+    {
+      "word": "kruS^l",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9214,
+              "meanDiff": 0.016794967045207405,
+              "stdDiff": 0.06991444966457278
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7367999999999999,
+              "meanDiff": 0.007905603969983044,
+              "stdDiff": 0.03695158664813276
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.31570000000000004,
+              "meanDiff": 0.003286139153973922,
+              "stdDiff": 0.006178983254701458
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9214
+    },
+    {
+      "word": "kru^l",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9214,
+              "meanDiff": 0.016496250506886592,
+              "stdDiff": 0.07052475669257623
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7371,
+              "meanDiff": 0.008054751876059063,
+              "stdDiff": 0.036996891546128785
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3734,
+              "meanDiff": 0.004029804705746205,
+              "stdDiff": 0.007818999102081833
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9214
+    },
+    {
+      "word": "kard",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9213,
+              "meanDiff": 0.016227067168799514,
+              "stdDiff": 0.07107649157448014
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7384999999999999,
+              "meanDiff": 0.008418208666182444,
+              "stdDiff": 0.03864041610229123
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.456,
+              "meanDiff": 0.004388097892609061,
+              "stdDiff": 0.009015195566302784
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9213
+    },
+    {
+      "word": "karp^t",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9213,
+              "meanDiff": 0.01812564401061059,
+              "stdDiff": 0.0719740004193442
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7376,
+              "meanDiff": 0.008384320987654292,
+              "stdDiff": 0.03765046021062062
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.31899999999999995,
+              "meanDiff": 0.0033786357700785296,
+              "stdDiff": 0.00639725891390431
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9213
+    },
+    {
+      "word": "kalig",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9211,
+              "meanDiff": 0.016604336412478875,
+              "stdDiff": 0.07027738758484366
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7376,
+              "meanDiff": 0.008149053497942186,
+              "stdDiff": 0.03772517010438533
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5985,
+              "meanDiff": 0.004197948864818514,
+              "stdDiff": 0.008343144589192459
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9211
+    },
+    {
+      "word": "gat",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9211,
+              "meanDiff": 0.015402184892212546,
+              "stdDiff": 0.07062838612765228
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7483,
+              "meanDiff": 0.008682546598886435,
+              "stdDiff": 0.04014440567016726
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3052,
+              "meanDiff": 0.005464128318691195,
+              "stdDiff": 0.011306121888285984
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9211
+    },
+    {
+      "word": "glu",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9205,
+              "meanDiff": 0.01410012068226352,
+              "stdDiff": 0.06715190229758884
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7419,
+              "meanDiff": 0.007983224400871415,
+              "stdDiff": 0.038732393719919676
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.32220000000000004,
+              "meanDiff": 0.0035595487229837844,
+              "stdDiff": 0.008626778415252424
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9205
+    },
+    {
+      "word": "gru",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9205,
+              "meanDiff": 0.014031987784317928,
+              "stdDiff": 0.06718584035799981
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7497999999999999,
+              "meanDiff": 0.007563350278383009,
+              "stdDiff": 0.03835033526918605
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4258,
+              "meanDiff": 0.0030234061595420395,
+              "stdDiff": 0.007091001952329057
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9205
+    },
+    {
+      "word": "gard",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9205,
+              "meanDiff": 0.016349919189451327,
+              "stdDiff": 0.0712595302753368
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7323,
+              "meanDiff": 0.008799063180827809,
+              "stdDiff": 0.039370173205335736
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5074,
+              "meanDiff": 0.00477447741398885,
+              "stdDiff": 0.009782400889319193
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9205
+    },
+    {
+      "word": "grup",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9204,
+              "meanDiff": 0.01655936674796424,
+              "stdDiff": 0.07173223203959823
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7345999999999999,
+              "meanDiff": 0.008272498184458865,
+              "stdDiff": 0.03874101492419723
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4908,
+              "meanDiff": 0.004577740444118063,
+              "stdDiff": 0.009142289893442781
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9204
+    },
+    {
+      "word": "g^tar",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9203,
+              "meanDiff": 0.016922738129192868,
+              "stdDiff": 0.07067408163401162
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7315,
+              "meanDiff": 0.008676301137738957,
+              "stdDiff": 0.039623789058808055
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3196,
+              "meanDiff": 0.00398707539353767,
+              "stdDiff": 0.007656480644067478
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9203
+    },
+    {
+      "word": "grik",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9201,
+              "meanDiff": 0.016577975293121966,
+              "stdDiff": 0.07201724863487025
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7351000000000001,
+              "meanDiff": 0.008559237472766764,
+              "stdDiff": 0.0401895909264246
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5102,
+              "meanDiff": 0.004783699510060819,
+              "stdDiff": 0.009740892464977778
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9201
+    },
+    {
+      "word": "grit",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9201,
+              "meanDiff": 0.01659453476211972,
+              "stdDiff": 0.07204776554443565
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7352000000000001,
+              "meanDiff": 0.008623035584604198,
+              "stdDiff": 0.04001341193672475
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.483,
+              "meanDiff": 0.004862904149663019,
+              "stdDiff": 0.00971815532004982
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9201
+    },
+    {
+      "word": "^",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9193,
+              "meanDiff": 0.009403150544331927,
+              "stdDiff": 0.057839913678089064
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8716,
+              "meanDiff": 0.006871878479786995,
+              "stdDiff": 0.037274590969690546
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3898,
+              "meanDiff": 0.003954871275583585,
+              "stdDiff": 0.010807754094532256
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9193
+    },
+    {
+      "word": "lat",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9169999999999999,
+              "meanDiff": 0.014132360502365614,
+              "stdDiff": 0.06685614428331912
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7684000000000001,
+              "meanDiff": 0.007955986443960297,
+              "stdDiff": 0.03697655865500851
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3188,
+              "meanDiff": 0.005364144343184684,
+              "stdDiff": 0.011080702502928799
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9169999999999999
+    },
+    {
+      "word": "lip",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9141,
+              "meanDiff": 0.01412277402343546,
+              "stdDiff": 0.06689212948585621
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.762,
+              "meanDiff": 0.008507465504720365,
+              "stdDiff": 0.03809245551568725
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3903,
+              "meanDiff": 0.00539625248465128,
+              "stdDiff": 0.011303281560044228
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9141
+    },
+    {
+      "word": "ark",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9111,
+              "meanDiff": 0.014483359041373168,
+              "stdDiff": 0.0681252122762248
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7368,
+              "meanDiff": 0.007917542967804388,
+              "stdDiff": 0.03663949976502071
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.30810000000000004,
+              "meanDiff": 0.00507298321519663,
+              "stdDiff": 0.010956779445857219
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9111
+    },
+    {
+      "word": "lup",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.9093,
+              "meanDiff": 0.014356764512431897,
+              "stdDiff": 0.06734469474592436
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7123999999999999,
+              "meanDiff": 0.008071592834664637,
+              "stdDiff": 0.03732550806767059
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.27409999999999995,
+              "meanDiff": 0.004804041752330573,
+              "stdDiff": 0.009989651872295313
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.9093
+    },
+    {
+      "word": "lid",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.909,
+              "meanDiff": 0.014035620281606695,
+              "stdDiff": 0.0668033030553865
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7292,
+              "meanDiff": 0.00855898087630106,
+              "stdDiff": 0.038604947694809016
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3262,
+              "meanDiff": 0.005288860419843116,
+              "stdDiff": 0.011390916220226139
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.909
+    },
+    {
+      "word": "ar",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8997999999999999,
+              "meanDiff": 0.011639330000020045,
+              "stdDiff": 0.06204764611364025
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.855,
+              "meanDiff": 0.007641946259985523,
+              "stdDiff": 0.036951596292229515
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.26160000000000005,
+              "meanDiff": 0.004122352634324895,
+              "stdDiff": 0.010590716886438208
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8997999999999999
+    },
+    {
+      "word": "^lat",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8932,
+              "meanDiff": 0.01440746677842533,
+              "stdDiff": 0.06584739638901838
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7311,
+              "meanDiff": 0.007163122730573794,
+              "stdDiff": 0.03386336904085874
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3706999999999999,
+              "meanDiff": 0.004704266095241344,
+              "stdDiff": 0.009635638407492599
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8932
+    },
+    {
+      "word": "lus",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8899,
+              "meanDiff": 0.013089955238911235,
+              "stdDiff": 0.0644386594193284
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6797,
+              "meanDiff": 0.007477325102880621,
+              "stdDiff": 0.03602999663780251
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.28830000000000006,
+              "meanDiff": 0.004213203500841293,
+              "stdDiff": 0.009184721874862349
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8899
+    },
+    {
+      "word": "lig",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8885,
+              "meanDiff": 0.013805610367034468,
+              "stdDiff": 0.06548466443812101
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8089999999999999,
+              "meanDiff": 0.008009455337690595,
+              "stdDiff": 0.03872364805368328
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4627,
+              "meanDiff": 0.0034132885670342438,
+              "stdDiff": 0.007722369196781555
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8885
+    },
+    {
+      "word": "lig^l",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8884,
+              "meanDiff": 0.015507539537024316,
+              "stdDiff": 0.0664811185379772
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6780999999999999,
+              "meanDiff": 0.00830377874606624,
+              "stdDiff": 0.03677232674890299
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4707,
+              "meanDiff": 0.004154852182570475,
+              "stdDiff": 0.008070076905361259
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8884
+    },
+    {
+      "word": "l^k",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8882,
+              "meanDiff": 0.013912043003243753,
+              "stdDiff": 0.06565172199905595
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8294,
+              "meanDiff": 0.00796992737835863,
+              "stdDiff": 0.038481939128509134
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4611,
+              "meanDiff": 0.003748465569499903,
+              "stdDiff": 0.007952174016027477
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8882
+    },
+    {
+      "word": "list",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8881,
+              "meanDiff": 0.01523272642961121,
+              "stdDiff": 0.06808767454226007
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6768000000000001,
+              "meanDiff": 0.008056584362139916,
+              "stdDiff": 0.036527828119972065
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.47590000000000005,
+              "meanDiff": 0.004533572848371611,
+              "stdDiff": 0.009212485921084833
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8881
+    },
+    {
+      "word": "l^ki",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8881,
+              "meanDiff": 0.014273393829684206,
+              "stdDiff": 0.06482650224979387
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6834,
+              "meanDiff": 0.007484446865165806,
+              "stdDiff": 0.03582590497629748
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3921,
+              "meanDiff": 0.004047086099263544,
+              "stdDiff": 0.008573799894882788
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8881
+    },
+    {
+      "word": "l^kS^ri",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8881,
+              "meanDiff": 0.016182760674658802,
+              "stdDiff": 0.06591920920331867
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6796,
+              "meanDiff": 0.007739777293633476,
+              "stdDiff": 0.03447856307182601
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3802,
+              "meanDiff": 0.002202681375105649,
+              "stdDiff": 0.004312415333888224
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8881
+    },
+    {
+      "word": "labi",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.887,
+              "meanDiff": 0.014195481788039267,
+              "stdDiff": 0.06461619106912034
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6775,
+              "meanDiff": 0.007420111353183179,
+              "stdDiff": 0.035767356759003666
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5084000000000001,
+              "meanDiff": 0.004000574324669522,
+              "stdDiff": 0.008957760892853458
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.887
+    },
+    {
+      "word": "art",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8816999999999999,
+              "meanDiff": 0.013890188648495658,
+              "stdDiff": 0.06609549305075457
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8256,
+              "meanDiff": 0.007678792060033953,
+              "stdDiff": 0.03731459156143179
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.4353,
+              "meanDiff": 0.003363211001666167,
+              "stdDiff": 0.007803304863643286
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8816999999999999
+    },
+    {
+      "word": "sis",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8789,
+              "meanDiff": 0.012503587872016069,
+              "stdDiff": 0.06285315961405552
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7105,
+              "meanDiff": 0.00619884531590429,
+              "stdDiff": 0.03214555538383018
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.24229999999999996,
+              "meanDiff": 0.004202991807051834,
+              "stdDiff": 0.009056630747197092
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8789
+    },
+    {
+      "word": "^pil",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8648,
+              "meanDiff": 0.014399140866469283,
+              "stdDiff": 0.06533613929947064
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7291000000000001,
+              "meanDiff": 0.0074198184458968384,
+              "stdDiff": 0.03593047280414631
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5265000000000001,
+              "meanDiff": 0.0048866839867593055,
+              "stdDiff": 0.010257083880964716
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8648
+    },
+    {
+      "word": "^part",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8647,
+              "meanDiff": 0.016490019848546433,
+              "stdDiff": 0.06922190171044813
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7293,
+              "meanDiff": 0.007866027596223669,
+              "stdDiff": 0.03679211861042894
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5614,
+              "meanDiff": 0.004520183531595034,
+              "stdDiff": 0.009046690688131076
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8647
+    },
+    {
+      "word": "^slip",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8643,
+              "meanDiff": 0.015038157519457997,
+              "stdDiff": 0.06615571670601485
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7292,
+              "meanDiff": 0.007547586540789186,
+              "stdDiff": 0.03622677789040954
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6088,
+              "meanDiff": 0.004554142502072757,
+              "stdDiff": 0.009073039718950793
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8643
+    },
+    {
+      "word": "^dapt",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8637,
+              "meanDiff": 0.016010735094674954,
+              "stdDiff": 0.0674882967886276
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7278,
+              "meanDiff": 0.00796192447349306,
+              "stdDiff": 0.03748654872477397
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.6526,
+              "meanDiff": 0.004927510816534279,
+              "stdDiff": 0.00967740544417728
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8637
+    },
+    {
+      "word": "^gri",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8635999999999999,
+              "meanDiff": 0.014542730639908486,
+              "stdDiff": 0.06594293564293821
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7276,
+              "meanDiff": 0.007313570564028027,
+              "stdDiff": 0.036348395414998465
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5646,
+              "meanDiff": 0.004479548825269145,
+              "stdDiff": 0.009998290200887465
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8635999999999999
+    },
+    {
+      "word": "^d^lt",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8634,
+              "meanDiff": 0.015902743096181095,
+              "stdDiff": 0.06730796686790322
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7283,
+              "meanDiff": 0.007775001210360676,
+              "stdDiff": 0.036974632832528005
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.634,
+              "meanDiff": 0.004652039202049251,
+              "stdDiff": 0.009238482683963168
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8634
+    },
+    {
+      "word": "^br^pt",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.863,
+              "meanDiff": 0.016445571911689057,
+              "stdDiff": 0.06724143182005685
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.728,
+              "meanDiff": 0.007553761801016699,
+              "stdDiff": 0.03485016886503718
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.5275,
+              "meanDiff": 0.0036669061817033396,
+              "stdDiff": 0.0072384977112544885
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.863
+    },
+    {
+      "word": "art^st",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0,
+              "stdDiff": 0
+            }
+          }
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.8569,
+              "meanDiff": 0.01666101827114084,
+              "stdDiff": 0.06825325169681551
+            }
+          }
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.7008000000000001,
+              "meanDiff": 0.007939648995400709,
+              "stdDiff": 0.03568350893884801
+            }
+          }
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "MEASURED",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0.3644,
+              "meanDiff": 0.003266705364113109,
+              "stdDiff": 0.006422832468028919
+            }
+          }
+        }
+      ],
+      "maxDiff": 0.8569
+    }
+  ],
+  "summary": {
+    "maxDiffAcrossAll": 0.9445,
+    "meanDiffAcrossAll": 0.009352354965263238,
+    "wordsMostAffected": [
+      {
+        "word": "it",
+        "maxDiff": 0.9445
+      },
+      {
+        "word": "ad",
+        "maxDiff": 0.938
+      },
+      {
+        "word": "but",
+        "maxDiff": 0.9315
+      },
+      {
+        "word": "bi",
+        "maxDiff": 0.9314
+      },
+      {
+        "word": "b^k",
+        "maxDiff": 0.9310999999999999
+      },
+      {
+        "word": "b^s",
+        "maxDiff": 0.9310999999999999
+      },
+      {
+        "word": "b^t",
+        "maxDiff": 0.9310999999999999
+      },
+      {
+        "word": "du",
+        "maxDiff": 0.9310999999999999
+      },
+      {
+        "word": "bit",
+        "maxDiff": 0.9309999999999999
+      },
+      {
+        "word": "blu",
+        "maxDiff": 0.9309999999999999
+      }
+    ]
+  }
+}

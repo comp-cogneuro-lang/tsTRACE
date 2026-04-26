@@ -2,11 +2,13 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as zlib from 'zlib';
 import { Writable } from 'stream';
 import TraceSimBase from './trace-sim-base';
 
-function writeFile(filepath: string, data: any[][][]) {
+function writeFile(filepath: string, data: any[][][], headers?: string) {
   const numRows = data[0]?.length || 0;
+  const numCols = data[0]?.[0]?.length || 0;
   const allCycles: any[][] = [];
   for (let row = 0; row < numRows; row++) {
     for (let cycle = 0; cycle < data.length; cycle++) {
@@ -18,7 +20,13 @@ function writeFile(filepath: string, data: any[][][]) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  fs.writeFileSync(filepath, allCycles.map((row) => row.join(', ')).join('\n'));
+
+  const csvContent = allCycles.map((row) => row.join(', ')).join('\n');
+  const fileContent = headers ? `${headers}\n${csvContent}` : csvContent;
+
+  // Write as gzip compressed file with .gz extension
+  const gzPath = filepath + '.gz';
+  fs.writeFileSync(gzPath, zlib.gzipSync(fileContent));
 }
 
 function write(stream: Writable, data: any) {
@@ -36,10 +44,19 @@ export default class TraceSim extends TraceSimBase {
     const prefixUnderscore = prefix ? `${prefix}_` : '';
 
     const { input, feature, phoneme, word } = this.getSimData();
-    writeFile(path.join(dir, `${prefixUnderscore}input.csv`), input);
-    writeFile(path.join(dir, `${prefixUnderscore}feature.csv`), feature);
-    writeFile(path.join(dir, `${prefixUnderscore}phoneme.csv`), phoneme);
-    writeFile(path.join(dir, `${prefixUnderscore}word.csv`), word);
+
+    const numTimeSlices = feature[0]?.[0]?.length - 1 || 0; // -1 to exclude the index column
+    const timeHeaders = Array.from({ length: numTimeSlices }, (_, i) => `t${i}`).join(', ');
+
+    const inputHeader = `cycle, input, feature_index, ${timeHeaders}`;
+    const featureHeader = `cycle, input, feature_index, ${timeHeaders}`;
+    const phonemeHeader = `cycle, input, phoneme, ${timeHeaders}`;
+    const wordHeader = `cycle, input, word, ${timeHeaders}`;
+
+    writeFile(path.join(dir, `${prefixUnderscore}input.csv`), input, inputHeader);
+    writeFile(path.join(dir, `${prefixUnderscore}feature.csv`), feature, featureHeader);
+    writeFile(path.join(dir, `${prefixUnderscore}phoneme.csv`), phoneme, phonemeHeader);
+    writeFile(path.join(dir, `${prefixUnderscore}word.csv`), word, wordHeader);
   }
 
   async appendInputData(file: Writable, prefix?: string[]) {

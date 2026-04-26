@@ -1,0 +1,354 @@
+{
+  "timestamp": "2026-04-25T20:07:29.601Z",
+  "status": "PASS",
+  "testCount": 5,
+  "passCount": 5,
+  "failCount": 0,
+  "tests": [
+    {
+      "word": "^",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        }
+      ]
+    },
+    {
+      "word": "^br^pt",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        }
+      ]
+    },
+    {
+      "word": "^dapt",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        }
+      ]
+    },
+    {
+      "word": "^d^lt",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        }
+      ]
+    },
+    {
+      "word": "^gri",
+      "files": [
+        {
+          "file": "input.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "feature.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 5104,
+              "current": 5104,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "phoneme.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 1216,
+              "current": 1216,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        },
+        {
+          "file": "word.csv.gz",
+          "status": "PASS",
+          "stats": {
+            "rowCount": {
+              "baseline": 17254,
+              "current": 17254,
+              "match": true
+            },
+            "valueDiff": {
+              "maxDiff": 0,
+              "meanDiff": 0
+            }
+          },
+          "errors": []
+        }
+      ]
+    }
+  ]
+}
