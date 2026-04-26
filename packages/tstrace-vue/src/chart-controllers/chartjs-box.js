@@ -59,6 +59,7 @@ Chart.controllers.box = Chart.DatasetController.extend({
       borderSkipped: options.borderSkipped,
       borderWidth: options.borderWidth,
       word: value.word,
+      slice: value.x,
     };
 
     item.pivot();
@@ -69,7 +70,17 @@ Chart.controllers.box = Chart.DatasetController.extend({
     const ctx = this.chart.ctx;
 
     for (const dataElement of data) {
-      const { word, getPixelForCharacterAtIndex, y, height, borderColor } = dataElement._model;
+      const {
+        word,
+        getPixelForCharacterAtIndex,
+        y,
+        height,
+        borderColor,
+        slice,
+        x: boxCenterX,
+        width: boxWidth,
+        base: boxTop,
+      } = dataElement._model;
       if (!word.length) continue;
 
       ctx.save();
@@ -92,6 +103,13 @@ Chart.controllers.box = Chart.DatasetController.extend({
         const x = getPixelForCharacterAtIndex(i) + desiredWidth / 2;
         ctx.fillText(word[i], x, y - height / 2);
       }
+
+      // Slice number in tiny font at the top-left of the bounding box
+      ctx.font = '9px sans-serif';
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'left';
+      ctx.fillText(String(slice), boxCenterX - boxWidth / 2 + 2, boxTop + 2);
+
       ctx.restore();
 
       dataElement.draw();
