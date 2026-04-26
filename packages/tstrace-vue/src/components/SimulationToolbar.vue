@@ -65,7 +65,7 @@
 <script lang="ts">
 import JSZip from '@progress/jszip-esm';
 import FileSaver from 'file-saver';
-import { getAnalysisData } from 'tracejs';
+import { getAnalysisData } from 'tstrace';
 import { computed, defineComponent, effect, ref } from 'vue';
 import { MAXIMUM_NUM_CYCLES } from '../constants';
 import { getStore } from '../store';
@@ -148,7 +148,7 @@ export default defineComponent({
             .map((row) => row.join(','))
             .join('\n')
         );
-        FileSaver.saveAs(await zip.generateAsync({ type: 'blob' }), 'tracejs-sim.zip');
+        FileSaver.saveAs(await zip.generateAsync({ type: 'blob' }), 'tstrace-sim.zip');
       },
     };
   },

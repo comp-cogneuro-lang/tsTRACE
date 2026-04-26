@@ -6,6 +6,6 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "tracejs": "*"
+    "tstrace": "*"
   }
 }

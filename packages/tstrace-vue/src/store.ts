@@ -9,8 +9,8 @@ import {
   TraceCompetitionType,
   TraceDomain,
   TraceSim,
-} from 'tracejs';
-import TraceConfig from 'tracejs/dist/esm/trace-param';
+} from 'tstrace';
+import TraceConfig from 'tstrace/dist/esm/trace-param';
 import { computed, inject, provide, reactive, ref } from 'vue';
 
 // format data as tab separated values with header

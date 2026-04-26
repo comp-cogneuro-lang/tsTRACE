@@ -2,7 +2,7 @@
 
 const repl = require('repl')
 const fs = require('fs')
-const tracejs = require('../')
+const tstrace = require('../')
 
 if (process.argv.length > 2) {
   let contents
@@ -13,11 +13,11 @@ if (process.argv.length > 2) {
     process.exit(1)
   }
 
-  // patch require function to return 'tracejs' package
+  // patch require function to return 'tstrace' package
   const oldRequire = require
   require = function() {
-    if (arguments[0] == 'tracejs') {
-      return tracejs
+    if (arguments[0] == 'tstrace') {
+      return tstrace
     }
     return oldRequire.apply(this, arguments)
   }
@@ -25,9 +25,9 @@ if (process.argv.length > 2) {
   eval(contents)
 } else {
   const r = repl.start('> ')
-  Object.defineProperty(r.context, 'tracejs', {
+  Object.defineProperty(r.context, 'tstrace', {
     configurable: false,
     enumerable: true,
-    value: tracejs
+    value: tstrace
   })
 }

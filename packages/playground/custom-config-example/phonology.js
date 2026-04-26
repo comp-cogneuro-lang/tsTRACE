@@ -1,4 +1,4 @@
-const { TracePhoneRole } = require('tracejs');
+const { TracePhoneRole } = require('tstrace');
 
 module.exports = [
   {

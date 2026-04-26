@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import FileSaver from 'file-saver';
-import { parseJsonLexicon, parseJtLexicon, serializeJtLexicon } from 'tracejs';
+import { parseJsonLexicon, parseJtLexicon, serializeJtLexicon } from 'tstrace';
 import { computed, defineComponent, ref } from 'vue';
 import FileUpload from '../../components/FileUpload.vue';
 import { getStore } from '../../store';
