@@ -118,3 +118,8 @@ dist
 .DS_Store
 
 CLAUDE_STUFF
+
+# Test artifacts (generated during CI/regression tests)
+packages/tstrace/baseline_data/regression_results.json
+packages/tstrace/baseline_data/pf_modification_results.json
+packages/tstrace/temp_test_output/
