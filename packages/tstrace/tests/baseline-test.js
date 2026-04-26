@@ -4,9 +4,17 @@ const { TraceSim, createDefaultConfig } = require('../dist/common/index.js');
 
 const BASELINE_DIR = path.join(__dirname, '../baseline_data');
 const REPORT_FILE = path.join(BASELINE_DIR, 'baseline_report.json');
+const DEBUG = process.env.DEBUG === '1' || process.env.DEBUG === 'true';
+
+const log = {
+  info: (msg) => console.log(`ℹ️  ${msg}`),
+  debug: (msg) => DEBUG && console.log(`🔍 ${msg}`),
+  success: (msg) => console.log(`✓ ${msg}`),
+  error: (msg) => console.error(`✗ ${msg}`),
+};
 
 async function createBaseline() {
-  console.log('Creating baseline test data...\n');
+  log.info('Creating baseline test data (DEBUG: ' + (DEBUG ? 'ON' : 'OFF') + ')\n');
 
   if (!fs.existsSync(BASELINE_DIR)) {
     fs.mkdirSync(BASELINE_DIR, { recursive: true });
@@ -30,7 +38,7 @@ async function createBaseline() {
   const words = config.lexicon.slice(0, numWords);
 
   for (const word of words) {
-    console.log(`Simulating: ${word.phon}`);
+    log.debug(`Simulating: ${word.phon}`);
 
     const simConfig = JSON.parse(JSON.stringify(config));
     simConfig.modelInput = word.phon;
@@ -48,12 +56,12 @@ async function createBaseline() {
     });
 
     reportData.simulationCount++;
-    console.log(`  ✓ Saved to ${wordDir}\n`);
+    log.debug(`  Saved to ${wordDir}`);
   }
 
   fs.writeFileSync(REPORT_FILE, JSON.stringify(reportData, null, 2));
-  console.log(`\n✓ Baseline created: ${reportData.simulationCount} simulations`);
-  console.log(`  Report: ${REPORT_FILE}`);
+  log.success(`Baseline created: ${reportData.simulationCount} simulations`);
+  log.info(`Report: ${REPORT_FILE}`);
 }
 
 function hashConfig(config) {
@@ -72,4 +80,8 @@ function hashSum(str) {
   return Math.abs(hash).toString(16);
 }
 
-createBaseline().catch(console.error);
+createBaseline().catch((err) => {
+  log.error(err.message);
+  if (DEBUG) console.error(err.stack);
+  process.exit(1);
+});
