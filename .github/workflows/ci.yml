@@ -4,9 +4,34 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build tstrace library
+        run: yarn workspace tstrace build
+
+      - name: Run regression tests
+        run: yarn workspace tstrace test:regression
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-results
+          path: packages/tstrace/baseline_data/regression_results.json
+
   build-and-deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     permissions:
@@ -24,4 +49,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./packages/tracejs-vue/dist
+          publish_dir: ./packages/tstrace-vue/dist
