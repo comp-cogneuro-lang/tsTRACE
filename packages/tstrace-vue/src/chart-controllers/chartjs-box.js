@@ -77,8 +77,6 @@ Chart.controllers.box = Chart.DatasetController.extend({
         height,
         borderColor,
         slice,
-        x: boxCenterX,
-        width: boxWidth,
         base: boxTop,
       } = dataElement._model;
       if (!word.length) continue;
@@ -104,11 +102,11 @@ Chart.controllers.box = Chart.DatasetController.extend({
         ctx.fillText(word[i], x, y - height / 2);
       }
 
-      // Slice number in tiny font at the top-left of the bounding box
+      // Slice number in tiny font, just above the first phoneme/letter
       ctx.font = '9px sans-serif';
       ctx.textBaseline = 'top';
       ctx.textAlign = 'left';
-      ctx.fillText(String(slice), boxCenterX - boxWidth / 2 + 2, boxTop + 2);
+      ctx.fillText(String(slice), getPixelForCharacterAtIndex(0), boxTop + 2);
 
       ctx.restore();
 
