@@ -27,7 +27,10 @@ export default defineComponent({
 
         const rawData = store.sim.value?.wordLayer[store.currentCycle.value] || [];
         const { min, max } = store.config;
-        const threshold = (max - min) * 0.01;
+        // Threshold expressed in the displayed (rescaled) activation space.
+        // A word's local-max activation must exceed this on the chart's Y axis.
+        const displayedThreshold = 0.05;
+        const threshold = min + (max - min) * displayedThreshold;
 
         // associate each word with corresponding row in an array [word, row]
         const data = rawData.map((row, index): [string, number[]] => [
@@ -36,8 +39,8 @@ export default defineComponent({
         ]);
         // sort associated array descending by max value of row
         data.sort((a, b) => Math.max(...b[1]) - Math.max(...a[1]));
-        // take top 10 values
-        const topData = data.slice(0, 10);
+        // take top 15 values
+        const topData = data.slice(0, 15);
 
         const chartData = [];
         for (const [word, row] of topData) {
