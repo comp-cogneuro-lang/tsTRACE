@@ -94,7 +94,7 @@ import {
   parseJsonPhonology,
   parseJtPhonology,
   serializeJtPhonology,
-} from 'tracejs';
+} from 'tstrace';
 import { defineComponent, ref, watch } from 'vue';
 import FileUpload from '../../components/FileUpload.vue';
 import { CONTINUA, NUM_FEATURES } from '../../constants';

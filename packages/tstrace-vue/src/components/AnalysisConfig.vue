@@ -143,7 +143,7 @@ import {
   TraceContentType,
   TraceDomain,
   TraceWord,
-} from 'tracejs';
+} from 'tstrace';
 import { computed, defineComponent, ref, watchEffect } from 'vue';
 import { getStore } from '../store';
 

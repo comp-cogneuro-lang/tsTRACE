@@ -1,5 +1,5 @@
 {
-  "name": "tracejs-vue",
+  "name": "tstrace-vue",
   "version": "0.0.0",
   "scripts": {
     "build": "vite build",
@@ -13,7 +13,7 @@
     "chart.js": "~2.8.0",
     "file-saver": "^2.0.5",
     "hash-sum": "^2.0.0",
-    "tracejs": "*",
+    "tstrace": "*",
     "vue": "^3.3.4"
   },
   "devDependencies": {

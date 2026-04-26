@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { TraceNet } from 'tracejs';
+import { TraceNet } from 'tstrace';
 import { computed, defineComponent } from 'vue';
 import { CONTINUA, NUM_FEATURES } from '../../constants';
 import { getStore } from '../../store';
