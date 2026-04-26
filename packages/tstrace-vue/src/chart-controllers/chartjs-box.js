@@ -98,14 +98,18 @@ Chart.controllers.box = Chart.DatasetController.extend({
       ctx.font = `bold ${Math.round(fontSize)}px monospace`;
 
       for (let i = 0; i < word.length; i++) {
-        const x = getPixelForCharacterAtIndex(i) + desiredWidth / 2;
+        // Center each letter on its slice position (slice + i * characterWidth),
+        // not on the cell that follows the slice. Previously letters were drawn
+        // at slice + characterWidth/2, which made e.g. slice 2 appear at scale 3.5
+        // for characterWidth ≈ 3.
+        const x = getPixelForCharacterAtIndex(i);
         ctx.fillText(word[i], x, y - height / 2);
       }
 
-      // Slice number in tiny font, just above the first phoneme/letter
+      // Slice number in tiny font, centered directly above the first letter
       ctx.font = '9px sans-serif';
       ctx.textBaseline = 'top';
-      ctx.textAlign = 'left';
+      ctx.textAlign = 'center';
       ctx.fillText(String(slice), getPixelForCharacterAtIndex(0), boxTop + 2);
 
       ctx.restore();
