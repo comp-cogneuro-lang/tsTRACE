@@ -34,8 +34,13 @@ Chart.controllers.box = Chart.DatasetController.extend({
     const x = getPixelForCharacterAtIndex(0);
     const y = yScale.getPixelForValue(value);
 
-    const width = getPixelForCharacterAtIndex(value.word.length) - x;
-    const halfWidth = width / 2;
+    // Letters are centered on slice positions value.x, value.x + cw, ...,
+    // value.x + (wordlen-1)*cw. Build a tight box around those centers
+    // with one cell-width's worth of letter padding (half on each side)
+    // plus a small visual margin.
+    const cellWidthPx = getPixelForCharacterAtIndex(1) - x;
+    const lastIdx = Math.max(0, value.word.length - 1);
+    const wordSpanPx = getPixelForCharacterAtIndex(lastIdx) - x;
 
     const height = options.height;
     const halfHeight = height / 2;
@@ -46,13 +51,13 @@ Chart.controllers.box = Chart.DatasetController.extend({
     item._datasetIndex = datasetIndex;
     item._index = index;
 
-    const xPadding = 15;
+    const xPadding = 4;
     item._model = {
       getPixelForCharacterAtIndex,
-      x: x + halfWidth,
+      x: x + wordSpanPx / 2,
       base: y - halfHeight,
       y: y + halfHeight,
-      width: width + xPadding * 2,
+      width: wordSpanPx + cellWidthPx + xPadding * 2,
       height: height,
       backgroundColor: options.backgroundColor,
       borderColor: options.borderColor,
@@ -87,13 +92,14 @@ Chart.controllers.box = Chart.DatasetController.extend({
 
       // Pick a font size that naturally fills the per-character tick width
       // (no horizontal-only scaling, which would distort the glyph aspect ratio).
-      // Cap the size at the box height so letters don't overflow the row vertically.
+      // Cap below the box height so there's vertical breathing room above
+      // and below the text.
       const baseFontSize = 16;
       ctx.font = `bold ${baseFontSize}px monospace`;
       const referenceWidth = ctx.measureText('m').width;
       const desiredWidth = getPixelForCharacterAtIndex(1) - getPixelForCharacterAtIndex(0);
       const widthBasedSize = (baseFontSize * desiredWidth) / referenceWidth;
-      const fontSize = Math.max(8, Math.min(widthBasedSize, height));
+      const fontSize = Math.max(8, Math.min(widthBasedSize, height - 14));
       ctx.font = `bold ${Math.round(fontSize)}px monospace`;
 
       for (let i = 0; i < word.length; i++) {
