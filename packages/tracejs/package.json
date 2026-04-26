@@ -25,7 +25,12 @@
     "build:esm": "tsc --outDir dist/esm --allowSyntheticDefaultImports --module esnext -p .",
     "build": "yarn build:common && yarn build:esm",
     "lint": "prettier --parser=typescript --write src/**/*.ts",
-    "test": "jest"
+    "test": "jest",
+    "test:baseline": "node tests/baseline-test.js",
+    "test:regression": "node tests/regression-test.js",
+    "test:quick": "node tests/quick-compare.js",
+    "test:all-words": "node tests/test-all-words.js",
+    "test:pf-modified": "node tests/test-with-modified-pf.js"
   },
   "dependencies": {
     "fast-xml-parser": "^4.2.4",

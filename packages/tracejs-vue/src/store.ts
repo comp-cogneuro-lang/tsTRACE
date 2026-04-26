@@ -13,9 +13,12 @@ import {
 import TraceConfig from 'tracejs/dist/esm/trace-param';
 import { computed, inject, provide, reactive, ref } from 'vue';
 
-// format data as tab separated values
-const formatData = (data?: (string | number)[][]) =>
-  data ? data.map((row) => row.join('\t')).join('\n') : '';
+// format data as tab separated values with header
+const formatData = (data?: (string | number)[][], header?: string) => {
+  if (!data) return '';
+  const dataRows = data.map((row) => row.join('\t')).join('\n');
+  return header ? `${header}\n${dataRows}` : dataRows;
+};
 
 // colors for analysis chart
 const chartColors = [
@@ -65,25 +68,45 @@ class Store {
   readonly cyclesToCalculate = ref(81);
   readonly calculatedCycles = computed(() => this.sim.value?.getStepsRun() || 0);
   readonly currentCycle = ref(0);
-  readonly formattedInputData = computed(() =>
-    formatData(this.sim.value?.getInputData(this.currentCycle.value))
-  );
-  readonly formattedFeatureData = computed(() =>
-    formatData(this.sim.value?.getFeatureData(this.currentCycle.value))
-  );
-  readonly formattedPhonemeData = computed(() =>
-    formatData(this.sim.value?.getPhonemeData(this.currentCycle.value))
-  );
-  readonly formattedWordData = computed(() =>
-    formatData(this.sim.value?.getWordData(this.currentCycle.value))
-  );
-  readonly formattedLevelsAndFlowData = computed(() =>
-    formatData(
-      this.sim.value
-        ?.getAllLevelsAndFlowData()
-        .map(([data], index) => [index, ...data.map((num) => num.toFixed(13).padEnd(18, ' '))])
-    )
-  );
+  readonly formattedInputData = computed(() => {
+    const data = this.sim.value?.getInputData(this.currentCycle.value);
+    if (!data) return '';
+    const numTimeSlices = data[0]?.length - 1 || 0;
+    const timeHeaders = Array.from({ length: numTimeSlices }, (_, i) => `t${i}`).join('\t');
+    const header = `feature_index\t${timeHeaders}`;
+    return formatData(data, header);
+  });
+  readonly formattedFeatureData = computed(() => {
+    const data = this.sim.value?.getFeatureData(this.currentCycle.value);
+    if (!data) return '';
+    const numTimeSlices = data[0]?.length - 1 || 0;
+    const timeHeaders = Array.from({ length: numTimeSlices }, (_, i) => `t${i}`).join('\t');
+    const header = `feature_index\t${timeHeaders}`;
+    return formatData(data, header);
+  });
+  readonly formattedPhonemeData = computed(() => {
+    const data = this.sim.value?.getPhonemeData(this.currentCycle.value);
+    if (!data) return '';
+    const numTimeSlices = data[0]?.length - 1 || 0;
+    const timeHeaders = Array.from({ length: numTimeSlices }, (_, i) => `t${i}`).join('\t');
+    const header = `phoneme\t${timeHeaders}`;
+    return formatData(data, header);
+  });
+  readonly formattedWordData = computed(() => {
+    const data = this.sim.value?.getWordData(this.currentCycle.value);
+    if (!data) return '';
+    const numTimeSlices = data[0]?.length - 1 || 0;
+    const timeHeaders = Array.from({ length: numTimeSlices }, (_, i) => `t${i}`).join('\t');
+    const header = `word\t${timeHeaders}`;
+    return formatData(data, header);
+  });
+  readonly formattedLevelsAndFlowData = computed(() => {
+    const data = this.sim.value
+      ?.getAllLevelsAndFlowData()
+      .map(([flowData], index) => [index, ...flowData.map((num) => num.toFixed(13).padEnd(18, ' '))]);
+    const header = 'cycle\tfeature_sum_all\tfeature_sum_pos\tfeature_competition\tphon_sum_all\tphon_sum_pos\tphon_competition\tword_sum_all\tword_sum_pos\tlexical_competition\tfeat_to_phon\tphon_to_feat\tphon_to_word\tword_to_phon';
+    return formatData(data, header);
+  });
   readonly analysisData = ref<any[]>([]);
   readonly formattedAnalysisData = computed(() => formatAnalysis(this.analysisData.value, true));
   readonly useBoxChart = ref(false);

@@ -1,0 +1,1023 @@
+{
+  "timestamp": "2026-04-25T20:09:06.645Z",
+  "configHash": "50bbb2ce",
+  "simulationCount": 100,
+  "parameters": {
+    "modelInput": "-^br^pt-",
+    "cycles": 81,
+    "alpha": {
+      "IF": 1,
+      "FP": 0.02,
+      "PW": 0.05,
+      "WP": 0.03,
+      "PF": 0
+    },
+    "gamma": {
+      "F": 0.04,
+      "P": 0.04,
+      "W": 0.03
+    }
+  },
+  "outputs": [
+    {
+      "word": "^",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "^br^pt",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "^dapt",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "^d^lt",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "^gri",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "^lat",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "^part",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "^pil",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "ark",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "ar",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "art",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "art^st",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "^slip",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "bar",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "bark",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "bi",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "bit",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "bist",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "blak",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "bl^d",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "blu",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "bab",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "babi",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "badi",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "bust",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "but",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "bat^l",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "baks",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "brid",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "brud",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "br^S",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "b^b^l",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "b^k",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "b^s",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "b^t",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kar",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kard",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "karp^t",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "sis",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "klak",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kl^b",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "klu",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kalig",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kul",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kap",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kapi",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "k^p^l",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "krip",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kru",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "krap",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kruS^l",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kru^l",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kr^S",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "k^p",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "k^t",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "dark",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "dart",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "dil",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "did",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "dip",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "du",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "dal",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "dat",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "d^b^l",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "dru",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "drap",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "dr^g",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "d^k",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "d^l",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "d^st",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "duti",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "ist",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "it",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "glu",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "gad",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "gat",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "grik",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "grit",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "gru",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "grup",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "gard",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "g^tar",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "kip",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "ki",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "lid",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "lig",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "lip",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "list",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "lig^l",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "labi",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "lak",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "lup",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "lus",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "lat",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "l^k",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "l^ki",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "l^kS^ri",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "ad",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "pap^",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    },
+    {
+      "word": "park",
+      "cycles": 81,
+      "files": [
+        "input.csv.gz",
+        "feature.csv.gz",
+        "phoneme.csv.gz",
+        "word.csv.gz"
+      ]
+    }
+  ]
+}
