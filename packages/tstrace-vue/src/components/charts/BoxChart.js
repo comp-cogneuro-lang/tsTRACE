@@ -137,7 +137,9 @@ export default defineComponent({
             borderWidth: () => this.borderWidth,
             height: (ctx) => {
               const { bottom, top } = ctx.chart.chartArea;
-              return (bottom - top) / this.options.scales.yAxes[0].ticks.max / 10;
+              // /8 (vs the old /10) makes each row ~25% taller, which leaves
+              // visible padding above and below each letter.
+              return (bottom - top) / this.options.scales.yAxes[0].ticks.max / 8;
             },
           },
         ],
