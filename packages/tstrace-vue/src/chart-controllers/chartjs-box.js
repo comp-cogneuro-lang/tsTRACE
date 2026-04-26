@@ -77,7 +77,6 @@ Chart.controllers.box = Chart.DatasetController.extend({
         height,
         borderColor,
         slice,
-        base: boxTop,
       } = dataElement._model;
       if (!word.length) continue;
 
@@ -106,11 +105,13 @@ Chart.controllers.box = Chart.DatasetController.extend({
         ctx.fillText(word[i], x, y - height / 2);
       }
 
-      // Slice number in tiny font, centered directly above the first letter
+      // Slice number in tiny font, centered just below the bottom of the
+      // letter's bounding box. Putting it inside the box at the top tended to
+      // overlap with tall letters when the font filled the row vertically.
       ctx.font = '9px sans-serif';
       ctx.textBaseline = 'top';
       ctx.textAlign = 'center';
-      ctx.fillText(String(slice), getPixelForCharacterAtIndex(0), boxTop + 2);
+      ctx.fillText(String(slice), getPixelForCharacterAtIndex(0), y + 2);
 
       ctx.restore();
 
