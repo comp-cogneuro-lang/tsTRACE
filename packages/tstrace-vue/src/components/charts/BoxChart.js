@@ -73,8 +73,11 @@ export default defineComponent({
             {
               ticks: {
                 display: true,
-                min: 0,
-                max: 1,
+                // Y axis runs in raw activation units (matches the threshold
+                // input value on the chart's toolbar). Falls back to 0..1 if
+                // simConfig isn't supplied.
+                min: this.simConfig ? this.simConfig.min : 0,
+                max: this.simConfig ? this.simConfig.max : 1,
                 stepSize: 0.1,
               },
               gridLines: {

@@ -110,6 +110,15 @@ class Store {
   readonly analysisData = ref<any[]>([]);
   readonly formattedAnalysisData = computed(() => formatAnalysis(this.analysisData.value, true));
   readonly useBoxChart = ref(false);
+  // Session-local display settings for the word/phoneme box charts.
+  // Threshold is in raw activation units (same scale as the chart's Y axis);
+  // top-N is the maximum number of words/phonemes whose peaks are plotted.
+  readonly displaySettings = reactive({
+    wordThreshold: 0.0,
+    wordTopN: 15,
+    phonemeThreshold: 0.0,
+    phonemeTopN: 100,
+  });
   readonly isModelInputValid = ref(true);
 
   updateAnalysis() {
