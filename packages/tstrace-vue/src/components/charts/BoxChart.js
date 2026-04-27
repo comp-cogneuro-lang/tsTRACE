@@ -108,6 +108,27 @@ export default defineComponent({
     this.updateChart();
   },
   methods: {
+    // Half-width (in chart slices) of a phoneme's input ramp on the X axis.
+    // Mirrors the model's spread shape: spreadPhons writes spread[spreadOffset±i]
+    // for i in [0, n-1], so the outermost nonzero offset from the peak is n-1
+    // input slices, where n = floor(spread[f] * spreadScale[f] * durationScalar[f]).
+    // Take the max over feature continua so the box spans the widest contributing
+    // feature (matching ceil-of-max used for spreadOffset in trace-phones.ts).
+    halfWindowChartSlices(label) {
+      const cfg = this.simConfig;
+      if (!cfg || !cfg.phonology) return 0;
+      const phon = cfg.phonology.find((p) => p.label === label);
+      const spread = cfg.spread || [];
+      const scale = cfg.spreadScale || [];
+      const slicesPerPhon = cfg.slicesPerPhon || 1;
+      let maxN = 0;
+      for (let f = 0; f < spread.length; f++) {
+        const dur = phon && phon.durationScalar ? phon.durationScalar[f] || 0 : 1;
+        const n = Math.floor((spread[f] || 0) * (scale[f] || 1) * dur);
+        if (n > maxN) maxN = n;
+      }
+      return Math.max(0, (maxN - 1) / slicesPerPhon);
+    },
     updateChart() {
       // order chart data by y value
       const sorted = this.chartData.slice().sort((a, b) => b.y - a.y);
@@ -124,11 +145,25 @@ export default defineComponent({
         wordColors[word] = colorPalette[Math.min(index, colorPalette.length - 1)];
       }
 
+      // Annotate each datum with the per-phoneme half-window (in chart slices)
+      // for its first and last letter. chartjs-box.js uses these to size the
+      // box so it matches the actual input ramp duration.
+      const annotatedData = this.chartData.map((d) => {
+        const w = d.word || '';
+        const first = w.charAt(0);
+        const last = w.charAt(w.length - 1) || first;
+        return {
+          ...d,
+          halfWindowLeft: this.halfWindowChartSlices(first),
+          halfWindowRight: this.halfWindowChartSlices(last),
+        };
+      });
+
       const chartData = {
         datasets: [
           {
             characterWidth: this.characterWidth,
-            data: this.chartData,
+            data: annotatedData,
             backgroundColor: () => 'transparent',
             borderColor: (ctx) =>
               ctx.dataset.data[ctx.dataIndex]

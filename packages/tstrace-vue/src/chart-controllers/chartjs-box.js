@@ -31,16 +31,23 @@ Chart.controllers.box = Chart.DatasetController.extend({
     const getPixelForCharacterAtIndex = (index) =>
       xZero + xTickWidth * (value.x + index * dataset.characterWidth);
 
-    const x = getPixelForCharacterAtIndex(0);
     const y = yScale.getPixelForValue(value);
 
-    // Letters are centered on slice positions value.x, value.x + cw, ...,
-    // value.x + (wordlen-1)*cw. Build a tight box around those centers
-    // with one cell-width's worth of letter padding (half on each side)
-    // plus a small visual margin.
-    const cellWidthPx = getPixelForCharacterAtIndex(1) - x;
+    // Box edges are derived from the per-phoneme input ramp width (passed in as
+    // halfWindowLeft / halfWindowRight on each datum, in chart-slice units).
+    // The first letter sits at value.x and the last at value.x + (n-1)*cw, so
+    // the input-active window in chart-slice space is:
+    //   [value.x - halfWindowLeft, lastLetterTA + halfWindowRight]
+    // This makes the box reflect the actual model input duration and reacts to
+    // per-phoneme durationScalar changes.
     const lastIdx = Math.max(0, value.word.length - 1);
-    const wordSpanPx = getPixelForCharacterAtIndex(lastIdx) - x;
+    const halfWindowLeft = value.halfWindowLeft || 0;
+    const halfWindowRight = value.halfWindowRight || 0;
+    const boxLeftPx = xZero + xTickWidth * (value.x - halfWindowLeft);
+    const boxRightPx =
+      xZero + xTickWidth * (value.x + lastIdx * dataset.characterWidth + halfWindowRight);
+    const boxWidthPx = Math.max(0, boxRightPx - boxLeftPx);
+    const boxCenterPx = (boxLeftPx + boxRightPx) / 2;
 
     const height = options.height;
     const halfHeight = height / 2;
@@ -51,13 +58,12 @@ Chart.controllers.box = Chart.DatasetController.extend({
     item._datasetIndex = datasetIndex;
     item._index = index;
 
-    const xPadding = 4;
     item._model = {
       getPixelForCharacterAtIndex,
-      x: x + wordSpanPx / 2,
+      x: boxCenterPx,
       base: y - halfHeight,
       y: y + halfHeight,
-      width: wordSpanPx + cellWidthPx + xPadding * 2,
+      width: boxWidthPx,
       height: height,
       backgroundColor: options.backgroundColor,
       borderColor: options.borderColor,
