@@ -50,7 +50,7 @@
       <template v-if="showChartOptions">
         <label class="checkbox" style="margin-left: 2rem">
           <input type="checkbox" v-model="useBoxChart" />
-          Visualize word/phoneme activations
+          Float mode
         </label>
       </template>
 
