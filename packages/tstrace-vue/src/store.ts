@@ -113,7 +113,7 @@ class Store {
     const data = this.sim.value
       ?.getAllLevelsAndFlowData()
       .map(([flowData], index) => [index, ...flowData.map((num) => num.toFixed(13).padEnd(18, ' '))]);
-    const header = 'cycle\tfeature_sum_all\tfeature_sum_pos\tfeature_competition\tphon_sum_all\tphon_sum_pos\tphon_competition\tword_sum_all\tword_sum_pos\tlexical_competition\tfeat_to_phon\tphon_to_feat\tphon_to_word\tword_to_phon';
+    const header = 'cycle\tfeature_sum_all\tfeature_sum_pos\tfeature_sum_abs\tfeature_competition\tphon_sum_all\tphon_sum_pos\tphon_sum_abs\tphon_competition\tword_sum_all\tword_sum_pos\tword_sum_abs\tlexical_competition\tfeat_to_phon\tphon_to_feat\tphon_to_word\tword_to_phon';
     return formatData(data, header);
   });
   readonly analysisData = ref<any[]>([]);
