@@ -1,10 +1,5 @@
 <template>
   <div>
-    <p>
-      NOTE: if the chart doesn't appear, try resizing your browser window to make it redraw (this is
-      a known bug)
-    </p>
-
     <div class="field">
       <button class="button" @click="store.updateAnalysis()">Refresh chart</button>
     </div>
@@ -73,6 +68,12 @@
         <label class="checkbox">
           <input type="checkbox" name="items" v-model="config.excludeSilence" />
           Exclude silence
+        </label>
+      </div>
+      <div class="control">
+        <label class="checkbox">
+          <input type="checkbox" name="items" v-model="config.maxInstancesOnly" />
+          Max instances only
         </label>
       </div>
     </div>
