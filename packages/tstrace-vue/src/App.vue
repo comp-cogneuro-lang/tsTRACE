@@ -48,6 +48,10 @@ export default defineComponent({
         label: 'Data',
         component: defineAsyncComponent(() => import('./views/AllDataTab.vue')),
       },
+      {
+        label: 'Docs',
+        component: defineAsyncComponent(() => import('./views/DocsTab.vue')),
+      },
     ];
     const activeIndex = ref(0);
 

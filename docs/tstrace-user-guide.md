@@ -246,9 +246,7 @@ Before going through the parameter that you can change, we simply note that the 
 #### *Model parameters*
 
 <mark>
-Note that more details about parameters is available in the
-document 'The Structure of TRACE' that is being released
-along with tsTRACE.
+Note that more details about parameters are available in the companion document <a href="structure-of-trace.md" data-tstrace-doc="structure-of-trace">The Structure of TRACE</a>, which is shipped alongside tsTRACE.
 </mark>
 
 The remaining items in this panel are model parameters. If you change any of these, a 'reset' button will appear. Crucially, the 'reset' returns to the previously specified value for the feature, *not* the default. <span style="color:red">Currently, if you need a return to *all* defaults, you must change each one back manually or simply reload the GUI.</span>
