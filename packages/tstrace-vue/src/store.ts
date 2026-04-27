@@ -8,6 +8,7 @@ import {
   TraceChoice,
   TraceCompetitionType,
   TraceDomain,
+  TraceFlowSumType,
   TraceSim,
 } from 'tstrace';
 import TraceConfig from 'tstrace/dist/esm/trace-param';
@@ -61,6 +62,10 @@ class Store {
     // multiple strong alignments shows each alignment as a separate series.
     // When true: collapses to one alignment per item (the historical view).
     maxInstancesOnly: false,
+    // How the Flow Indices activation series sum across layer cells.
+    // ABSOLUTE (default) uses the magnitude of every cell, POSITIVE uses
+    // only positive cells, RAW includes negatives so contributions cancel.
+    flowSumType: TraceFlowSumType.ABSOLUTE,
   });
   readonly sortedPhonemes = computed(() =>
     [...this.config.phonology].sort((a, b) => a.label.localeCompare(b.label))
