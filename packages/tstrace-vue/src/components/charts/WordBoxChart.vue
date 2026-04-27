@@ -1,12 +1,41 @@
 <template>
-  <BoxChart
-    :chart-data="chartData"
-    chart-title="Word Activations"
-    x-axis-title="Time (phoneme cycles)"
-    y-axis-title="Activation Magnitude"
-    :num-x-ticks="Math.ceil(store.config.fSlices / store.config.slicesPerPhon) + 1"
-    :sim-config="store.config"
-  />
+  <div :class="$style.wrapper">
+    <div :class="$style.controls">
+      <label :class="$style.control">
+        Threshold:
+        <input
+          type="number"
+          :class="$style.input"
+          :min="store.config.min"
+          :max="store.config.max"
+          step="0.01"
+          v-model.number="store.displaySettings.wordThreshold"
+        />
+      </label>
+      <label :class="$style.control">
+        Top:
+        <input
+          type="number"
+          :class="$style.input"
+          min="1"
+          max="500"
+          step="1"
+          v-model.number="store.displaySettings.wordTopN"
+        />
+      </label>
+    </div>
+    <div :class="$style.chartArea">
+      <BoxChart
+        :chart-data="chartData"
+        chart-title="Word Activations"
+        x-axis-title="Time (phoneme cycles)"
+        y-axis-title="Activation Magnitude"
+        :num-x-ticks="Math.ceil(store.config.fSlices / store.config.slicesPerPhon) + 1"
+        :sim-config="store.config"
+        :styles="chartStyles"
+      />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -21,16 +50,14 @@ export default defineComponent({
     const store = getStore();
     return {
       store,
+      // Force the BoxChart's root div to fill our chartArea (otherwise the
+      // canvas defaults to 400x400 and the chart looks squished).
+      chartStyles: { position: 'relative', height: '100%', width: '100%' },
       chartData: computed(() => {
-        // jTRACE doesn't limit the data to top 10 in word box chart, but I'm doing it here
-        // because iterating through thousands of values is a big performance hit
-
         const rawData = store.sim.value?.wordLayer[store.currentCycle.value] || [];
-        const { min, max } = store.config;
-        // Threshold expressed in the displayed (rescaled) activation space.
-        // A word's local-max activation must exceed this on the chart's Y axis.
-        const displayedThreshold = 0.05;
-        const threshold = min + (max - min) * displayedThreshold;
+        // Threshold is in raw activation units (matches the chart's Y axis).
+        const threshold = store.displaySettings.wordThreshold;
+        const topN = Math.max(1, Math.min(500, store.displaySettings.wordTopN || 1));
 
         // associate each word with corresponding row in an array [word, row]
         const data = rawData.map((row, index): [string, number[]] => [
@@ -39,8 +66,7 @@ export default defineComponent({
         ]);
         // sort associated array descending by max value of row
         data.sort((a, b) => Math.max(...b[1]) - Math.max(...a[1]));
-        // take top 15 values
-        const topData = data.slice(0, 15);
+        const topData = data.slice(0, topN);
 
         const chartData = [];
         for (const [word, row] of topData) {
@@ -49,11 +75,9 @@ export default defineComponent({
             const value = row[col];
             const nextValue = col + 1 < row.length ? row[col + 1] : Number.NEGATIVE_INFINITY;
             if (value > lastValue && value > nextValue && value > threshold) {
-              // rescale the activation value
-              const rescaled = (value - min) / (max - min);
               chartData.push({
                 x: col,
-                y: rescaled,
+                y: value,
                 word,
               });
             }
@@ -67,3 +91,40 @@ export default defineComponent({
   },
 });
 </script>
+
+<style module>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.controls {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.25rem 0.5rem 0;
+  font-size: 0.8rem;
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.input {
+  width: 4.5rem;
+  padding: 0.1rem 0.25rem;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+.chartArea {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+</style>
