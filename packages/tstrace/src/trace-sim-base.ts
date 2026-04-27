@@ -21,10 +21,13 @@ export default abstract class TraceSimBase {
   public globalPhonToFeatSum: number[] = [];
   public globalFeatSumAll: number[] = [];
   public globalFeatSumPos: number[] = [];
+  public globalFeatSumAbs: number[] = [];
   public globalPhonSumAll: number[] = [];
   public globalPhonSumPos: number[] = [];
+  public globalPhonSumAbs: number[] = [];
   public globalWordSumAll: number[] = [];
   public globalWordSumPos: number[] = [];
+  public globalWordSumAbs: number[] = [];
 
   constructor(public config: TraceConfig = createDefaultConfig()) {
     this.tn = new TraceNet(this.config);
@@ -55,10 +58,13 @@ export default abstract class TraceSimBase {
       this.globalPhonToFeatSum.push(this.tn.globalPhonToFeatSum);
       this.globalFeatSumAll.push(this.tn.globalFeatSumAll);
       this.globalFeatSumPos.push(this.tn.globalFeatSumPos);
+      this.globalFeatSumAbs.push(sumAbs2D(this.tn.featLayer));
       this.globalPhonSumAll.push(this.tn.globalPhonSumAll);
       this.globalPhonSumPos.push(this.tn.globalPhonSumPos);
+      this.globalPhonSumAbs.push(sumAbs2D(this.tn.phonLayer));
       this.globalWordSumAll.push(this.tn.globalWordSumAll);
       this.globalWordSumPos.push(this.tn.globalWordSumPos);
+      this.globalWordSumAbs.push(sumAbs2D(this.tn.wordLayer));
       this.tn.cycle();
     }
   }
@@ -90,12 +96,15 @@ export default abstract class TraceSimBase {
       [
         this.globalFeatSumAll[cycle],
         this.globalFeatSumPos[cycle],
+        this.globalFeatSumAbs[cycle],
         this.globalFeatureCompetition[cycle],
         this.globalPhonSumAll[cycle],
         this.globalPhonSumPos[cycle],
+        this.globalPhonSumAbs[cycle],
         this.globalPhonemeCompetition[cycle],
         this.globalWordSumAll[cycle],
         this.globalWordSumPos[cycle],
+        this.globalWordSumAbs[cycle],
         this.globalLexicalCompetition[cycle],
         this.globalFeatToPhonSum[cycle],
         this.globalPhonToFeatSum[cycle],
@@ -165,7 +174,7 @@ export default abstract class TraceSimBase {
 
   public serializeLevelsAndFlowData(prefix: string[] = []) {
     const fullPrefix = [this.config.modelInput, ...prefix];
-    const header = 'cycle, input, feature_sum_all, feature_sum_pos, feature_competition, phon_sum_all, phon_sum_pos, phon_competition, word_sum_all, word_sum_pos, lexical_competition, feat_to_phon, phon_to_feat, phon_to_word, word_to_phon';
+    const header = 'cycle, input, feature_sum_all, feature_sum_pos, feature_sum_abs, feature_competition, phon_sum_all, phon_sum_pos, phon_sum_abs, phon_competition, word_sum_all, word_sum_pos, word_sum_abs, lexical_competition, feat_to_phon, phon_to_feat, phon_to_word, word_to_phon';
     return serializeData(this.getAllLevelsAndFlowData(), fullPrefix, header);
   }
 
@@ -192,6 +201,14 @@ export default abstract class TraceSimBase {
   abstract writeFiles(dir: string, prefix?: string): void | Promise<void>;
 
   abstract appendFiles(files: Writable[], prefix?: string[]): Promise<void>;
+}
+
+function sumAbs2D(rows: number[][]): number {
+  let s = 0;
+  for (const row of rows) {
+    for (const v of row) s += Math.abs(v);
+  }
+  return s;
 }
 
 function serializeData(data: any[][][], prefix: string[], header?: string) {

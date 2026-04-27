@@ -48,7 +48,7 @@ export default defineComponent({
         component: WordTab,
       },
       {
-        label: 'Levels and Flow',
+        label: 'Flow',
         component: LevelsAndFlowTab,
       },
     ];
