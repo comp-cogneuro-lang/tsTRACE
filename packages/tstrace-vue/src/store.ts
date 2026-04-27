@@ -57,6 +57,10 @@ class Store {
     competType: TraceCompetitionType.RAW,
     competSlope: 4,
     excludeSilence: false,
+    // When false (default): in MAX_POSTHOC + ACTIVATIONS mode, an item with
+    // multiple strong alignments shows each alignment as a separate series.
+    // When true: collapses to one alignment per item (the historical view).
+    maxInstancesOnly: false,
   });
   readonly sortedPhonemes = computed(() =>
     [...this.config.phonology].sort((a, b) => a.label.localeCompare(b.label))
