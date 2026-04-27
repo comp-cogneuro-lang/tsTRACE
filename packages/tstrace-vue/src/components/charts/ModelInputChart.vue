@@ -5,6 +5,7 @@
     x-axis-title="Time (input cycles)"
     y-axis-title="Feature Continua"
     :y-label-callback="yLabelCallback"
+    :row-label-callback="rowLabelCallback"
     :num-x-ticks="store.config.fSlices + 1"
     :num-y-ticks="numXTicks"
     :y-step-size="numYTicks"
@@ -42,6 +43,14 @@ export default defineComponent({
           return CONTINUA[index];
         }
         return null;
+      },
+      // Tooltip row label: rows are interleaved feature x continuum, so map
+      // the row index back to "<continuum>[<feature>]"
+      rowLabelCallback(_: any, rowIndex: number) {
+        if (rowIndex == null) return null;
+        const continuum = CONTINUA[Math.floor(rowIndex / NUM_FEATURES)];
+        const featureIdx = rowIndex % NUM_FEATURES;
+        return continuum != null ? `${continuum}[${featureIdx}]` : null;
       },
     };
   },
