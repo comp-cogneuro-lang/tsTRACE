@@ -25,7 +25,7 @@
           <select v-model="contentType">
             <option :value="contentTypeActivations">Activations</option>
             <option :value="contentTypeResponseProbabilities">Response Probabilities</option>
-            <option :value="contentTypeCompetitionIndex">Competition Index</option>
+            <option :value="contentTypeCompetitionIndex">Flow Indices</option>
           </select>
         </div>
       </div>
@@ -115,13 +115,26 @@
     </div>
 
     <div v-if="shouldShowCompetIndex" class="field">
-      <label class="label">Global Competition Index</label>
+      <label class="label">Display</label>
       <div class="control">
         <div class="select">
           <select v-model="config.competType">
             <option :value="competTypeRaw">Raw</option>
             <option :value="competTypeFirstDeriv">1st Derivative</option>
             <option :value="competTypeSecondDeriv">2nd Derivative</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="shouldShowCompetIndex" class="field">
+      <label class="label">Activation summation</label>
+      <div class="control">
+        <div class="select">
+          <select v-model="config.flowSumType">
+            <option :value="flowSumAbsolute">Absolute sums</option>
+            <option :value="flowSumPositive">Positive sums</option>
+            <option :value="flowSumRaw">Raw sums</option>
           </select>
         </div>
       </div>
@@ -143,6 +156,7 @@ import {
   TraceCompetitionType,
   TraceContentType,
   TraceDomain,
+  TraceFlowSumType,
   TraceWord,
 } from 'tstrace';
 import { computed, defineComponent, ref, watchEffect } from 'vue';
@@ -203,6 +217,10 @@ export default defineComponent({
       competTypeRaw: TraceCompetitionType.RAW,
       competTypeFirstDeriv: TraceCompetitionType.FIRST_DERIVATIVE,
       competTypeSecondDeriv: TraceCompetitionType.SECOND_DERIVATIVE,
+
+      flowSumRaw: TraceFlowSumType.RAW,
+      flowSumPositive: TraceFlowSumType.POSITIVE,
+      flowSumAbsolute: TraceFlowSumType.ABSOLUTE,
 
       choiceNormal: TraceChoice.NORMAL,
       choiceForced: TraceChoice.FORCED,

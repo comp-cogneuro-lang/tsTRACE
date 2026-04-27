@@ -47,6 +47,16 @@ export enum TraceCompetitionType {
   SECOND_DERIVATIVE,
 }
 
+/** how to sum activations into the Flow Indices activation series */
+export enum TraceFlowSumType {
+  /** sum cell values as-is (positive and negative contributions cancel) */
+  RAW,
+  /** sum only positive cell values */
+  POSITIVE,
+  /** sum the absolute value of every cell */
+  ABSOLUTE,
+}
+
 /**
  * Get indices into the second arg for items that match an element in the
  * first arg.
@@ -128,6 +138,11 @@ export interface TraceSimAnalysisConfig {
   // alignment (the historical behavior). Default false: each strong
   // alignment of an item is its own series.
   maxInstancesOnly?: boolean;
+  // How the Flow Indices activation series (Word/Phoneme/Feature activation)
+  // sum across layer cells. RAW = include negatives; POSITIVE = positive
+  // cells only; ABSOLUTE = sum of |cell value|. Other Flow Indices series
+  // (competition, inhibition, feedback) ignore this.
+  flowSumType?: TraceFlowSumType;
 }
 
 const discoverItemsToWatch = (config: TraceSimAnalysisConfig) => {
@@ -771,48 +786,77 @@ export const doSimAnalysis = (config: TraceSimAnalysisConfig): TraceDataset[] =>
 
     return ret;
   } else {
-    //if competitionIndex
-    // convert data to an XYSeriesCollection
-    let oneSeries: TraceDataset;
-    const ret: TraceDataset[] = [];
+    // Flow Indices: emit one series per global flow/level metric. Domain
+    // (WORDS/PHONEMES) is irrelevant here — every metric is a global sum
+    // accumulated by the network on each cycle.
+    //
+    // For the three activation series we honor config.flowSumType so the
+    // user can pick raw / positive-only / absolute summation across layer
+    // cells. The model exposes SumAll and SumPos directly; ABSOLUTE is
+    // computed from the per-cycle layer snapshots (sim.wordLayer etc.).
+    const flowSumType = config.flowSumType ?? TraceFlowSumType.ABSOLUTE;
+    const sumAbs = (layer: number[][][]): number[] =>
+      layer.map((snapshot) => {
+        let s = 0;
+        for (const row of snapshot) {
+          for (const v of row) s += Math.abs(v);
+        }
+        return s;
+      });
+    const pickActivation = (
+      sumAll: number[],
+      sumPos: number[],
+      layer: number[][][]
+    ): number[] => {
+      if (flowSumType == TraceFlowSumType.RAW) return sumAll;
+      if (flowSumType == TraceFlowSumType.POSITIVE) return sumPos;
+      return sumAbs(layer);
+    };
 
-    let compIndex: number[];
-    if (domain == TraceDomain.WORDS) {
-      compIndex = sim.globalLexicalCompetition;
-      oneSeries = { label: 'Lexical Competition', data: [] };
-    } else {
-      compIndex = sim.globalPhonemeCompetition;
-      oneSeries = { label: 'Phoneme Competition', data: [] };
-    }
+    const metrics: { label: string; values: number[] }[] = [
+      {
+        label: 'Word activation',
+        values: pickActivation(sim.globalWordSumAll, sim.globalWordSumPos, sim.wordLayer),
+      },
+      { label: 'Word competition', values: sim.globalLexicalCompetition },
+      {
+        label: 'Phoneme activation',
+        values: pickActivation(sim.globalPhonSumAll, sim.globalPhonSumPos, sim.phonLayer),
+      },
+      { label: 'Phoneme inhibition', values: sim.globalPhonemeCompetition },
+      {
+        label: 'Feature activation',
+        values: pickActivation(sim.globalFeatSumAll, sim.globalFeatSumPos, sim.featLayer),
+      },
+      { label: 'Feature inhibition', values: sim.globalFeatureCompetition },
+      { label: 'WP feedback (W→P)', values: sim.globalWordToPhonSum },
+      { label: 'PF feedback (P→F)', values: sim.globalPhonToFeatSum },
+      { label: 'FP feedforward (F→P)', values: sim.globalFeatToPhonSum },
+      { label: 'PW feedforward (P→W)', values: sim.globalPhonToWordSum },
+    ];
 
-    if (competType == TraceCompetitionType.RAW) {
-      // competIndex, raw, not a slope line
-      for (let iDSL = 0; iDSL < dataSetLength; iDSL++) {
-        // X is time step, y is data
-        //System.out.println("add\t"+iDSL+"\t"+compIndex[iDSL]);
-        oneSeries.data.push({ x: iDSL, y: compIndex[iDSL] });
+    const buildSeriesData = (values: number[]): TracePoint[] => {
+      if (competType == TraceCompetitionType.FIRST_DERIVATIVE) {
+        const d = slopeRegress(values, competSlope, dataSetLength);
+        return d.map((y, x) => ({ x, y }));
       }
-      ret.push(oneSeries);
-    } else if (competType == TraceCompetitionType.FIRST_DERIVATIVE) {
-      // first derivative
-      const firstDeriv = slopeRegress(compIndex, competSlope, dataSetLength);
-      for (let iDSL = 0; iDSL < firstDeriv.length; iDSL++) {
-        // X is time step, y is data
-        //System.out.println("add\t"+iDSL+"\t"+firstDeriv[iDSL]);
-        oneSeries.data.push({ x: iDSL, y: firstDeriv[iDSL] });
+      if (competType == TraceCompetitionType.SECOND_DERIVATIVE) {
+        const d1 = slopeRegress(values, competSlope, dataSetLength - 1);
+        const d2 = slopeRegress(d1, competSlope, dataSetLength - 2);
+        return d2.map((y, x) => ({ x, y }));
       }
-      ret.push(oneSeries);
-    } else if (competType == TraceCompetitionType.SECOND_DERIVATIVE) {
-      // second derivative
-      const firstDeriv = slopeRegress(compIndex, competSlope, dataSetLength - 1);
-      const secondDeriv = slopeRegress(firstDeriv, competSlope, dataSetLength - 2);
-      for (let iDSL = 0; iDSL < secondDeriv.length; iDSL++) {
-        // X is time step, y is data
-        oneSeries.data.push({ x: iDSL, y: secondDeriv[iDSL] });
+      // RAW
+      const out: TracePoint[] = [];
+      for (let i = 0; i < dataSetLength; i++) {
+        out.push({ x: i, y: values[i] });
       }
-      ret.push(oneSeries);
-    }
-    return ret;
+      return out;
+    };
+
+    return metrics.map(({ label, values }) => ({
+      label,
+      data: buildSeriesData(values),
+    }));
   }
 };
 
