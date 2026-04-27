@@ -11,6 +11,11 @@ export default defineComponent({
     xAxisTitle: String,
     yAxisTitle: String,
     yLabelCallback: Function,
+    // Optional: returns a string label for a row index (used in tooltips).
+    // For matrices where the y-axis ticks don't 1:1 match data rows
+    // (e.g., feature charts: 7 ticks but 63 rows), this lets each chart
+    // supply its own row-label lookup independently of the axis labels.
+    rowLabelCallback: Function,
     numXTicks: Number,
     numYTicks: Number,
     yStepSize: Number,
@@ -28,7 +33,28 @@ export default defineComponent({
           display: false,
         },
         tooltips: {
-          enabled: false,
+          enabled: true,
+          intersect: true,
+          mode: 'nearest',
+          callbacks: {
+            title: (items, data) => {
+              if (!items.length) return '';
+              const item = items[0];
+              const d = data.datasets[item.datasetIndex].data[item.index];
+              if (!d) return '';
+              // Cells are drawn at x + 0.5; recover the integer cycle index.
+              return `Cycle ${Math.floor(d.x)}`;
+            },
+            label: (item, data) => {
+              const d = data.datasets[item.datasetIndex].data[item.index];
+              if (!d) return '';
+              const value = d.raw != null ? d.raw : d.v;
+              const formatted = typeof value === 'number' ? value.toFixed(4) : String(value);
+              const labelFn = this.rowLabelCallback || this.yLabelCallback;
+              const rowLabel = labelFn ? labelFn(null, d.rowIndex) : null;
+              return rowLabel != null ? `${rowLabel}: ${formatted}` : formatted;
+            },
+          },
         },
         title: {
           display: true,
@@ -117,6 +143,9 @@ export default defineComponent({
               v:
                 (Math.min(Math.max(val, 0), 1.0) - this.simConfig.min) /
                 (this.simConfig.max - this.simConfig.min),
+              // raw activation and original row index, used by the tooltip
+              raw: val,
+              rowIndex: y,
             });
           }
         }
