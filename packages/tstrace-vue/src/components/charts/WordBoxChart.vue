@@ -2,7 +2,7 @@
   <BoxChart
     :chart-data="chartData"
     chart-title="Word Activations"
-    x-axis-title="Temporal Alignment"
+    x-axis-title="Time (phoneme cycles)"
     y-axis-title="Activation Magnitude"
     :num-x-ticks="Math.ceil(store.config.fSlices / store.config.slicesPerPhon) + 1"
     :sim-config="store.config"
