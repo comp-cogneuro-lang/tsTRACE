@@ -2,7 +2,7 @@
   <SimulationChart
     :chart-data="chartData"
     chart-title="Model Input"
-    x-axis-title="Time"
+    x-axis-title="Time (input cycles)"
     y-axis-title="Feature Continua"
     :y-label-callback="yLabelCallback"
     :num-x-ticks="store.config.fSlices + 1"

@@ -2,7 +2,7 @@
   <SimulationChart
     :chart-data="chartData"
     chart-title="Word Activations"
-    x-axis-title="Temporal Alignment"
+    x-axis-title="Time (phoneme cycles)"
     y-axis-title="Word"
     :y-label-callback="yLabelCallback"
     :num-x-ticks="Math.ceil(store.config.fSlices / store.config.slicesPerPhon) + 1"
