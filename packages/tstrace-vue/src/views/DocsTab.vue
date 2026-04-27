@@ -177,7 +177,6 @@ export default defineComponent({
   flex: 1;
   overflow-y: auto;
   padding: 1rem 2rem 3rem;
-  max-width: 100%;
 }
 
 .article :global(h1),
@@ -275,12 +274,5 @@ export default defineComponent({
 .article :global(mark) {
   background: #fff7c2;
   padding: 0 0.2em;
-}
-
-/* Inner article width: keep prose readable */
-.article > :global(*) {
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
 }
 </style>
