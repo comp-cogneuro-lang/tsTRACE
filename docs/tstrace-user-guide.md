@@ -8,12 +8,12 @@
 ---
     
 <h1><center>tsTRACE Graphical User Interface Guide</center></h1>    
-<h4><center>DRAFT: 2023.10.18</center></h4>    
+<h4><center>DRAFT: 2026.04.27</center></h4>    
 
 ---
 
 
-tsTRACE is a JavaScript (more precisely, TypeScript) re-implementation of the Java-based jTRACE (Strauss et al., 2007) re-implementation of the original C version of TRACE (as described by McClelland & Elman, 1986). *This guide applies to using tsTRACE in it's GUI form, via a web browser.* Other guides (will eventually) address local installation (not necessary to use the cloud-based web version), and how to use JavaScript scripts to conduct batch simulations (only possible with a local installation).
+tsTRACE is a JavaScript (more precisely, TypeScript) re-implementation of the Java-based jTRACE (Strauss et al., 2007) re-implementation of the original C version of TRACE (as described by McClelland & Elman, 1986). *This guide applies to using tsTRACE in its GUI form, via a web browser.* Other guides (will eventually) address local installation (not necessary to use the cloud-based web version), and how to use JavaScript scripts to conduct batch simulations (only possible with a local installation).
 
 ## Table of Contents
 
@@ -37,11 +37,12 @@ tsTRACE is a JavaScript (more precisely, TypeScript) re-implementation of the Ja
             *   [Data-Features](#data-features)
             *   [Data-Phonemes](#data-phonemes)
             *   [Data-Words](#data-words)
-            *   [Data-Levels and Flow](#data-levels-and-flow)
+            *   [Data-Flow](#data-flow)
     *    [Save sim data button](#save-sim-data-button)
 *    [Notes](#notes)
      *   [Cautionary notes](#cautionary-notes)
      *   [Changes from jTRACE](#changes-from-jtrace)
+     *   [Recent updates](#recent-updates)
 
 *   [References (annotated)](#references)
 *   [Credits](#credits)
@@ -153,7 +154,7 @@ Our aim is to make tsTRACE as intuitive as possible, but it's a complex bit of s
 
 ### Quick start
 
-* Open tsTRACE. As of this writing, you can access an up-to-date implementation at [https://andrew0.github.io/tracejs]().
+* Open tsTRACE. As of this writing, you can access an up-to-date implementation at [https://comp-cogneuro-lang.github.io/tsTRACE/](https://comp-cogneuro-lang.github.io/tsTRACE/).
 * When you follow that link, you land on the [Config](*config) tab (more specifically, the [Config-Parameters](#config-parameters) sub-tab).
 * By default, the simulator opens with the default word *ABRUPT* (\-\^br\^pt\-) listed in the *Model input* entry field, with silence phoneme symbols (\-) before and after the phoneme string. You can enter any input in *Model input*, and hit "enter" for *tsTRACE* to read it. It will warn you if you use undefined phonological symbols (and will not run until you remove them).
 
@@ -183,24 +184,26 @@ Our aim is to make tsTRACE as intuitive as possible, but it's a complex bit of s
 
 * Now let's look at the phoneme level. There is one row per phoneme. Each copy of each phoneme (there are 33, one starting every 3rd slice) is represented by a single cell. The darker that cell is, the more strongly activated that copy of the phoneme is. We see copies of the silence phoneme (/\-/) strongly activated at early time steps, and copies of /\^/ strongly activated at or adjacent to the locations of features corresponding to /\^/ in the input, strong activation of /b/ and weaker activation of /p/ (which differs only slightly from /b/) at slice 6, etc.
 
-* A similar scheme is used to plot word activations, but only the 10 most activated words are included (and you will see the set change dynamically if you animate the simulation, because the current top 10 can change from cycle to cycle). We can see that the copy of ABRUPT aligned with slice 4 is most active, with fairly high activations for ABRUPT at slice 5, the 'silence word' (\-) at slices 0-3, the 'uh' corresponding to A (/\^/) at slices 4, 5, and 9, RUB (/r\^b/) at slices 2 and 3, etc. We leave it to the reader to infer why these words at these alignments are getting strongly activated by the input /\-\^br\^pt\-/.
+* A similar scheme is used to plot word activations, but only the 15 most activated words are included by default (and you will see the set change dynamically if you animate the simulation, because the current top set can change from cycle to cycle). We can see that the copy of ABRUPT aligned with slice 4 is most active, with fairly high activations for ABRUPT at slice 5, the 'silence word' (\-) at slices 0-3, the 'uh' corresponding to A (/\^/) at slices 4, 5, and 9, RUB (/r\^b/) at slices 2 and 3, etc. We leave it to the reader to infer why these words at these alignments are getting strongly activated by the input /\-\^br\^pt\-/.
 
-* Now try checking the 'visualize word/phoneme activations' box. We get a very different view of phonemes and words. At the phoneme level, we see copies of appropriate phonemes at or just after their locations in the input (with the maximally-aligned copy having higher activation) and some hints at interesting competition (e.g., copies of /b/, /d/, and /t/ activated near word offset). At the word level, we see the very most activated items from the previous screen shot with their left edges aligned with their alignment in that previous screenshot. **Need to fix extent issue and replace figure.**
+* Now try checking the *Float mode* box. We get a very different view of phonemes and words: each row is replaced by floating letters representing word/phoneme units. The letter sequence sits at a Y-axis height equal to the unit's current activation, with each letter centered on its slice position along the X-axis, and the surrounding bounding box spanning the actual input duration of the word/phoneme (computed from the model's `spread` and per-phoneme `durationScalar` parameters). A small slice number is printed under each box so you can read off the alignment. At the phoneme level, you'll see copies of appropriate phonemes at or just after their locations in the input (with the maximally-aligned copy higher) and some hints at interesting competition (e.g., copies of /b/, /d/, and /t/ activated near word offset). Above each Float-mode panel are two small controls: a *Threshold* field (only items whose peak activation exceeds this raw value are plotted; default 0) and a *Top* field (cap on how many items are shown; default 15 for words, 100 for phonemes). The chart's Y-axis runs in raw activation units (\~\-0.3 to 1 by default), so threshold values match Y-axis tick marks directly.
 
 <p align="center">
   <img src="image/tstrace-abrupt-cycle-50-toggled.png"  />
 </p>
 
-* Next, let's look at the Chart tab. Just click 'Chart', and you should see something like the next screenshot. By default, we will see the activations of the word copies with highest peak activations. The legend at the top tells what copy of what word each line corresponds to. Initially, all items are aligned at position 4 (e.g., *\^br\^pt [4]*) because the default chart mode is to use a specified *Alignment calculation*. There are many things you can explore here. Try changing to *Phonemes*, or from *Activations* to *Response Probabilities*, or from *Specified* alignment to *Max (Post-Hoc)*. Note that if the chart does not update, you can click the 'refresh chart' button. If that doesn't work, resize the window slightly.
+* Next, let's look at the Chart tab. Just click 'Chart', and you should see something like the next screenshot. By default, we will see the activations of the word copies with highest peak activations. The legend at the top tells what copy of what word each line corresponds to. Initially, all items are aligned at position 4 (e.g., *\^br\^pt [4]*) because the default chart mode is to use a specified *Alignment calculation*. There are many things you can explore here. Try changing to *Phonemes*, or from *Activations* to *Response Probabilities*, or from *Specified* alignment to *Max (Post-Hoc)*. If for some reason the chart needs to be redrawn, click *Refresh chart*.
+
+* You can hover the cursor over any cell in the four matrix panels on the *Simulation* tab (Model Input, Feature Activations, Word Activations, Phoneme Activations) to read the cell's *cycle*, row label, and raw activation value as a tooltip.
 
 
 <p align="center">
   <img src="image/tstrace-chart-example.png"  />
 </p>
 
-* Note that you can also trigger a simulation from here. So you could switch to the *Confg-Parameters* tab, change a parameter, and then switch back to the Chart tab and click *Simulate*, rather than having to use the *Simulation* tab.
+* Note that you can also trigger a simulation from here. So you could switch to the *Config-Parameters* tab, change a parameter, and then switch back to the Chart tab and click *Simulate*, rather than having to use the *Simulation* tab.
 
-* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, and "levels and flow" data. You can explore those data These are explained in sections below.
+* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, and "flow" data. You can explore those data These are explained in sections below.
 
 * The data for the chart with your parameters is available under the *Chart Data* tab, where you can examine or save it.
 
@@ -223,7 +226,7 @@ The *Config* tab brings you to 3 sub-tabs, described below ([Config-Parameters](
 
 #### Config-Parameters
 
-The screenshot below shows the top part of the *Config-Parmeters* sub-tab. The scrollbar in the middle of the screen allows you to advance through the full feature list in the feature panel (which has the *Model Input* text field at the top).
+The screenshot below shows the top part of the *Config-Parameters* sub-tab. The scrollbar in the middle of the screen allows you to advance through the full feature list in the feature panel (which has the *Model Input* text field at the top).
 
 Before going through the parameter that you can change, we simply note that the model input panel displays input corresponding to text in the *Model Input* text field. If you change the contents of that field, hit 'Enter' on your keyboard for it to register, and you will see the *Model Input* **panel** update.
 
@@ -287,7 +290,7 @@ The remaining items in this panel are model parameters. If you change any of the
 </center>
 
 
-* **Frq post act (*c*)**. While the *rest* and *weight* frequency implementations change activations *within the model*, the *post-activation* method only applies frequency at the decision stage, by using the Luce Choice Rule. Normally, the way you calculate response probabilities with the Luce Choice Rule is to calcluate a *response strength*, *S*, from each activation, *a*, where *S = e<sup>ka</sup>* (where *k* is a constant scaling parameter). Then you sum all response strengths and normalize (divide each *S* by the sum). The difference with *frq post act* is we scale the response strengths by frequency first, using this simple change to the formula (where *c* is **the value specified for this parameter** and *f<sub>i</sub>*  is the frequency [occurrences per million words] of word *i*). *See Dahan, Magnuson, & Tanenhaus (2001, p. 338) for details.* Dahan et al. report that a value of 15 for *c* worked well.
+* **Frq post act (*c*)**. While the *rest* and *weight* frequency implementations change activations *within the model*, the *post-activation* method only applies frequency at the decision stage, by using the Luce Choice Rule. Normally, the way you calculate response probabilities with the Luce Choice Rule is to calculate a *response strength*, *S*, from each activation, *a*, where *S = e<sup>ka</sup>* (where *k* is a constant scaling parameter). Then you sum all response strengths and normalize (divide each *S* by the sum). The difference with *frq post act* is we scale the response strengths by frequency first, using this simple change to the formula (where *c* is **the value specified for this parameter** and *f<sub>i</sub>*  is the frequency [occurrences per million words] of word *i*). *See Dahan, Magnuson, & Tanenhaus (2001, p. 338) for details.* Dahan et al. report that a value of 15 for *c* worked well.
 
 <center>
 
@@ -351,7 +354,7 @@ At this tab, you will see a display as in this screenshot.
 
 The Lexicon window has 3 buttons (*add word*, *load from XML*, *save XML*). See screenshot below that shows just the first few rows of the lexicon.
 
-* *Add word* adds a row at the top with the "Lexical Items" field blank and frequency and priming set to 0. Note that by default, freuency and priming are turned off; see relevant parameters in [Config-Parameters](#config-parameters).
+* *Add word* adds a row at the top with the "Lexical Items" field blank and frequency and priming set to 0. Note that by default, frequency and priming are turned off; see relevant parameters in [Config-Parameters](#config-parameters).
 
 * *Load from XML* allows you to replace the current lexicon with one you read in from an XML file.
 
@@ -383,7 +386,7 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 
 ## Simulation
 
-* *Cycles to calculate*. Enter a value to change the total number of cycles in the simulation. Maximum (for historical reasons) is 287. This is more than enough for most purposes. This maximum could be changed in the source code, but would impose higher memory demans.
+* *Cycles to calculate*. Enter a value to change the total number of cycles in the simulation. Maximum (for historical reasons) is 287. This is more than enough for most purposes. This maximum could be changed in the source code, but would impose higher memory demands.
 
 * *Simulate*. Run a new simulation with the current parameters (those defined under the 3 *Config* tabs, as well as any changes to *Model input* or *Cycles to calculate* on the *Simulation* tab). When you click this button, you will see the button outline turn dark during processing, and return to light grey when it is done. If *Current cycle* is set to a value where the new parameters cause a change in any of the graph panels, you will see the graphs update.
 
@@ -391,28 +394,29 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 
 * *Start animation* button. This will step through the simulation data cycle-by-cycle, starting from the cycle listed in *Current cycle*. The rate is predetermined and not under user control.
 
-* *Visualize word/phoneme activations* checkbox. If this box is checked, you will see the "floating box" representations of words and phonemes (based on Figure 5 [among others] from the original TRACE paper [McClelland & Elman, 1986]). See *graph* descriptions below for more details.
+* *Float mode* checkbox. If this box is checked, the *Phoneme Activations* and *Word Activations* panels switch from a heatmap to a "floating letter" representation (based on Figure 5 [among others] from the original TRACE paper [McClelland & Elman, 1986]). See *graph* descriptions below for more details.
 
 * The [*Save sim data* button](#save-sim-data-button) always does the same thing.
 
 * *Model input* field. You can type directly into this field to change the input, and then click *Simulate* to run a simulation with the new input.   
 
-* *Input graph*. his displays a static representation of the input matrix. When you run a simulation, the input matrix is presented column-by-column (one column per time step) to the feature level. Darker grey indicates higher input values, white indicates 0. The X-axis is in *feature time slices*.
+* All four panels share a unified time axis. The two input-grain panels (*Model Input*, *Feature Activations*) are labeled *Time (input cycles)*; the two phoneme-grain panels (*Phoneme Activations*, *Word Activations*) are labeled *Time (phoneme cycles)*. One phoneme cycle equals `slicesPerPhon` input cycles (3 by default). Hovering the cursor over any cell shows a tooltip with the cycle index, the row label, and the cell's raw activation value.
 
-* *Feature graph*. This depicts the feature activations.here is one row for each level of each feature (9 levels for each of 7 features with the default TRACE parameters). Darker grey indicates higher activation. Only activations > 0 are indicated (cells with activation <= 0 are white). X-axis is in *feature time slices*.
+* *Model Input* panel. Displays a static representation of the input matrix. When you run a simulation, the input matrix is presented column-by-column (one column per time step) to the feature level. Darker grey indicates higher input values, white indicates 0.
 
-* *Phoneme graph*. This depicts phoneme activations. The X-axis is *phoneme time slices* (by default, 1 for every 3 *feature time slices*).
+* *Feature Activations* panel. Depicts the feature activations. There is one row for each level of each feature (9 levels for each of 7 features with the default TRACE parameters). Darker grey indicates higher activation. Only activations > 0 are indicated (cells with activation <= 0 are white).
 
-    * If *Visualize word/phoneme activations* is not checked, there is one row for each phoneme. In each row, each column represents another of the 33 copies of that row's phoneme. The darker the cell, the higher the activation.
+* *Phoneme Activations* panel.
 
-    * If *Visualize word/phoneme* activations is checked, "floating phoneme" mode is activated. Now phoneme nodes with activations > 0.25 are plotted, with y-axis height indicating activation.
+    * If *Float mode* is **off**, there is one row for each phoneme. In each row, each column represents another of the 33 copies of that row's phoneme. The darker the cell, the higher the activation.
 
-* *Word graph*. X-axis is in *word time slices* (by default, 1 for every 3 *feature time slices*).
+    * If *Float mode* is **on**, the panel switches to floating-letter form. Each detected peak is shown as a letter on the chart, with Y-axis height equal to the unit's raw activation and X-axis position equal to its slice. The bounding box around the letter spans the actual input window for that phoneme (computed from `spread`, `spreadScale`, and the phoneme's `durationScalar`). A small slice number is printed under each box. Above the chart are two controls: *Threshold* (raw activation cutoff; default 0) and *Top* (max number of phoneme peaks to plot; default 100, capped at 500).
 
+* *Word Activations* panel.
 
-    * If *Visualize word/phoneme activations* is not checked, there is one row for each of the 10 words with highest peak activation. In each row, each column represents another of the 33 copies of that row's word. The darker the cell, the higher the activation. Note that cells occupy one unit width, but words have temporal extent proportional to their number of phonemes. This can be made apparent by checking *Visualize word/phoneme activations*. See [Quick start](#quick-start) for some more details about the nature of word units.
+    * If *Float mode* is **off**, there is one row for each of the 10 words with highest peak activation. In each row, each column represents another of the 33 copies of that row's word. The darker the cell, the higher the activation. Note that cells occupy one unit width, but words have temporal extent proportional to their number of phonemes. This can be made apparent by switching on *Float mode*. See [Quick start](#quick-start) for more details about the nature of word units.
 
-    * If *Visualize word/phoneme* activations is checked, "floating word" mode is activated. Now the 10 word nodes with highest activations > 0.25 are plotted, with y-axis height indicating activation.
+    * If *Float mode* is **on**, the panel switches to floating-letter form. Each plotted word is rendered as its phoneme letters on the chart, with Y-axis height equal to the unit's raw activation and X-axis positions equal to each phoneme's slice. The bounding box around the word spans the actual input window from the first phoneme's input onset to the last phoneme's input offset. A small slice number is printed under each box. Above the chart are two controls: *Threshold* (raw activation cutoff; default 0) and *Top* (max number of words to plot; default 15, capped at 500).
 
 --------------
 [Return to *Table of Contents*](#table-of-contents)
@@ -422,13 +426,13 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 ## Chart
 
 
-* *Cycles to calculate*. Enter a value to change the total number of cycles in the simulation. Maximum (for historical reasons) is 287. This is more than enough for most purposes. This maximum could be changed in the source code, but would impose higher memory demans.
+* *Cycles to calculate*. Enter a value to change the total number of cycles in the simulation. Maximum (for historical reasons) is 287. This is more than enough for most purposes. This maximum could be changed in the source code, but would impose higher memory demands.
 
 * *Simulate*. Run a new simulation with the current parameters (those defined under the 3 *Config* tabs, as well as any changes to *Cycles to calculate* here or on the *Simulation* tab, or the *Model input* field in the *Simulation* tab). When you click this button, you will see the button outline turn dark during processing, and return to light grey when it is done. If *Current cycle* is set to a value where the new parameters cause a change in any of the graph panels, you will see the graphs update.
 
 * The [*Save sim data* button](#save-sim-data-button) always does the same thing.
 
-* *Refresh chart*: click this when you change any chart parameters to update the chart. If the chart does not update after a few seconds, resizing the window slightly should force the update.
+* *Refresh chart*: click this when you change any chart parameters to update the chart.
 
 * *Analyze (words or phonemes)*: Change which level's units are being charted.
 
@@ -451,19 +455,35 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 
         * Third, we convert each response strength to a response probability by dividing each response strength by the sum of response strengths.
 
-        * When you have selected 'Response Probabilities', new controls appear for specifiying *k* and also for choosing to apply the Luce Choice rule to *all items* (all items in the lexicon) or *forced choice*, which will restrict the computation to items selected using the *Use selected items* or *Use top X items* interfaces.
+        * When you have selected 'Response Probabilities', new controls appear for specifying *k* and also for choosing to apply the Luce Choice rule to *all items* (all items in the lexicon) or *forced choice*, which will restrict the computation to items selected using the *Use selected items* or *Use top X items* interfaces.
 
         * ``NB: this is softmax with a scaling parameter (k) applied to activations``
 
-    * **Competition index**.When competition index is selected in the content type, jTRACE sums the total amount of competition acting within the word (or phoneme) layer at the current time cycle. When *Raw* is selected from the drop-down menu, that summed value is plotted directly. When *First-Derivative* is selected, a slope regression operation is applied to the competition data to determine the rate of change of competition over time; this is plotted. If *Second-Derivative* is selected, the slope regression is applied twice, first to the raw data, then to the *First-Derivative*, approximating the acceleration of competition. The calculation of slope is done with this equation:
+    * **Flow Indices**. (Earlier versions called this "Competition Index" and emitted a single series.) Selecting *Flow Indices* plots ten global, network-wide time series at once, drawn from the same data exposed by [Data-Flow](#data-flow):
 
-      <pre>
-               b = SUM[(x-avg(x))(y-avg(y))] / SUM[(x-avg(x))^2]
-      </pre>
+        * *Word activation*, *Phoneme activation*, *Feature activation* — total per-cycle activity at each layer (see *Activation summation* below).
+        * *Word competition*, *Phoneme inhibition*, *Feature inhibition* — total per-cycle inhibition transmitted within each layer (corresponds to *LexicalCompetition*, *PhonemeCompetition*, *FeatureCompetition*).
+        * *WP feedback (W→P)*, *PF feedback (P→F)* — total feedback signal traveling top-down (words to phonemes, phonemes to features).
+        * *FP feedforward (F→P)*, *PW feedforward (P→W)* — total feedforward signal traveling bottom-up.
 
-      where *x* is the time axis, simply incrementing from 1 to the number of cycles in the simulation. And _y_ is the competition value. Because the slope equation requires averaging over a range of values, in order to approximate the slope within that range of values, we must decide the width of that range, i.e., how much of the curve to approximate at a time. The numeric parameter labeled 'sample width' sets that value. Larger values here will lead to smoother curves.
+      Domain (Words/Phonemes) does not affect the Flow Indices output, since every metric is a network-wide accumulator.
 
-        * Note that the raw *Competition index* corresponds to the *LexicalCompetition* field in [Levels and Flow](#data-levels-and-flow) data.
+      Two dropdowns appear when *Flow Indices* is selected:
+
+      * **Display**: *Raw* plots each metric directly. *1st Derivative* applies a sliding-window slope regression to estimate the rate of change of each metric over time. *2nd Derivative* applies the slope regression twice, approximating acceleration. Slope is computed via:
+
+        <pre>
+                 b = SUM[(x-avg(x))(y-avg(y))] / SUM[(x-avg(x))^2]
+        </pre>
+
+        where *x* is the cycle index and *y* is the metric value. The numeric *Sampling Width* parameter sets the window width; larger values give smoother curves.
+
+      * **Activation summation**: chooses how the three activation series (*Word activation*, *Phoneme activation*, *Feature activation*) sum across layer cells at each cycle.
+        * *Absolute sums* (default): sum of \|cell\| at each cycle. Always non-negative; reflects total "activity magnitude".
+        * *Positive sums*: sum of only the positive cells (uses the model's `globalWordSumPos`, `globalPhonSumPos`, `globalFeatSumPos`).
+        * *Raw sums*: sum of cells as-is, including negatives that cancel positives (uses `globalWordSumAll`, `globalPhonSumAll`, `globalFeatSumAll`).
+
+        This dropdown applies only to the three activation series. The other seven Flow Indices (competition, inhibition, feedback, feedforward) display their stored per-cycle values regardless of which mode is selected, because the model accumulates those as net per-cycle scalars without separate Pos/Abs trackers.
 
 * For *Activations* and *Response probabilities*, you can also control *Items* included and *Alignment*
 
@@ -472,14 +492,16 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 
         * *Exclude silence*: If this is checked, the silence word or phoneme will not be included in the chart. If it is among the top X items, however, you will only see the others X-1 items.
 
+        * *Max instances only*: When checked, each word/phoneme is plotted at most once (at its single highest-peak alignment). When unchecked (the default), the same word can appear multiple times if it has strong activation at several alignments — for example, with input `-titi-` and *Max (Post-Hoc)* selected, you will see separate series for *ti [3]*, *ti [4]*, *ti [5]*, *ti [8]*, and *ti [9]*. The *Top* count then ranks (item, alignment) pairs by peak value rather than ranking items. This applies to *Activations* and to *Response Probabilities* with the "All Items" Luce choice; "Forced Choice" continues to use the historical single-instance math.
+
         * *Use selected items* (only for words): place a check next to each item to include.
 
     * Alignment:
         *  The default *Alignment calculation* is to use a specified alignment. 4 is the default, as this is where a target word preceded by the silence phoneme would be aligned. This only considers word units aligned at this position.
 
-        * *Max post-hoc*: This considers words at any alignment, but currently only considers one copy per word. It is post-hoc since words are selected based on their peak over the entire simulations
+        * *Max post-hoc*: This considers words at any alignment. By default, with *Max instances only* unchecked, multiple alignments of the same word can appear as separate series; check *Max instances only* to collapse to one alignment per word (the historical view, which selects each word's peak alignment over the entire simulation).
 
-        * NB: *jTRACE* had additional options. We have removed them after seeing them used improperly in publications. Users interested in using those options can calculate them after the fact from saved output, but we do not think it is wise to make them available by default.
+        * NB: *jTRACE* had additional options (max ad-hoc, Frauenfelder). We have removed them after seeing them used improperly in publications. Users interested in using those options can calculate them after the fact from saved output, but we do not think it is wise to make them available by default.
 
 --------------
 [Return to *Table of Contents*](#table-of-contents)
@@ -575,45 +597,53 @@ The Data tab provides 6 subtabs, described below.
 
 --------------
 
-### Data-Levels and Flow
+### Data-Flow
 
-* A new feature in *tsTRACE* is tracking of activation within levels and flowing between them. This can be useful when trying to relate relatively global activity to, e.g., neural activity (see Luthra et al., 2021).
+* A core feature in *tsTRACE* is tracking of activation within levels and flow between them. This can be useful when trying to relate relatively global activity to, e.g., neural activity (see Luthra et al., 2021). These are also the values plotted by the *Chart* tab's *Flow Indices* content type.
 
 * The [*Save sim data* button](#save-sim-data-button) always does the same thing.
 
-* The columns are cycle, and then 13 data columns (described below the screenshot). These are each calculated once per cycle, so there is only 1 page of output, with one row per cycle, and nothing to step or animate through.
+* The columns are cycle, and then 16 data columns (described below the screenshot). These are each calculated once per cycle, so there is only 1 page of output, with one row per cycle, and nothing to step or animate through.
 
 <p align="center">
   <img src="image/tstrace-levels-and-flow.png"  />
 </p>
 
-**Data columns in levels-and-flow**
+**Data columns in flow data**
 
 1. FeatureSumAll: Sum of all units in the feature level.
 
-2. FeatSumPos: Sum of positive activations in the feature level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state)
+2. FeatSumPos: Sum of positive activations in the feature level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state).
 
-3. FeatureCompetition: Sum of inhibition being transmitted within the feature level.
+3. FeatSumAbs: Sum of \|activation\| across the feature level (always non-negative; reflects total feature-layer activity magnitude).
 
-4. PhonSumAll: Sum of all units in the feature level.
+4. FeatureCompetition: Sum of inhibition being transmitted within the feature level.
 
-5. PhonSumPos: Sum of positive activations in the feature level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state)
+5. PhonSumAll: Sum of all units in the phoneme level.
 
-6. PhonemeCompetition: Sum of inhibition being transmitted within the phoneme level.
+6. PhonSumPos: Sum of positive activations in the phoneme level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state).
 
-7. WordSumAll: Sum of all units in the word level.
+7. PhonSumAbs: Sum of \|activation\| across the phoneme level.
 
-8. WordSumPos: Sum of positive activations in the word level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state)
+8. PhonemeCompetition: Sum of inhibition being transmitted within the phoneme level.
 
-9. LexicalCompetition: Sum of inhibition being transmitted within the word level.
+9. WordSumAll: Sum of all units in the word level.
 
-10. FeatToPhonSum: Total activity flowing from features to phonemes.
+10. WordSumPos: Sum of positive activations in the word level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state).
 
-11. PhonToFeatSum: Total activity flowing from phonemes to features (is zero by default).
+11. WordSumAbs: Sum of \|activation\| across the word level.
 
-12. PhonToWordSum: Total activity flowing from phonemes to words.
+12. LexicalCompetition: Sum of inhibition being transmitted within the word level.
 
-13. WordToPhonSum: Total activity flowing from words to phonemes.
+13. FeatToPhonSum: Total activity flowing from features to phonemes.
+
+14. PhonToFeatSum: Total activity flowing from phonemes to features (is zero by default).
+
+15. PhonToWordSum: Total activity flowing from phonemes to words.
+
+16. WordToPhonSum: Total activity flowing from words to phonemes.
+
+The three Sum-of-absolute-values columns (`FeatSumAbs`, `PhonSumAbs`, `WordSumAbs`) match the *Absolute sums* option of the *Activation summation* dropdown in the *Chart* tab's [Flow Indices](#chart) view.
 
 
 --------------
@@ -625,7 +655,7 @@ The Data tab provides 6 subtabs, described below.
 
 * Several tabs include the *Save sim data* button.
 
-* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, and "levels and flow" data. You can explore those data These are explained in sections above.
+* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, and "flow" data. You can explore those data These are explained in sections above.
 
 * One key difference between the descriptions above and the data in the CSV files is that the CSV files include an extra column showing what the *Model input* was for the simulation.
 
@@ -681,7 +711,30 @@ How does length normalization work?
     * *Phonemes* tab: removed "Languages" option and more generally got away from hard-coding of default features. In *tsTRACE*, you can load in XML or JSON files specifying phonology and lexicon.
     * *Graphing* (*Chart*):
         * Removed complex alignment options (max ad-hoc, which would select the copy of each word at each time step with maximum activation *at that time step* which was experimental but really not sensible, in retrospect).
-        * Also removed the "Frauenfelder" method of combining nodes with their right-adjacent copy (since the maximally-aligned and right-adjacent copies tend to be highly activated together). This seems rarely used, and better left to advanced users to implment at the analysis stage.
+        * Also removed the "Frauenfelder" method of combining nodes with their right-adjacent copy (since the maximally-aligned and right-adjacent copies tend to be highly activated together). This seems rarely used, and better left to advanced users to implement at the analysis stage.
+
+--------------
+[Return to *Table of Contents*](#table-of-contents)
+
+--------------
+
+## Recent updates
+
+A number of usability and analysis improvements have been added since the original tsTRACE release. The most visible ones:
+
+* **X-axis labels.** All four *Simulation* tab panels now share an unambiguous *Time* axis: input-grain panels (*Model Input*, *Feature Activations*) read *Time (input cycles)*, while phoneme-grain panels (*Phoneme Activations*, *Word Activations*) read *Time (phoneme cycles)*. One phoneme cycle = `slicesPerPhon` input cycles (3 by default).
+
+* **Cell-hover tooltips.** Hovering over any cell in the four *Simulation* tab matrix panels shows a tooltip with the cycle index, row label, and raw activation value.
+
+* **Float mode** (formerly "Visualize word/phoneme activations"). Each Float-mode panel now has a small toolbar above it for *Threshold* (raw activation cutoff; default 0) and *Top* (max number of items to plot; default 15 for words, 100 for phonemes, capped at 500). The chart's Y-axis displays raw activation units (\~\-0.3 to 1 by default), so threshold values match Y-axis tick marks directly.
+
+* **Box geometry that matches the input.** In Float mode, each word/phoneme box is drawn so its width corresponds to the *actual model input duration* of the unit, derived from the model's `spread`, `spreadScale`, and per-phoneme `durationScalar` values. Letters are centered on their slice positions, and a small slice number is printed below each box.
+
+* **Multi-instance Max (Post-Hoc).** On the *Chart* tab, *Max (Post-Hoc)* now shows multiple alignments of the same word/phoneme as separate series (e.g., *ti [3]*, *ti [4]*, *ti [8]* for input `-titi-`). The new *Max instances only* checkbox restores the historical single-alignment-per-item view. This applies to *Activations* and to *Response Probabilities* with the "All Items" Luce choice.
+
+* **Flow Indices.** The *Content* type formerly named "Competition Index" is now *Flow Indices*, and emits ten time series at once (Word/Phoneme/Feature activation; Word/Phoneme/Feature competition or inhibition; WP and PF feedback; FP and PW feedforward). A new *Activation summation* dropdown (Absolute / Positive / Raw, defaulting to Absolute) controls how the three activation series sum across layer cells.
+
+* **Chart redraw fix.** The *Chart* tab no longer requires a window resize to render correctly on first load.
 
 --------------
 [Return to *Table of Contents*](#table-of-contents)
