@@ -1,40 +1,29 @@
+> This is documentation of unknown provenance which someone shared with me in the late 1990s... To my chagrin, I can't recall who shared it, if they were the author, or if they told me who the author was. I've tried really hard to find the source and author, but have not been able to track down either. This documentation has been invaluable, and I am immensely grateful to the author — if you know who that is, please let me know!
+>
+> I have lightly edited the text here and there, but this is not my work. I have not verified every detail, so caveat lector...
+>
+>— Jim Magnuson, April, 2026
+
+---
+
+> **Editor's note (2026).** This document describes the original TRACE specification. Some parameter names and mechanisms below differ from what tsTRACE exposes in its GUI — in particular:
+>
+> - The `<FREQSCALE>` parameter described below corresponds, in current tsTRACE, to *three separate* word-frequency mechanisms (`frq resting`, `Frq phoneme->word weights`, and `Frq post act`) following Dahan, Magnuson, & Tanenhaus (2001). See the *Config-Parameters* section of the <a href="tstrace-user-guide.md" data-tstrace-doc="user-guide">User Guide</a> for details.
+> - Per-input parameters such as `<RATEp(i)>` and `<STRENGTHp(i)>` are not user-facing in tsTRACE; the model uses fixed defaults.
+> - The total-inhibition cap `<WIMAX>` mentioned below is not exposed.
+>
+> Use this document for the conceptual / mathematical specification of the model; consult the <a href="tstrace-user-guide.md" data-tstrace-doc="user-guide">User Guide</a> for the runtime parameters you can actually adjust.
+
+---
+
 <center>
 
-# The structure of TRACE
+# THE STRUCTURE OF TRACE
+AUTHOR UNKNOWN
 
 </center>
 
-```
-This is documentation of unknown provenance which someone shared with
-me in the 1990s... To my chagrin, I can't recall who shared it, if
-they were the author, or if they told me who the author was. I've
-tried really hard to find the source and author, but have not been
-able to track down either. This documentation has been invaluable,
-and I am immensely grateful to the author -- if you know who that is,
-please let me know!
-
-I have lightly edited the text here and there, but this is not my work.
-I have not verified every detail, so caveat lector...
-
-                                        -- Jim Magnuson, March, 2022
-```
-
-> **Editor's note (2026).** This document describes the original TRACE
-> specification. Some parameter names and mechanisms below differ from
-> what tsTRACE exposes in its GUI — in particular:
->
-> - The `<FREQSCALE>` parameter described below corresponds, in current
->   tsTRACE, to *three separate* word-frequency mechanisms (`frq
->   resting`, `Frq phoneme->word weights`, and `Frq post act`) following
->   Dahan, Magnuson, & Tanenhaus (2001). See the *Config-Parameters*
->   section of the <a href="tstrace-user-guide.md" data-tstrace-doc="user-guide">User Guide</a> for details.
-> - Per-input parameters such as `<RATEp(i)>` and `<STRENGTHp(i)>` are
->   not user-facing in tsTRACE; the model uses fixed defaults.
-> - The total-inhibition cap `<WIMAX>` mentioned below is not exposed.
->
-> Use this document for the conceptual / mathematical specification of
-> the model; consult the <a href="tstrace-user-guide.md" data-tstrace-doc="user-guide">User Guide</a> for the
-> runtime parameters you can actually adjust.
+---
 
 The TRACE model is an interactive activation model, consisting of three levels of activation: the **feature, phoneme,** and **word** levels.
 
