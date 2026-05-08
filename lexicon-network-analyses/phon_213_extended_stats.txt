@@ -1,0 +1,81 @@
+Extended Network Statistics: Phonological DAS
+
+Lexicon Size: 212
+Num Nodes: 212
+Num Edges: 282
+Density: 0.01260842349995529
+Average Degree: 2.660377358490566
+Median Degree: 2.0
+Max Degree: 11
+Degree Q25: 0.0
+Degree Q75: 4.0
+Degree Q90: 6.0
+Degree Q99: 9.889999999999986
+Degree Assortativity: 0.4031492328275527
+Avg Clustering Coefficient: 0.18632892264967735
+Transitivity Global Clustering: 0.32654867256637166
+Num Triangles: 123
+Modularity: 0.6827121372164378
+K Core Depth: 5
+Num Components: 62
+Giant Component Size: 143
+Gc Fraction: 0.6745283018867925
+Non Gc Subgraph Count: 7
+Non Gc Subgraph Mean Size: 2.142857142857143
+Non Gc Subgraph Min Size: 2
+Non Gc Subgraph Max Size: 3
+Size 2 Dyads: 6
+Size 3 Triads: 1
+Size 4: 0
+Size 5 To 9: 0
+Size 10 Plus Non Gc: 0
+Num Hermits: 54
+Hermit Fraction: 0.25471698113207547
+Gc Num Nodes: 143
+Gc Num Edges: 274
+Gc Density: 0.02698709740963262
+Gc Average Degree: 3.832167832167832
+Gc Median Degree: 3.0
+Gc Max Degree: 11
+Gc Degree Q25: 2.0
+Gc Degree Q75: 5.0
+Gc Degree Q90: 7.0
+Gc Degree Q99: 10.0
+Gc Avg Clustering: 0.2762358853267944
+Gc Transitivity Global Clustering: 0.32683790965456155
+Gc Num Triangles: 123
+Gc Degree Assortativity: 0.3527510517514195
+Gc Modularity: 0.6695881506739837
+Gc K Core Depth: 5
+Gc Avg Shortest Path: 5.303949571555205
+Gc Diameter: 14
+Gc Radius: 7
+Er Clustering Ref: 0.02698709740963262
+Er Path Length Ref: 3.6941576444999082
+Small World Sigma: 7.12918620450874
+Power Law Available: True
+Power Law Alpha: 2.625073242187499
+Power Law Xmin: 3.0
+Power Law Ks Distance: 0.17719123321786334
+Power Law N Tail: 93
+Power Law Vs Lognormal R: -3.8162330559438566
+Power Law Vs Lognormal P: 0.0001355045241613186
+Power Law Vs Exponential R: -6.456973336883448
+Power Law Vs Exponential P: 1.0681770822685804e-10
+Power Law Vs Truncated R: -6.456373280475812
+Power Law Vs Truncated P: 4.354717519916562e-08
+Gc Power Law Available: True
+Gc Power Law Alpha: 2.625073242187499
+Gc Power Law Xmin: 3.0
+Gc Power Law Ks Distance: 0.17719123321786334
+Gc Power Law N Tail: 93
+Gc Power Law Vs Lognormal R: -3.8162330559438566
+Gc Power Law Vs Lognormal P: 0.0001355045241613186
+Gc Power Law Vs Exponential R: -6.456973336883448
+Gc Power Law Vs Exponential P: 1.0681770822685804e-10
+Gc Power Law Vs Truncated R: -6.456373280475812
+Gc Power Law Vs Truncated P: 4.354717519916562e-08
+Loader Raw Entries: 213
+Loader Skipped Dash: 1
+Loader Homophone Collapses: 0
+Phoneme Inventory Size: 22

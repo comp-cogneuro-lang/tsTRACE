@@ -127,3 +127,8 @@ packages/tstrace/temp_test_output/
 # Editor backup files
 *~
 plans.md
+nk-features
+plans.md
+logs
+yarn.lock
+nk-features-figures-notes.txt

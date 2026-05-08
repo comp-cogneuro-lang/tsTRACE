@@ -1,0 +1,4 @@
+yarn install
+yarn workspace tstrace build
+yarn workspace tstrace-vue dev
+# Vite will display localhost, often: http://localhost:5173/
