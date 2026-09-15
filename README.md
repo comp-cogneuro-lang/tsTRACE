@@ -14,7 +14,7 @@ This is a Yarn workspaces monorepo:
 - `packages/tstrace-vue/` — Vue 3 + Vite simulation GUI
 - `packages/playground/` — Scratch / development workspace (not part of the
   build)
-- `docs/` — User guide and reference images
+- `docs/` — Quick start, user guide, and reference images
 - `TEST_SUITE_GUIDE.md` — How the regression test suite works
 
 ## Local development
@@ -38,8 +38,11 @@ yarn build
 ## Running simulations from the CLI
 
 ```bash
-yarn cli --help
+yarn cli              # Node REPL with the library preloaded as `tstrace`
+yarn cli script.js    # run a script; inside it, require('tstrace') resolves to the local build
 ```
+
+See `packages/tstrace/README.md` for the scripting API and a batch example.
 
 ## Regression tests
 
@@ -56,7 +59,9 @@ only happens if the regression tests pass on `main`. See
 
 ## Documentation
 
+- `docs/QUICKSTART.md` — Install, build, and run locally in five minutes
 - `docs/tstrace-user-guide.md` — Walkthrough of the simulation GUI
+- `packages/tstrace/README.md` — Scripting the model from Node (API, batch runs, custom lexicons)
 
 ## Live demo
 

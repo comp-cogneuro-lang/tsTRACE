@@ -1,55 +1,323 @@
+# tstrace — core TRACE library
 
-# tracejs
-TRACE is a model of speech perception based on James McClelland and Jeffrey Elman's research. This module is a port of the jTRACE implementation, which can be located [here](https://magnuson.psy.uconn.edu/jtrace/). From the link:
+TypeScript implementation of the TRACE model of speech perception (McClelland
+& Elman, 1986), ported from jTRACE (Strauss, Harris & Magnuson, 2007) and
+cTRACE. This package is the simulation engine only; the Vue GUI lives in
+`../tstrace-vue/`.
 
-> TRACE is a highly influential model of speech perception and spoken word recognition, created by Jay McClelland and Jeff Elman (1986). The original implementation of that model was used to run dozens of simulations comparing TRACE’s behavior with results from experimental studies with human subjects. TRACE’s behavior accounted for human behavior in a number of important ways, and it is still frequently cited as the canonical _interactive-activation_ model of speech perception and spoken word recognition. TRACE has proved remarkably robust, accounting for results in paradigms that were developed 10 years after the model (e.g., fine-grained time course measures from eye tracking).
+For a five-minute install-and-run walkthrough see
+[`docs/QUICKSTART.md`](../../docs/QUICKSTART.md). This file is the reference
+for scripting the model from Node.
 
-This module is capable of running the raw simulations, with a user interface made using Vue.js available [here](https://github.com/andrew0/tracejs-vue).
+## Contents
 
-To programmatically run simulations, you can either install the module locally and run a script in Node, or use the `tracejs` utility application to automatically import the tracejs module. Running the `tracejs` command will launch a Node REPL interface with the module automatically loaded into the variable `tracejs`. For example:
+- [Install and build](#install-and-build)
+- [Importing the library](#importing-the-library)
+- [A single simulation](#a-single-simulation)
+- [The data model](#the-data-model)
+- [Batch scripting](#batch-scripting)
+- [Custom lexicons and phonologies](#custom-lexicons-and-phonologies)
+- [Phoneme continua](#phoneme-continua)
+- [Analysis helpers](#analysis-helpers)
+- [Substep integration (`nreps < 0`)](#substep-integration-nreps--0)
+- [The `tstrace` CLI](#the-tstrace-cli)
+- [Tests](#tests)
 
-```
-$ tracejs
-> const config = tracejs.createDefaultConfig() // tracejs variable already loaded
-undefined
-> const sim = new tracejs.TraceSim(config)
-phon 0: -
-phon 1: ^
-phon 2: a
-phon 3: b
-phon 4: d
-phon 5: g
-phon 6: i
-phon 7: k
-phon 8: l
-phon 9: p
-phon 10: r
-phon 11: s
-phon 12: S
-phon 13: t
-phon 14: u
-TraceNet.createInput: phons=-^br^pt-
-undefined
-> sim.cycle(60)
-undefined
+## Install and build
+
+From the repository root:
+
+```bash
+yarn install
+yarn workspace tstrace build     # compiles src/ -> dist/common (CommonJS) and dist/esm
 ```
 
-The values of the input, feature, phoneme, and word layers can then be accessed by the properties `sim.inputLayer`, `sim.featLayer`, `sim.phonLayer`, and `sim.wordLayer`. Each layer has an array indexed by cycle number.
+Rerun the build after any change under `src/`. The tests and the CLI all load
+`dist/common/index.js`, not the TypeScript sources.
 
-## Project setup
+## Importing the library
+
+Everything is a **named** export from `dist/common/index.js`. There is no
+default export.
+
+```js
+// From a script run with `yarn cli my-script.js` (see "The tstrace CLI"):
+const { TraceSim, createDefaultConfig } = require('tstrace');
+
+// From any other Node script, by path:
+const { TraceSim, createDefaultConfig } = require('/path/to/tsTRACE/packages/tstrace/dist/common/index.js');
+```
+
+Exports:
+
+| Group | Names |
+|---|---|
+| Simulation | `TraceSim`, `TraceNet`, `createDefaultConfig`, `createDefaultPhoneme`, `TracePhoneRole` |
+| Errors | `TraceError`, `ModelInputError` |
+| jTRACE file I/O | `loadJtLexicon`, `loadJtPhonology`, `parseJtLexicon`, `parseJtPhonology`, `serializeJtLexicon`, `serializeJtPhonology` |
+| JSON I/O | `parseJsonLexicon`, `parseJsonPhonology` |
+| Streamed CSV output | `openFileHandle`, `openFileHandles`, `closeFileHandles` |
+| Analysis | `doSimAnalysis`, `getAnalysisData`, `formatAnalysis`, and the enums `TraceDomain`, `TraceContentType`, `TraceCalculationType`, `TraceChoice`, `TraceCompetitionType`, `TraceFlowSumType` |
+
+## A single simulation
+
+```js
+const { TraceSim, createDefaultConfig } = require('tstrace');
+
+const config = createDefaultConfig();     // original M&E 1986 phonology, 213-word lexicon, default parameters
+config.modelInput = '-^br^pt-';           // "abrupt"; '-' is silence, pad both ends
+
+const sim = new TraceSim(config);
+sim.cycle(80);                            // run 80 cycles (GUI default is 81)
+
+// wordLayer[cycle][wordIndex][slot]
+const i = config.lexicon.findIndex(w => w.phon === '^br^pt');
+const peakAtEnd = Math.max(...sim.wordLayer[79][i]);
+console.log('abrupt at cycle 79, best slot:', peakAtEnd.toFixed(3));   // ~0.79
+```
+
+`cycle(n)` can be called repeatedly; each call appends `n` more cycles. A
+single call is capped at `max(6 × modelInput.length × deltaInput, fSlices)`
+cycles (288 for the default input).
+
+## The data model
+
+### Configuration (`TraceConfig`)
+
+`createDefaultConfig()` returns a plain object you can mutate before
+constructing a `TraceSim`. The fields you'll touch most:
+
+| Field | Default | Meaning |
+|---|---|---|
+| `modelInput` | `'-^br^pt-'` | Phoneme string to present. Use `-` for silence. |
+| `lexicon` | 213 words | `TraceWord[]`: `{ phon, freq, prime, label? }` |
+| `phonology` | 15 phonemes | `TracePhone[]`: `{ label, features, durationScalar, phonologicalRole }` |
+| `alpha.IF / FP / PW / WP / PF` | 1.0 / 0.02 / 0.05 / 0.03 / 0.0 | Excitatory rates: input→feature, feature→phoneme, phoneme→word, word→phoneme (feedback), phoneme→feature |
+| `gamma.F / P / W` | 0.04 / 0.04 / 0.03 | Lateral inhibition at each layer |
+| `decay.F / P / W` | 0.01 / 0.03 / 0.05 | Decay toward rest at each layer |
+| `rest.F / P / W` | −0.1 / −0.1 / −0.01 | Resting activations |
+| `min`, `max` | −0.3, 1.0 | Activation clamp |
+| `deltaInput` | 6 | Feature slices per phoneme of input |
+| `slicesPerPhon` | 3 | Phoneme/word unit spacing in slices |
+| `fSlices` | 99 | Width of the feature layer (time axis) |
+| `spread`, `spreadScale` | 7 × 6, 7 × 1 | Temporal ramp of each feature continuum |
+| `nreps` | 1 | Input slices advanced per cycle; negative = substep mode (see below) |
+| `noiseSD`, `stochasticitySD` | 0, 0 | Input noise / McClelland (1991) activation noise |
+| `freqNode`, `primeNode` | off | Frequency and priming (rest / weight / post-activation variants) |
+| `continuumSpec` | `''` | Build an ambiguous phoneme continuum (see below) |
+| `lengthNormalization` | 0 | Scale word-to-word inhibition by word length |
+| `wordInhBuProtect` | 0 | Experimental: cap net inhibition on a word at k × its current activation. 0 = original TRACE. |
+
+Phoneme labels are single, case-sensitive characters (`^` is /ʌ/, `S` is /ʃ/,
+etc.). Anything in `modelInput` that is not a defined label throws
+`ModelInputError`.
+
+### Layers
+
+After `cycle()`, `sim` holds one snapshot per cycle:
+
+| Array | Shape | Notes |
+|---|---|---|
+| `sim.inputLayer` | `[cycle][feature][slice]` | Constant across cycles |
+| `sim.featLayer` | `[cycle][feature][slice]` | 63 features × `fSlices` |
+| `sim.phonLayer` | `[cycle][phoneme][slot]` | Phoneme index order is the engine's sorted order (`- ^ a b d g …`), **not** `config.phonology` order — use `sim.phonemes.byIndex(i).label` |
+| `sim.wordLayer` | `[cycle][word][slot]` | Word index order = `config.lexicon` |
+
+`sim.getStepsRun()` is the number of cycles simulated. Row-labeled versions
+(strings, 4-decimal) are available per cycle: `getInputData(c)`,
+`getFeatureData(c)`, `getPhonemeData(c)`, `getWordData(c)`,
+`getLevelsAndFlowData(c)`, and for all cycles via the `getAll*Data()` variants.
+
+A dozen per-cycle scalars are also kept for the Flow Indices display:
+`globalLexicalCompetition`, `globalPhonToWordSum`, `globalWordSumPos`, etc.
+(see `src/trace-sim-base.ts`).
+
+## Batch scripting
+
+The pattern is: copy the base config, set `modelInput`, construct a fresh
+`TraceSim`, cycle, harvest what you need, repeat. Two ways to persist results:
+
+- **`sim.writeFiles(dir, prefix?)`** — one gzipped CSV per layer
+  (`input`, `feature`, `phoneme`, `word`) for this simulation. Creates `dir`
+  if needed. Simple; one directory per simulation.
+- **`openFileHandles(dir, prefix?)` + `sim.appendFiles(handles, extraCols?)` + `closeFileHandles(handles)`** —
+  five append-mode gzip streams (`input`, `feature`, `phoneme`, `word`,
+  `levels_and_flow`); every simulation appends its rows to the same files.
+  Best for sweeps. `openFileHandles` does **not** create the directory.
+
+The following runs the first three lexicon words with modified feedback,
+streams all layers into one file set, and prints a recognition check. Run it
+with `yarn cli batch.js out-dir`.
+
+```js
+// batch.js
+const fs = require('fs');
+const { TraceSim, createDefaultConfig, openFileHandles, closeFileHandles } = require('tstrace');
+
+// Under `yarn cli script.js ARGS`, argv[2] is the script path; your args start at argv[3].
+const OUT_DIR = process.argv[3] || 'batch-out';
+const CYCLES = 80;
+
+async function main() {
+  const base = createDefaultConfig();
+  base.alpha.WP = 0.03;                        // change any parameter here
+  const words = base.lexicon.slice(0, 3);      // or base.lexicon for all 213
+
+  fs.mkdirSync(OUT_DIR, { recursive: true }); // openFileHandles does not create the directory
+  const handles = openFileHandles(OUT_DIR, 'demo');
+
+  for (const w of words) {
+    const config = JSON.parse(JSON.stringify(base));   // fresh copy per simulation
+    config.modelInput = `-${w.phon}-`;                  // pad with silence
+    const sim = new TraceSim(config);
+    sim.cycle(CYCLES);
+
+    // Recognition check: peak activation of the target vs. best other real word
+    const peak = (i) => Math.max(...sim.wordLayer.flatMap(cyc => cyc[i]));
+    const targetIdx = config.lexicon.findIndex(x => x.phon === w.phon);
+    const target = peak(targetIdx);
+    const rival = Math.max(...config.lexicon.map((x, i) =>
+      i === targetIdx || x.phon === '-' ? -Infinity : peak(i)));
+    console.log(`${w.phon.padEnd(8)} target ${target.toFixed(3)}  best other ${rival.toFixed(3)}  ${target > rival ? 'PASS' : 'FAIL'}`);
+
+    // Extra columns tag each simulation's rows (here: the alpha.WP used)
+    await sim.appendFiles(handles, [String(config.alpha.WP)]);
+  }
+  closeFileHandles(handles);
+  console.log(`wrote ${OUT_DIR}/demo-{input,feature,phoneme,word,levels_and_flow}.csv.gz`);
+}
+main();
+```
+
+Output:
 
 ```
-npm install
+^        target 0.304  best other 0.149  PASS
+^br^pt   target 0.791  best other 0.203  PASS
+^dapt    target 0.738  best other 0.215  PASS
+wrote out-dir/demo-{input,feature,phoneme,word,levels_and_flow}.csv.gz
 ```
 
-### Compile TypeScript to JavaScript
+### CSV layout and gotchas
 
-```
-npm run build
+Each layer file has one row per (cycle, unit): `cycle, input, <unit label>,
+t0, t1, …` where `t*` are the time slices/slots. The `word` file for one
+80-cycle simulation of the 213-word lexicon is 80 × 213 = 17,040 rows.
+
+Things to know when you load these files:
+
+1. **Header repeats.** Every `appendFiles` call writes a header line, so a
+   file with N simulations has N header lines. Drop rows whose first field is
+   the literal `cycle`.
+2. **Extra columns are not in the header.** Columns passed as the second
+   argument to `appendFiles` are inserted after `input`, but the header line
+   is not widened. Supply your own column names when parsing.
+3. **Mixed delimiters.** Headers and label columns use `", "`; numeric cells
+   use `","`. Split on `/,\s*/`.
+4. Memory: `TraceSim` keeps every cycle of every layer in memory. For long
+   sweeps, harvest what you need from each `sim` and let it go out of scope
+   before the next one.
+5. CPU: each simulation is single-threaded. If you parallelize with worker
+   processes, keep the total at or below ~70% of physical cores.
+
+The regression suite in `tests/` (`baseline-test.js`, `regression-test.js`,
+`quick-compare.js`) is a working example of the `writeFiles` variant.
+
+## Custom lexicons and phonologies
+
+```js
+const { loadJtLexicon, loadJtPhonology, parseJsonLexicon, parseJsonPhonology } = require('tstrace');
+
+// From jTRACE XML (.jt) files on disk:
+config.lexicon   = loadJtLexicon('path/to/lexicon.jt');
+config.phonology = loadJtPhonology('path/to/phonology.jt');
+
+// From already-parsed JSON (same shapes as the GUI's Save buttons produce):
+config.lexicon   = parseJsonLexicon(JSON.parse(fs.readFileSync('lexicon.json', 'utf8')));
+config.phonology = parseJsonPhonology(JSON.parse(fs.readFileSync('phonology.json', 'utf8')));
 ```
 
-### Run  tests
+`parseJtLexicon(xmlString)` / `parseJtPhonology(xmlString)` do the same from
+a string; `serializeJtLexicon(lexicon)` / `serializeJtPhonology(phonology)`
+go the other way. The jTRACE gallery files in the
+`gallery/` folder of the jTRACE distribution (if you have it) are
+`<lexicon>` blocks you can load directly.
 
+Every phoneme in every lexicon word must exist in `config.phonology`; every
+phoneme's `features.length` must equal `numFeatures × continuaPerFeature`
+(63 for the original 7 × 9 scheme). A flat single-level scheme is
+`numFeatures: 1, continuaPerFeature: N`.
+
+## Phoneme continua
+
+Set `config.continuumSpec` to a three-character string `<from><to><steps>`
+(steps 2–9), e.g. `'bp5'`. The engine adds phonemes labeled `0` … `steps-1`
+that interpolate every feature linearly from `b` to `p`, plus `?` for the
+midpoint. Use those digits in `modelInput`:
+
+```js
+config.continuumSpec = 'bp7';
+config.modelInput = '-3l^g-';   // step 3 of 7 between /b/ and /p/, i.e. ambiguous blug/plug
 ```
-npm run test
+
+Continuum phonemes are **input-only**: they define feature patterns for
+`modelInput` but are not units in the phoneme layer, so `sim.phonLayer` keeps
+its usual 15 rows. Read the outcome at the phoneme layer by comparing the
+endpoint phonemes (`b` vs. `p`) at the slot aligned with the ambiguous
+segment.
+
+## Analysis helpers
+
+`doSimAnalysis` reproduces the GUI's Chart tab computations (top-N items,
+response probabilities, alignment strategies):
+
+```js
+const { doSimAnalysis, formatAnalysis, TraceDomain, TraceCalculationType } = require('tstrace');
+
+const data = doSimAnalysis({
+  sim,
+  domain: TraceDomain.WORDS,                    // or PHONEMES
+  itemsToWatch: 5,                              // top-N by activation
+  calculationType: TraceCalculationType.STATIC, // STATIC | AVERAGE | MAX_POSTHOC | MAX_ADHOC | FRAUENFELDER | ...
+  alignment: 4,                                 // slot for STATIC
+});
+// data: [{ label: '^br^pt [4]', data: [{x: 0, y: ...}, ...] }, ...]
+console.log(formatAnalysis(data));              // tab-separated table, one column per item
 ```
+
+Other options: `choice` (`TraceChoice.NORMAL | FORCED`), `kValue` (Luce
+choice exponent, default 4), `competType`, `competSlope`. See
+`src/trace-sim-analysis.ts` for the full `TraceSimAnalysisConfig`.
+
+## Substep integration (`nreps < 0`)
+
+`nreps = -k` (k ≥ 2) runs k network updates per input-slice advance. Used
+with all nine rate parameters (`alpha.FP/PW/WP/PF`, `gamma.P/W`,
+`decay.F/P/W`) divided by k, this gives an effective time step of 1/k and
+removes the period-2 explicit-Euler oscillation that appears with large
+lexicons. Cycle counts and plots keep their usual meaning; only the
+integration is finer. Positive `nreps` keeps the legacy meaning (advance
+that many input slices per cycle).
+
+## The `tstrace` CLI
+
+`bin/cli.js` (exposed as `yarn cli` from the repo root) is a thin wrapper:
+
+```bash
+yarn cli               # Node REPL with the library preloaded as `tstrace`
+yarn cli script.js     # run script.js; inside it, require('tstrace') resolves to the local build
+```
+
+There are no flags. When running a script, its own path is `process.argv[2]`
+and any further arguments start at `process.argv[3]`.
+
+## Tests
+
+```bash
+yarn workspace tstrace test:regression   # 100-word comparison against baseline_data/ (~1 min)
+yarn workspace tstrace test:quick ark    # one word, ~5 s
+yarn workspace tstrace test:baseline     # regenerate the baseline (only after an intentional model change)
+```
+
+See [`tests/README.md`](tests/README.md) and the root
+[`TEST_SUITE_GUIDE.md`](../../TEST_SUITE_GUIDE.md).
