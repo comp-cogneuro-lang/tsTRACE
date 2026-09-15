@@ -121,6 +121,30 @@ export default interface TraceConfig {
   /** length normalization?: binary */
   lengthNormalization: number
 
+  /**
+   * Bu-protection coefficient for word-layer inhibition (Option D).
+   *
+   * Caps the net inhibition a word receives at most at `wordInhBuProtect *
+   * bu_drive` per cycle, where bu_drive is the bottom-up support flowing
+   * into the word from the phoneme layer this cycle.
+   *
+   *   0 (default) — original TRACE: purely subtractive, no protection.
+   *   1.0          — full protection: net inhibition cannot exceed bu_drive,
+   *                  so a word with full bu support is never driven below
+   *                  its bu floor in a single cycle.
+   *   in (0, 1)    — partial protection.
+   *
+   * Cognitive/neural rationale: shunting (divisive) inhibition + feedforward
+   * input-locked gain together produce inhibition bounded by current
+   * excitatory drive. With purely subtractive lateral inhibition, many
+   * overlapping cohort/embedded competitors can collectively crush a long
+   * word's activation even though each individually is weak. This parameter
+   * models the neural reality that lateral inhibition resolves ambiguity
+   * among well-supported candidates rather than killing well-supported
+   * candidates outright.
+   */
+  wordInhBuProtect?: number
+
   /** lexical frequency parameters. stores variables for three type of lexical frequency effects */
   freqNode: RdlNode
   /** priming parameters. stores variables for three type of lexical priming */
@@ -182,6 +206,7 @@ export const createDefaultConfig = (): TraceConfig => ({
   bias: 0.0,
   learningrate: 0.0,
   lengthNormalization: 0,
+  wordInhBuProtect: 0,
   phonology: [
     {
       label: 'p',

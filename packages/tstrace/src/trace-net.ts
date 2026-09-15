@@ -777,6 +777,26 @@ export default class TraceNet {
     }
     // now, repeat the looping over words and slices and apply the inhibition
     // accumulated at each slice to every word unit that overlaps with that slice.
+    //
+    // OPTION D-act — activation-protected inhibition (added 2026-05-10).
+    //   When config.wordInhBuProtect = k > 0, the net inhibition that can be
+    //   subtracted from a word's wordNet this cycle is capped at
+    //     k * max(0, wordLayer[word][wstart])
+    //   where wordLayer[word][wstart] is the word's CURRENT accumulated
+    //   activation. A word at zero/negative activation receives no protection
+    //   (the cap is 0, so the original behavior applies). As activation
+    //   grows, the cap on inhibition grows proportionally.
+    //
+    //   This is a refinement of the original "bu_drive cap" idea: bu_drive
+    //   is length-weighted (sum across all overlapping phoneme positions),
+    //   so it gives long words a runaway protection. Using current
+    //   accumulated activation as the cap basis avoids that — only words
+    //   that have established meaningful activation get any protection,
+    //   matching the user's "tolerance grows with accumulated bu" intent.
+    //
+    //   k=0 reproduces original TRACE behaviour exactly.
+    //   See trace-param.ts wordInhBuProtect docstring for cognitive rationale.
+    const buProtect = this.config.wordInhBuProtect || 0;
     this.globalLexicalCompetitionIndex = 0;
     for (let wstart = 0; wstart < pSlices; wstart++) {
       for (let word = 0; word < dict.length; word++) {
@@ -785,52 +805,63 @@ export default class TraceNet {
         let wmax = wstart + dict[word].phon.length * 2; //!! wstart + (wlength*phone width) + (1/2 phone width)
         if (wmax > pSlices) wmax = pSlices - 1;
 
-        // length_normalization_scale = 1/(14  -dict.get(word).getPhon().length());
-        // inhibition applied in this loop.
+        // Capture bu_drive (bottom-up support already in wordNet from phonToWord).
+        // This is the value we may need to bound the inhibition by.
+        const buDrive = this.wordNet[word][wstart];
+
+        // Compute total raw inhibition and self-reimbursement separately so we
+        // can apply the bu-protection cap on the *net* inhibition.
+        let inhTotal = 0;
         for (let l = wmin; l < wmax; l++) {
-          // EXTENSION
           if (this.config.lengthNormalization) {
-            let compensation_factor = 1 / (dict[word].phon.length * this.lengthNormalizationScale);
+            let compensation_factor =
+              1 / (dict[word].phon.length * this.lengthNormalizationScale);
             if (compensation_factor > 1) compensation_factor = 1;
-            //double compensation_factor = (((dict.get(word).getPhon().length() / length_normalization_fulcrum ) - 1) * length_normalization_scale) + 1
-            //if(compensation_factor<0) compensation_factor=1;
-            const n = wwi[l] * compensation_factor;
-            this.wordNet[word][wstart] -= n; //if(wwi[l]>0) //inhibition applied here
-            this.globalLexicalCompetitionIndex += n;
-          }
-          //END EXTENSION
-          else {
-            this.wordNet[word][wstart] -= wwi[l]; //if(wwi[l]>0) //inhibition applied here
-            this.globalLexicalCompetitionIndex += wwi[l];
+            inhTotal += wwi[l] * compensation_factor;
+          } else {
+            inhTotal += wwi[l];
           }
         }
-        // re-imbursement of self-inhibition occurs here.
+
+        let selfReimburse = 0;
         if (this.wordLayer[word][wstart] > 0) {
-          //self-inhibitiopn prevented here.
-          // EXTENSION
           if (this.config.lengthNormalization) {
-            let compensation_factor = 1 / (dict[word].phon.length * this.lengthNormalizationScale);
+            let compensation_factor =
+              1 / (dict[word].phon.length * this.lengthNormalizationScale);
             if (compensation_factor > 1) compensation_factor = 1;
-            const n =
+            selfReimburse =
               (wmax - wmin) *
               (this.wordLayer[word][wstart] *
                 this.wordLayer[word][wstart] *
                 (this.config.gamma.W || 0)) *
               compensation_factor;
-            this.wordNet[word][wstart] += n;
-            this.globalLexicalCompetitionIndex -= n;
-          }
-          //END EXTENSION
-          else {
-            const n =
+          } else {
+            selfReimburse =
               (wmax - wmin) *
               (this.wordLayer[word][wstart] *
                 this.wordLayer[word][wstart] *
                 (this.config.gamma.W || 0));
-            this.wordNet[word][wstart] += n;
-            this.globalLexicalCompetitionIndex -= n;
           }
         }
+
+        let netInh = inhTotal - selfReimburse;
+
+        // Apply activation-protection cap (Option D-act). Only when k > 0
+        // and the word's current accumulated activation > 0:
+        //   netInh capped at k * current_activation
+        // When wordLayer[word][wstart] ≤ 0 the word has no foothold yet —
+        // no protection (original behavior applies).
+        const currentAct = this.wordLayer[word][wstart];
+        if (buProtect > 0 && currentAct > 0 && netInh > buProtect * currentAct) {
+          netInh = buProtect * currentAct;
+        }
+        // Mark buDrive as "intentionally unused" — it's captured above for
+        // potential future formulations but D-act doesn't use it.
+        void buDrive;
+
+        // Apply: wordNet -= netInh; globalLexicalCompetitionIndex += netInh.
+        this.wordNet[word][wstart] -= netInh;
+        this.globalLexicalCompetitionIndex += netInh;
       }
     }
   }
