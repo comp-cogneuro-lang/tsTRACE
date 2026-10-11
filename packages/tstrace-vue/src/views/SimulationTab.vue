@@ -4,10 +4,6 @@
       <SimulationToolbar show-cycles show-chart-options />
     </div>
 
-    <div :class="$style['input-wrapper']">
-      <ConfigInput v-model="config.modelInput" label="Model Input" note="" type="text" />
-    </div>
-
     <div :class="$style.main">
       <div :class="$style.grid">
         <FeatureActivationsChart :class="$style['chart-wrapper']" />
@@ -29,14 +25,12 @@ import PhonemeActivationsChart from '../components/charts/PhonemeActivationsChar
 import PhonemeBoxChart from '../components/charts/PhonemeBoxChart.vue';
 import WordActivationsChart from '../components/charts/WordActivationsChart.vue';
 import WordBoxChart from '../components/charts/WordBoxChart.vue';
-import ConfigInput from '../components/ConfigInput.vue';
 import SimulationToolbar from '../components/SimulationToolbar.vue';
 import { getStore } from '../store';
 
 export default defineComponent({
   name: 'SimulationTab',
   components: {
-    ConfigInput,
     SimulationToolbar,
     FeatureActivationsChart,
     WordActivationsChart,
@@ -49,7 +43,6 @@ export default defineComponent({
     const store = getStore();
     return {
       useBoxChart: store.useBoxChart,
-      config: store.config,
     };
   },
 });
@@ -88,9 +81,5 @@ export default defineComponent({
   min-width: 0;
   width: 100%;
   height: 100%;
-}
-
-.input-wrapper {
-  padding: 0.5rem 0;
 }
 </style>

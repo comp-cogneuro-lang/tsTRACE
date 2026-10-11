@@ -1,5 +1,15 @@
 <template>
   <div :class="$style.toolbar">
+    <!-- kept outside the validity check so invalid input can still be edited -->
+    <label for="model-input">Model input:</label>
+    <input
+      :value="config.modelInput"
+      @change="config.modelInput = asAny($event).target.value"
+      class="input"
+      id="model-input"
+      type="text"
+      style="width: 10rem; margin: 0 1rem 0 0.5rem"
+    />
     <template v-if="isModelInputValid">
       <label for="cycles-to-calculate">Cycles to calculate:</label>
       <input
@@ -7,12 +17,12 @@
         class="input"
         id="cycles-to-calculate"
         type="number"
-        style="width: 6rem; margin: 0 0.5rem"
+        style="width: 5rem; margin: 0 0.5rem"
       />
       <a class="button" @click="calculate">Simulate</a>
 
       <template v-if="showCycles && calculatedCycles">
-        <label for="current-cycle" style="margin-left: 2.5rem">Current cycle:</label>
+        <label for="current-cycle" style="margin-left: 1.5rem">Current cycle:</label>
 
         <a
           style="margin-left: 0.5rem"
@@ -34,7 +44,7 @@
 
         <input
           v-model="currentCycle"
-          style="margin-left: 0.5rem; width: 200px"
+          style="margin-left: 0.5rem; width: 100px"
           class="slider"
           step="1"
           min="0"
@@ -48,7 +58,7 @@
       </template>
 
       <template v-if="showChartOptions">
-        <label class="checkbox" style="margin-left: 2rem">
+        <label class="checkbox" style="margin-left: 1rem">
           <input type="checkbox" v-model="useBoxChart" />
           Float mode
         </label>
@@ -112,6 +122,9 @@ export default defineComponent({
     });
 
     return {
+      // helper for typescript errors in templates
+      asAny: (x: any) => x,
+      config: store.config,
       isModelInputValid: store.isModelInputValid,
       useBoxChart: store.useBoxChart,
       calculatedCycles: store.calculatedCycles,
@@ -158,8 +171,14 @@ export default defineComponent({
 <style module>
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
   align-items: center;
   background: white;
   padding: 0.5rem;
+}
+
+.toolbar label {
+  white-space: nowrap;
 }
 </style>
