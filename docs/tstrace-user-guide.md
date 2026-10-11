@@ -154,31 +154,48 @@ Our aim is to make tsTRACE as intuitive as possible, but it's a complex bit of s
 
 ### Quick start
 
-* Open tsTRACE. As of this writing, you can access an up-to-date implementation at [https://comp-cogneuro-lang.github.io/tsTRACE/](https://comp-cogneuro-lang.github.io/tsTRACE/).
+* Open tsTRACE. As of this writing, you can access an up-to-date implementation at [https://comp-cogneuro-lang.github.io/tsTRACE/](https://comp-cogneuro-lang.github.io/tsTRACE/). *This is a beta version, and feedback is very welcome --- if something looks wrong, breaks, or just gets in your way, please tell me about it.*
 * When you follow that link, you land on the [Config](*config) tab (more specifically, the [Config-Parameters](#config-parameters) sub-tab).
 * By default, the simulator opens with the default word *ABRUPT* (\-\^br\^pt\-) listed in the *Model input* entry field, with silence phoneme symbols (\-) before and after the phoneme string. You can enter any input in *Model input*, and hit "enter" for *tsTRACE* to read it. It will warn you if you use undefined phonological symbols (and will not run until you remove them).
 
 <p align="center">
-  <img src="image/tstrace-config-parameters.png"  />
+  <img src="image/tsTRACE-config.png"  />
 </p>
 
 * For details about the various parameters you change here, see  [Config-Parameters](#config-parameters), below.
 * To just do a simulation, click on the *Simulation* tab at the top of the window. Now you'll see the Simulation tab, as in the screenshot below. Since we haven't run a simulation, there is nothing to see in 3 of the panels. The *Model Input* **panel** shows what the feature pattern corresponding to the string in the *Model Input* **text entry box**. When we run a simulation, those values will be sent to the Feature level one time slice (column) per time step.
 
-<p align="center">
-  <img src="image/tstrace-simulation-tab.png"  />
-</p>
 
-* To run a simulation, click *Simulate*. After a few seconds, the top panel of the screen will change, letting you know that the simulation is done. The simulation runs *very* quickly in the background without animating anything, because you may not always want to take the time to watch the simulation (e.g., if you've just changed a parameter and want to chart the results).
+* To run a simulation, click *Simulate*. After a few seconds, the top panel of the screen will change, letting you know that the simulation is done. Here's how it looks before you simulate:
 
 <p align="center">
-  <img src="image/tstrace-simulate-header-post-click.png"  />
+  <img src="image/tsTRACE-sim-before-sim-v2.png"  />
 </p>
+
+* Here's how it looks after you click 'simulate':
+
+<p align="center">
+  <img src="image/tsTRACE-sim-simready-v2.png"  />
+</p>
+
+* If you change the input string and hit return, new simulation data is needed. Currently the only indication of this is a '*' near config in the top left:
+
+<p align="center">
+  <img src="image/tsTRACE-sim-bar-pending-v2.png"  />
+</p>
+
+* And after you click 'Simulate' again: 
+
+<p align="center">
+  <img src="image/tsTRACE-sim-simready-brptpat.png"  />
+</p>
+
+* The simulation runs *very* quickly in the background without animating anything, because you may not always want to take the time to watch the simulation (e.g., if you've just changed a parameter and want to chart the results).
 
 * Now to animate the simulation, you can click on *start animation*. Or you can use the blue slider bulb to scroll through the simulation. Or, you can manually change the 'Current cycle' to look at a specific time step. Here's a screenshot of the animation advanced to cycle 50. Now we see activity happening in all the panels. In the Feature panel, look at the right 'edge' of activation; we are just a few steps before the end of the input, and we can see the latest input slice has strongly activated the corresponding features. Look at the early time steps, though, and compare them to the input pattern. They look different because the inputs were applied for just 1 time step. On subsequent time steps, the feature nodes' activities are a function of any input they receive (which is none after the input 'passes by') but also their previous activation, multiplied by a negative decay parameter. So the nodes gradually turn off as time passes. Whatever activation they have, though, continues to be propagated forward to corresponding phonemes.
 
 <p align="center">
-  <img src="image/tstrace-abrupt-cycle-50.png"  />
+  <img src="image/tsTRACE-sim-default-v2.png"  />
 </p>
 
 
@@ -186,26 +203,60 @@ Our aim is to make tsTRACE as intuitive as possible, but it's a complex bit of s
 
 * A similar scheme is used to plot word activations, but only the 15 most activated words are included by default (and you will see the set change dynamically if you animate the simulation, because the current top set can change from cycle to cycle). We can see that the copy of ABRUPT aligned with slice 4 is most active, with fairly high activations for ABRUPT at slice 5, the 'silence word' (\-) at slices 0-3, the 'uh' corresponding to A (/\^/) at slices 4, 5, and 9, RUB (/r\^b/) at slices 2 and 3, etc. We leave it to the reader to infer why these words at these alignments are getting strongly activated by the input /\-\^br\^pt\-/.
 
-* Now try checking the *Float mode* box. We get a very different view of phonemes and words: each row is replaced by floating letters representing word/phoneme units. The letter sequence sits at a Y-axis height equal to the unit's current activation, with each letter centered on its slice position along the X-axis, and the surrounding bounding box spanning the actual input duration of the word/phoneme (computed from the model's `spread` and per-phoneme `durationScalar` parameters). A small slice number is printed under each box so you can read off the alignment. At the phoneme level, you'll see copies of appropriate phonemes at or just after their locations in the input (with the maximally-aligned copy higher) and some hints at interesting competition (e.g., copies of /b/, /d/, and /t/ activated near word offset). Above each Float-mode panel are two small controls: a *Threshold* field (only items whose peak activation exceeds this raw value are plotted; default 0) and a *Top* field (cap on how many items are shown; default 15 for words, 100 for phonemes). The chart's Y-axis runs in raw activation units (\~\-0.3 to 1 by default), so threshold values match Y-axis tick marks directly.
+* Now try checking the 'Float mode' box. We get a very different view of phonemes and words, based on a schematic McClelland & Elman used in their 1986 paper. At the phoneme level, we see copies of appropriate phonemes at or just after their locations in the input (with the maximally-aligned copy having higher activation) and some hints at interesting competition (e.g., copies of /b/, /d/, and /t/ activated near word offset). The small numbers under boxes indicate the slice alignment of the phoneme. At the word level, we see the very most activated items from the previous screen shot with their left edges aligned with their alignment in that previous screenshot. Small numbers below boxes indicate word node alignments. The box around each unit spans the actual input duration of that word/phoneme, computed from the model's `spread`, `spreadScale`, and per-phoneme `durationScalar` parameters. Above each Float-mode panel are two small controls: a *Threshold* field (only items whose peak activation exceeds this raw value are plotted; default 0) and a *Top* field (cap on how many items are shown; default 15 for words, 100 for phonemes, capped at 500). The chart's Y-axis runs in raw activation units (\~\-0.3 to 1 by default), so threshold values match Y-axis tick marks directly.
 
 <p align="center">
-  <img src="image/tstrace-abrupt-cycle-50-toggled.png"  />
+  <img src="image/tsTRACE-sim-float-v2.png"  />
 </p>
 
-* Next, let's look at the Chart tab. Just click 'Chart', and you should see something like the next screenshot. By default, we will see the activations of the word copies with highest peak activations. The legend at the top tells what copy of what word each line corresponds to. Initially, all items are aligned at position 4 (e.g., *\^br\^pt [4]*) because the default chart mode is to use a specified *Alignment calculation*. There are many things you can explore here. Try changing to *Phonemes*, or from *Activations* to *Response Probabilities*, or from *Specified* alignment to *Max (Post-Hoc)*. If for some reason the chart needs to be redrawn, click *Refresh chart*.
+* Next, let's look at the Chart tab. Just click 'Chart', and you should see something like the next screenshot. By default, we will see the activations of the word copies with highest peak activations. The legend at the top tells what copy of what word each line corresponds to. Initially, all items are aligned at position 4 (e.g., *\^br\^pt [4]*) because the default chart mode is to use a specified *Alignment calculation*. This limits the chart to items aligned at that position.
+
+<p align="center">
+  <img src="image/tsTRACE-chart-default-v2.png"  />
+</p>
+
+* Let's try 'Max (Post-Hoc)' instead. Now it will chart the top 10 items no matter their alignment:
+
+<p align="center">
+  <img src="image/tsTRACE-chart-max-posthoc-v2.png"  />
+</p>
+
+* Interestingly, we see several copies of the silence ('-') word. If we don't want to include those, we click 'Exclude silence' and refresh the chart:
+
+<p align="center">
+  <img src="image/tsTRACE-chart-excludesilence-maxposthoc-v2.png"  />
+</p>
+
+* Now we just see 'regular' words, but we also multiple instances of the same words aligned at slices 4 and 5. If we just want 1 node per word (the most strongly activated one), we click 'Max instances only':
+  
+<p align="center">
+  <img src="image/tsTRACE-chart-excludesilence-maxonly-max-posthoc-v2.png"  />
+</p>
+
+* **Note**: we will normally prefer this final version of the chart. It is conventional to ignore additional copies of the same word, as well as silence. But *Max instances only* has a weakness: if we presented the word sequence /pattappat/ (pot-top-pot), we would really want to track both instances of *pot*, and *Max instances only* keeps just one. Float mode on the *Simulation* tab already shows both, because it suppresses *adjacent* copies of the same word (here at cycle 100 of a 101-cycle simulation):
+
+<p align="center">
+  <img src="image/tsTRACE-pattappat-v2.png"  />
+</p>
+
+* The *Exclude adjacent* checkbox does the same thing in the chart. Uncheck *Max instances only*, check *Exclude adjacent*, and refresh: a copy of a word is dropped only when the same word peaks higher one slice to its left or right. Now both instances of *pot* are charted (*pat [5]* and *pat [16]*), along with *top* (*tap [10]*). For a single word like /\^br\^pt/, *Exclude adjacent* and *Max instances only* give the same chart; they differ when the same word occurs more than once in the input.
+
+<p align="center">
+  <img src="image/tsTRACE-chart-pattappat-excludeadjacent.png"  />
+</p>
+
+* One limitation: when the *same phoneme* occurs twice in a row (e.g., the /tt/ in /pattappat/), the two copies blur into a single bump centered between them, so *Exclude adjacent* shows one series for that phoneme, at the in-between alignment. Uncheck *Exclude adjacent* to see every alignment.
+
+
+* There are many things you can explore here. Try changing to *Phonemes*, or from *Activations* to *Response Probabilities*, or from *Specified* alignment to *Max (Post-Hoc)*. If the chart does not update, click *Refresh chart*. If that does not work either --- sometimes the panel is blank after you click refresh --- resize the browser window slightly and it will redraw. This is a known bug.
 
 * You can hover the cursor over any cell in the four matrix panels on the *Simulation* tab (Model Input, Feature Activations, Word Activations, Phoneme Activations) to read the cell's *cycle*, row label, and raw activation value as a tooltip.
 
+* Note that you can also trigger a simulation from the Chart tab. So you could switch to the *Config-Parameters* tab, change a parameter, and then switch back to the Chart tab and click *Simulate*, rather than having to use the *Simulation* tab.
 
-<p align="center">
-  <img src="image/tstrace-chart-example.png"  />
-</p>
+* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, and "flow" data.  These are explained in sections below.
 
-* Note that you can also trigger a simulation from here. So you could switch to the *Config-Parameters* tab, change a parameter, and then switch back to the Chart tab and click *Simulate*, rather than having to use the *Simulation* tab.
-
-* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, and "flow" data. You can explore those data These are explained in sections below.
-
-* The data for the chart with your parameters is available under the *Chart Data* tab, where you can examine or save it.
+* The data for the chart with your parameters is available under the *Data-Chart* tab, where you can examine or save it.
 
 --------------
 [Return to *Table of Contents*](#table-of-contents)
@@ -384,6 +435,8 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 
 ## Simulation
 
+* *Model input* field (at the left of the toolbar). You can type directly into this field to change the input, and then click *Simulate* to run a simulation with the new input. The same field appears at the left of the toolbar on every tab that has a *Simulate* button (*Simulation*, *Chart*, and the *Data* tabs); they all edit the same input.
+
 * *Cycles to calculate*. Enter a value to change the total number of cycles in the simulation. Maximum (for historical reasons) is 287. This is more than enough for most purposes. This maximum could be changed in the source code, but would impose higher memory demands.
 
 * *Simulate*. Run a new simulation with the current parameters (those defined under the 3 *Config* tabs, as well as any changes to *Model input* or *Cycles to calculate* on the *Simulation* tab). When you click this button, you will see the button outline turn dark during processing, and return to light grey when it is done. If *Current cycle* is set to a value where the new parameters cause a change in any of the graph panels, you will see the graphs update.
@@ -395,8 +448,6 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 * *Float mode* checkbox. If this box is checked, the *Phoneme Activations* and *Word Activations* panels switch from a heatmap to a "floating letter" representation (based on Figure 5 [among others] from the original TRACE paper [McClelland & Elman, 1986]). See *graph* descriptions below for more details.
 
 * The [*Save sim data* button](#save-sim-data-button) always does the same thing.
-
-* *Model input* field. You can type directly into this field to change the input, and then click *Simulate* to run a simulation with the new input.   
 
 * All four panels share a unified time axis. The two input-grain panels (*Model Input*, *Feature Activations*) are labeled *Time (input cycles)*; the two phoneme-grain panels (*Phoneme Activations*, *Word Activations*) are labeled *Time (phoneme cycles)*. One phoneme cycle equals `slicesPerPhon` input cycles (3 by default). Hovering the cursor over any cell shows a tooltip with the cycle index, the row label, and the cell's raw activation value.
 
@@ -426,11 +477,11 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 
 * *Cycles to calculate*. Enter a value to change the total number of cycles in the simulation. Maximum (for historical reasons) is 287. This is more than enough for most purposes. This maximum could be changed in the source code, but would impose higher memory demands.
 
-* *Simulate*. Run a new simulation with the current parameters (those defined under the 3 *Config* tabs, as well as any changes to *Cycles to calculate* here or on the *Simulation* tab, or the *Model input* field in the *Simulation* tab). When you click this button, you will see the button outline turn dark during processing, and return to light grey when it is done. If *Current cycle* is set to a value where the new parameters cause a change in any of the graph panels, you will see the graphs update.
+* *Simulate*. Run a new simulation with the current parameters (those defined under the 3 *Config* tabs, as well as any changes to *Model input* or *Cycles to calculate* here or on the *Simulation* tab). When you click this button, you will see the button outline turn dark during processing, and return to light grey when it is done. If *Current cycle* is set to a value where the new parameters cause a change in any of the graph panels, you will see the graphs update.
 
 * The [*Save sim data* button](#save-sim-data-button) always does the same thing.
 
-* *Refresh chart*: click this when you change any chart parameters to update the chart.
+* *Refresh chart*: click this when you change any chart parameters to update the chart. If the chart still does not redraw, resize the browser window slightly (known bug).
 
 * *Analyze (words or phonemes)*: Change which level's units are being charted.
 
@@ -490,6 +541,8 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 
         * *Exclude silence*: If this is checked, the silence word or phoneme will not be included in the chart. If it is among the top X items, however, you will only see the others X-1 items.
 
+        * *Exclude adjacent*: Available when *Max instances only* is unchecked; it only affects *Max (Post-Hoc)* charts, since *Specified* alignment already shows one alignment per item. Removes near-duplicate copies of the same word/phoneme that are one slice apart: an alignment is dropped if the same item peaks higher at the alignment just before or just after it, so *ti [3]* and *ti [4]* collapse to whichever peaks higher. Only alignments that are local peaks across alignment remain. Filtering happens before the *Top* count is applied, so you still get up to the requested number of series.
+
         * *Max instances only*: When checked, each word/phoneme is plotted at most once (at its single highest-peak alignment). When unchecked (the default), the same word can appear multiple times if it has strong activation at several alignments — for example, with input `-titi-` and *Max (Post-Hoc)* selected, you will see separate series for *ti [3]*, *ti [4]*, *ti [5]*, *ti [8]*, and *ti [9]*. The *Top* count then ranks (item, alignment) pairs by peak value rather than ranking items. This applies to *Activations* and to *Response Probabilities* with the "All Items" Luce choice; "Forced Choice" continues to use the historical single-instance math.
 
         * *Use selected items* (only for words): place a check next to each item to include.
@@ -515,7 +568,7 @@ The Data tab provides 6 subtabs, described below.
 * The *Chart data* sub tab shows the exact data used at the moment to drive the chart on the *Chart* tab. In the example below, we see there is one column for 'cycle', and then 1 column for each word that is included in the plot. We can tell that the user has selected the 'Max (Post-Hoc)' alignment since we see words with a variety of alignments.
 
 <p align="center">
-  <img src="image/tstrace-chart-chart.png"  />
+  <img src="image/tsTRACE-data-chart.png"  />
 </p>
 
 * Note that you can trigger a simulation from here (by clicking *Simulate*), which you might want to do if you just want to tweak a parameter and then jump here to examine the raw chart data or save it.
@@ -534,7 +587,7 @@ The Data tab provides 6 subtabs, described below.
 * The [*Save sim data* button](#save-sim-data-button) always does the same thing.
 
 <p align="center">
-  <img src="image/tstrace-input.png"  />
+  <img src="image/tsTRACE-data-input.png"  />
 </p>
 
 --------------
@@ -551,7 +604,7 @@ The Data tab provides 6 subtabs, described below.
 * The [*Save sim data* button](#save-sim-data-button) always does the same thing.
 
 <p align="center">
-  <img src="image/tstrace-feature.png"  />
+  <img src="image/tsTRACE-data-feature.png"  />
 </p>
 
 --------------
@@ -569,7 +622,7 @@ The Data tab provides 6 subtabs, described below.
 
 
 <p align="center">
-  <img src="image/tstrace-phoneme.png"  />
+  <img src="image/tsTRACE-data-phoneme.png"  />
 </p>
 
 --------------
@@ -586,7 +639,7 @@ The Data tab provides 6 subtabs, described below.
 * The [*Save sim data* button](#save-sim-data-button) always does the same thing.
 
 <p align="center">
-  <img src="image/tstrace-word.png"  />
+  <img src="image/tsTRACE-data-word.png"  />
 </p>
 
 
@@ -604,7 +657,7 @@ The Data tab provides 6 subtabs, described below.
 * The columns are cycle, and then 16 data columns (described below the screenshot). These are each calculated once per cycle, so there is only 1 page of output, with one row per cycle, and nothing to step or animate through.
 
 <p align="center">
-  <img src="image/tstrace-levels-and-flow.png"  />
+  <img src="image/tsTRACE-data-levels-and-flow.png"  />
 </p>
 
 **Data columns in flow data**
@@ -653,7 +706,7 @@ The three Sum-of-absolute-values columns (`FeatSumAbs`, `PhonSumAbs`, `WordSumAb
 
 * Several tabs include the *Save sim data* button.
 
-* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, and "flow" data. You can explore those data These are explained in sections above.
+* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, and "flow" data. You can explore those data; they are explained in sections above.
 
 * One key difference between the descriptions above and the data in the CSV files is that the CSV files include an extra column showing what the *Model input* was for the simulation.
 
@@ -728,11 +781,10 @@ A number of usability and analysis improvements have been added since the origin
 
 * **Box geometry that matches the input.** In Float mode, each word/phoneme box is drawn so its width corresponds to the *actual model input duration* of the unit, derived from the model's `spread`, `spreadScale`, and per-phoneme `durationScalar` values. Letters are centered on their slice positions, and a small slice number is printed below each box.
 
-* **Multi-instance Max (Post-Hoc).** On the *Chart* tab, *Max (Post-Hoc)* now shows multiple alignments of the same word/phoneme as separate series (e.g., *ti [3]*, *ti [4]*, *ti [8]* for input `-titi-`). The new *Max instances only* checkbox restores the historical single-alignment-per-item view. This applies to *Activations* and to *Response Probabilities* with the "All Items" Luce choice.
+* **Multi-instance Max (Post-Hoc).** On the *Chart* tab, *Max (Post-Hoc)* now shows multiple alignments of the same word/phoneme as separate series (e.g., *ti [3]*, *ti [4]*, *ti [8]* for input `-titi-`). The new *Max instances only* checkbox restores the historical single-alignment-per-item view. A companion *Exclude adjacent* checkbox keeps multiple alignments but drops copies that are one slice away from a higher-peaking copy of the same item. This applies to *Activations* and to *Response Probabilities* with the "All Items" Luce choice.
 
 * **Flow Indices.** The *Content* type formerly named "Competition Index" is now *Flow Indices*, and emits ten time series at once (Word/Phoneme/Feature activation; Word/Phoneme/Feature competition or inhibition; WP and PF feedback; FP and PW feedforward). A new *Activation summation* dropdown (Absolute / Positive / Raw, defaulting to Absolute) controls how the three activation series sum across layer cells.
 
-* **Chart redraw fix.** The *Chart* tab no longer requires a window resize to render correctly on first load.
 
 --------------
 [Return to *Table of Contents*](#table-of-contents)
