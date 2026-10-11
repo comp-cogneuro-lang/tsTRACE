@@ -138,6 +138,11 @@ export interface TraceSimAnalysisConfig {
   // alignment (the historical behavior). Default false: each strong
   // alignment of an item is its own series.
   maxInstancesOnly?: boolean;
+  // When true (and maxInstancesOnly is false), the multi-instance path drops
+  // any (item, alignment) pair whose peak is lower than the same item's peak
+  // at an adjacent alignment (a-1 or a+1), so near-duplicate copies offset by
+  // one slice collapse to the locally strongest alignment.
+  excludeAdjacent?: boolean;
   // How the Flow Indices activation series (Word/Phoneme/Feature activation)
   // sum across layer cells. RAW = include negatives; POSITIVE = positive
   // cells only; ABSOLUTE = sum of |cell value|. Other Flow Indices series
@@ -186,7 +191,7 @@ const doMultiInstanceMaxPosthoc = (
   contentType: TraceContentType,
   kValue: number
 ): TraceDataset[] => {
-  const { sim, domain, itemsToWatch, excludeSilence, maxInstancesOnly } = config;
+  const { sim, domain, itemsToWatch, excludeSilence, maxInstancesOnly, excludeAdjacent } = config;
   const allLabels =
     domain == TraceDomain.WORDS
       ? sim.config.lexicon.map((x) => x.phon)
@@ -244,13 +249,23 @@ const doMultiInstanceMaxPosthoc = (
   for (let i = 0; i < candidateIndices.length; i++) {
     const idx = candidateIndices[i];
     const label = candidateLabels[i];
+    const peaks: number[] = [];
     for (let a = 0; a < numSlices; a++) {
       let peak = -Infinity;
       for (let t = 0; t < dataSetLength; t++) {
         const v = valueAt(t, idx, a);
         if (v > peak) peak = v;
       }
-      pairs.push({ label, idx, alignment: a, peak });
+      peaks.push(peak);
+    }
+    for (let a = 0; a < numSlices; a++) {
+      // excludeAdjacent: keep only alignments that are local peak maxima
+      // across alignment; on ties the lower alignment survives.
+      if (excludeAdjacent && !maxInstancesOnly) {
+        if (a > 0 && peaks[a - 1] >= peaks[a]) continue;
+        if (a < numSlices - 1 && peaks[a + 1] > peaks[a]) continue;
+      }
+      pairs.push({ label, idx, alignment: a, peak: peaks[a] });
     }
   }
   pairs.sort((a, b) => b.peak - a.peak);

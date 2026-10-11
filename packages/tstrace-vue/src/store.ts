@@ -62,6 +62,9 @@ class Store {
     // multiple strong alignments shows each alignment as a separate series.
     // When true: collapses to one alignment per item (the historical view).
     maxInstancesOnly: false,
+    // When true (and maxInstancesOnly is false): drop any alignment of an
+    // item whose peak is below the same item's peak at an adjacent alignment.
+    excludeAdjacent: false,
     // How the Flow Indices activation series sum across layer cells.
     // ABSOLUTE (default) uses the magnitude of every cell, POSITIVE uses
     // only positive cells, RAW includes negatives so contributions cancel.

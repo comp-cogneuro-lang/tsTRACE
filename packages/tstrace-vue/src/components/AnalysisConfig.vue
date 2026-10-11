@@ -72,6 +72,17 @@
       </div>
       <div class="control">
         <label class="checkbox">
+          <input
+            type="checkbox"
+            name="items"
+            :disabled="config.maxInstancesOnly"
+            v-model="config.excludeAdjacent"
+          />
+          Exclude adjacent
+        </label>
+      </div>
+      <div class="control">
+        <label class="checkbox">
           <input type="checkbox" name="items" v-model="config.maxInstancesOnly" />
           Max instances only
         </label>
