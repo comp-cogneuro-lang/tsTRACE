@@ -4,17 +4,19 @@ export const serializeJtLexicon = (lex: TraceWord[]) => {
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<lexicon>',
-    ...lex.map((word) => [
-      '  <lexeme>',
-      ...(word.label ? [`    <label>${word.label}</label>`] : []),
-      `    <phonology>${word.phon}</phonology>`,
-      ...(word.freq ? [`    <frequency>${word.freq}</frequency>`] : []),
-      ...(word.prime ? [`    <prime>${word.prime}</prime>`] : []),
-      '  </lexeme>',
-    ]),
+    ...([] as string[]).concat(
+      ...lex.map((word) => [
+        '  <lexeme>',
+        ...(word.label ? [`    <label>${word.label}</label>`] : []),
+        `    <phonology>${word.phon}</phonology>`,
+        ...(word.freq ? [`    <frequency>${word.freq}</frequency>`] : []),
+        ...(word.prime ? [`    <prime>${word.prime}</prime>`] : []),
+        '  </lexeme>',
+      ])
+    ),
     '</lexicon>',
     '',
-  ];
+  ].join('\n');
 };
 
 const formatter = Intl.NumberFormat('en-US', {
@@ -29,13 +31,15 @@ export const serializeJtPhonology = (phonology: TracePhone[]) => {
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<phonology>',
     '  <phonemes>',
-    ...phonology.map((phon) => [
-      '    <phoneme>',
-      `      <symbol>${phon.label}</symbol>`,
-      `      <features>${serializeNumberArray(phon.features)}</features>`,
-      `      <durationScalar>${serializeNumberArray(phon.features)}</durationScalar>`,
-      `    </phoneme>`,
-    ]),
+    ...([] as string[]).concat(
+      ...phonology.map((phon) => [
+        '    <phoneme>',
+        `      <symbol>${phon.label}</symbol>`,
+        `      <features>${serializeNumberArray(phon.features)}</features>`,
+        `      <durationScalar>${serializeNumberArray(phon.durationScalar)}</durationScalar>`,
+        `    </phoneme>`,
+      ])
+    ),
     '  </phonemes>',
     '</phonology>',
     '',
