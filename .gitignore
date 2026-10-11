@@ -117,19 +117,10 @@ dist
 
 .DS_Store
 
-
 # Test artifacts (generated during CI/regression tests)
 packages/tstrace/baseline_data/regression_results.json
 packages/tstrace/baseline_data/pf_modification_results.json
 packages/tstrace/temp_test_output/
 
-
 # Editor backup files
 *~
-plans.md
-nk-features
-plans.md
-logs
-yarn.lock
-nk-features-figures-notes.txt
-nk-features-bundle.tar.gz
