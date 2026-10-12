@@ -39,6 +39,8 @@ export default class TraceNet {
 
   private inputSlice: number = 0;
   private __nreps: number = 1;
+  // source of uniform random numbers for all noise; seeded when config.seed is set
+  private random: () => number = Math.random;
 
   constructor(config: TraceConfig = createDefaultConfig()) {
     this.config = config;
@@ -52,6 +54,8 @@ export default class TraceNet {
     this.lengthNormalizationScale = 1 / util.average(this.config.lexicon.map((x) => x.phon.length));
     //System.out.println("length_normalization_scale:"+length_normalization_scale)
     this.inputSlice = 0;
+    // re-seed on every reset so a seeded run is repeatable
+    this.random = this.config.seed == null ? Math.random : util.seededRandom(this.config.seed);
 
     this.inputLayer = util.zeros2D(
       this.config.continuaPerFeature * this.config.numFeatures,
@@ -313,7 +317,7 @@ export default class TraceNet {
     if (this.config.noiseSD != 0) {
       for (let feat = 0; feat < this.config.numFeatures * this.config.continuaPerFeature; feat++) {
         for (let islice = 0; islice < this.config.fSlices; islice++) {
-          this.inputLayer[feat][islice] += util.gauss(0.0, this.config.noiseSD);
+          this.inputLayer[feat][islice] += util.gauss(0.0, this.config.noiseSD, this.random);
         }
       }
     }
@@ -889,7 +893,7 @@ export default class TraceNet {
       for (let feat = 0; feat < this.config.numFeatures * this.config.continuaPerFeature; feat++) {
         if (stochasticitySD) {
           //apply gaussian noise here
-          this.featNet[feat][slice] += util.gauss(0.0, stochasticitySD); //this adds the noise
+          this.featNet[feat][slice] += util.gauss(0.0, stochasticitySD, this.random); //this adds the noise
         }
 
         let t = this.featLayer[feat][slice];
@@ -927,7 +931,7 @@ export default class TraceNet {
       for (let phon = 0; phon < this.config.phonology.length; phon++) {
         if (stochasticitySD) {
           //apply gaussian noise here
-          this.phonNet[phon][pslice] += util.gauss(0.0, stochasticitySD); // this adds the noise
+          this.phonNet[phon][pslice] += util.gauss(0.0, stochasticitySD, this.random); // this adds the noise
         }
 
         let diff;
@@ -967,7 +971,7 @@ export default class TraceNet {
 
         if (stochasticitySD) {
           // apply gaussian noise here
-          this.wordNet[word][slice] += util.gauss(0.0, stochasticitySD); // this adds the noise
+          this.wordNet[word][slice] += util.gauss(0.0, stochasticitySD, this.random); // this adds the noise
         }
 
         let t = this.wordLayer[word][slice];

@@ -35,11 +35,11 @@ export default defineComponent({
   name: 'ConfigInput',
   props: {
     modelValue: {
-      type: [String, Number],
+      type: [String, Number] as PropType<string | number | null>,
       default: '',
     },
     lastValue: {
-      type: [String, Number],
+      type: [String, Number] as PropType<string | number | null>,
       default: null,
     },
     label: {
@@ -62,12 +62,22 @@ export default defineComponent({
       type: Number,
       default: 0.1,
     },
+    // when true, a blank number field means null instead of 0
+    nullable: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     return {
       onChange: (evt: any) => {
-        const value = props.type === 'number' ? Number(evt.target.value) : evt.target.value;
+        const raw = evt.target.value;
+        if (props.nullable && String(raw).trim() === '') {
+          emit('update:modelValue', null);
+          return;
+        }
+        const value = props.type === 'number' ? Number(raw) : raw;
         emit('update:modelValue', value);
       },
     };

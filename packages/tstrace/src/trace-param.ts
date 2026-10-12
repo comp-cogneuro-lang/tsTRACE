@@ -121,6 +121,8 @@ export default interface TraceConfig {
   stochasticitySD: number
   /** extra processing noise at F P W layers, independent of (and combined with) stochasticitySD */
   stochasticity: Stochasticity
+  /** integer seed for input noise and stochasticity; null uses an unseeded (different every run) generator */
+  seed: number | null
 
   //attention, phoneme learning rate params (cf. Mirman et al. 2005)
   atten: number
@@ -215,6 +217,7 @@ export const createDefaultConfig = (): TraceConfig => ({
     P: 0,
     W: 0,
   },
+  seed: null,
   atten: 1.0,
   bias: 0.0,
   learningrate: 0.0,

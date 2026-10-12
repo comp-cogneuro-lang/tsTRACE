@@ -133,6 +133,14 @@
         note="Extra word noise (SD)"
       />
       <ConfigInput
+        v-model="config.seed"
+        :last-value="lastConfig.seed"
+        label="Random seed"
+        note="Blank = different noise every run; an integer repeats runs exactly"
+        :step="1"
+        nullable
+      />
+      <ConfigInput
         v-model="config.atten"
         :last-value="lastConfig.atten"
         label="Attention"
