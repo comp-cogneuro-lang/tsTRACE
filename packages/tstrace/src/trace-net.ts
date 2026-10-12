@@ -867,18 +867,29 @@ export default class TraceNet {
   }
 
   /**
+   * SD of the processing noise at one layer. The global and per-layer noise are
+   * independent Gaussian sources, so their variances add.
+   */
+  private getStochasticitySD(layer: 'F' | 'P' | 'W'): number {
+    const globalSD = this.config.stochasticitySD || 0;
+    const layerSD = this.config.stochasticity?.[layer] || 0;
+    return Math.sqrt(globalSD * globalSD + layerSD * layerSD);
+  }
+
+  /**
    * final processing of feature units incorporates stochasticity (if on) and
    * implements decay to resting level behavior.
    */
   public featUpdate() {
     const { min, max } = this.config;
+    const stochasticitySD = this.getStochasticitySD('F');
     this.globalFeatSumAll = 0;
     this.globalFeatSumPos = 0;
     for (let slice = 0; slice < this.config.fSlices; slice++) {
       for (let feat = 0; feat < this.config.numFeatures * this.config.continuaPerFeature; feat++) {
-        if (this.config.stochasticitySD) {
+        if (stochasticitySD) {
           //apply gaussian noise here
-          this.featNet[feat][slice] += util.gauss(0.0, this.config.stochasticitySD); //this adds the noise
+          this.featNet[feat][slice] += util.gauss(0.0, stochasticitySD); //this adds the noise
         }
 
         let t = this.featLayer[feat][slice];
@@ -909,13 +920,14 @@ export default class TraceNet {
    */
   public phonUpdate() {
     const pSlices = this.getPSlices();
+    const stochasticitySD = this.getStochasticitySD('P');
     this.globalPhonSumAll = 0;
     this.globalPhonSumPos = 0;
     for (let pslice = 0; pslice < pSlices; pslice++) {
       for (let phon = 0; phon < this.config.phonology.length; phon++) {
-        if (this.config.stochasticitySD) {
+        if (stochasticitySD) {
           //apply gaussian noise here
-          this.phonNet[phon][pslice] += util.gauss(0.0, this.config.stochasticitySD); // this adds the noise
+          this.phonNet[phon][pslice] += util.gauss(0.0, stochasticitySD); // this adds the noise
         }
 
         let diff;
@@ -944,6 +956,7 @@ export default class TraceNet {
   public wordUpdate() {
     const wSlices = this.getWSlices();
     const { min, max } = this.config;
+    const stochasticitySD = this.getStochasticitySD('W');
     this.globalWordSumAll = 0;
     this.globalWordSumPos = 0;
     for (let word = 0; word < this.config.lexicon.length; word++) {
@@ -952,9 +965,9 @@ export default class TraceNet {
         this.wordNet[word][slice] *= this.config.atten;
         this.wordNet[word][slice] -= this.config.bias;
 
-        if (this.config.stochasticitySD) {
+        if (stochasticitySD) {
           // apply gaussian noise here
-          this.wordNet[word][slice] += util.gauss(0.0, this.config.stochasticitySD); // this adds the noise
+          this.wordNet[word][slice] += util.gauss(0.0, stochasticitySD); // this adds the noise
         }
 
         let t = this.wordLayer[word][slice];

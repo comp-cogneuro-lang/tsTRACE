@@ -115,6 +115,24 @@
         note="McClelland: 0.02"
       />
       <ConfigInput
+        v-model="config.stochasticity.F"
+        :last-value="lastConfig.stochasticity.F"
+        label="STOCH[f]"
+        note="Extra feature noise (SD)"
+      />
+      <ConfigInput
+        v-model="config.stochasticity.P"
+        :last-value="lastConfig.stochasticity.P"
+        label="STOCH[p]"
+        note="Extra phoneme noise (SD)"
+      />
+      <ConfigInput
+        v-model="config.stochasticity.W"
+        :last-value="lastConfig.stochasticity.W"
+        label="STOCH[w]"
+        note="Extra word noise (SD)"
+      />
+      <ConfigInput
         v-model="config.atten"
         :last-value="lastConfig.atten"
         label="Attention"

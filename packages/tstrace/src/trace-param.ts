@@ -35,6 +35,12 @@ export interface Rest {
   W?: number
 }
 
+export interface Stochasticity {
+  F?: number
+  P?: number
+  W?: number
+}
+
 export interface Alpha {
   IF?: number
   FP?: number
@@ -113,6 +119,8 @@ export default interface TraceConfig {
   noiseSD: number
   /** amount of processing noise */
   stochasticitySD: number
+  /** extra processing noise at F P W layers, independent of (and combined with) stochasticitySD */
+  stochasticity: Stochasticity
 
   //attention, phoneme learning rate params (cf. Mirman et al. 2005)
   atten: number
@@ -202,6 +210,11 @@ export const createDefaultConfig = (): TraceConfig => ({
   deltaInput: 6,
   noiseSD: 0,
   stochasticitySD: 0,
+  stochasticity: {
+    F: 0,
+    P: 0,
+    W: 0,
+  },
   atten: 1.0,
   bias: 0.0,
   learningrate: 0.0,

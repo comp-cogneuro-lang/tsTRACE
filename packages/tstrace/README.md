@@ -103,6 +103,7 @@ constructing a `TraceSim`. The fields you'll touch most:
 | `spread`, `spreadScale` | 7 × 6, 7 × 1 | Temporal ramp of each feature continuum |
 | `nreps` | 1 | Input slices advanced per cycle; negative = substep mode (see below) |
 | `noiseSD`, `stochasticitySD` | 0, 0 | Input noise / McClelland (1991) activation noise |
+| `stochasticity` (F, P, W) | 0, 0, 0 | Extra per-layer activation noise (SD), combined with `stochasticitySD` as √(global² + layer²) |
 | `freqNode`, `primeNode` | off | Frequency and priming (rest / weight / post-activation variants) |
 | `continuumSpec` | `''` | Build an ambiguous phoneme continuum (see below) |
 | `lengthNormalization` | 0 | Scale word-to-word inhibition by word length |
