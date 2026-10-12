@@ -287,6 +287,8 @@ Before going through the parameter that you can change, we simply note that the 
 
 * *Load from JSON* / *Save JSON*. Save the entire current configuration (all parameters, the model input, and the current phonology and lexicon) to a JSON file, or load one you saved earlier. This is the easiest way to return to a known configuration.
 
+* *Restore defaults*. Set every parameter on this tab to its default value. The model input, phonology, and lexicon are left as they are (use the Phonology and Lexicon tabs to change those).
+
 * *Model input* field. You can type directly into this field to change the input, and then press "Enter" on your keyboard to update.
 
 * *Continuum spec* (continuum specification) controls:
@@ -302,7 +304,7 @@ Before going through the parameter that you can change, we simply note that the 
 Note that more details about parameters are available in the companion document <a href="structure-of-trace.md" data-tstrace-doc="structure-of-trace">The Structure of TRACE</a>, available in the Docs tab.
 </mark>
 
-The remaining items in this panel are model parameters. If you change any of these, a 'reset' button will appear. Crucially, the 'reset' returns to the previously specified value for the feature, *not* the default. <span style="color:red">Currently, if you need a return to *all* defaults, you must change each one back manually or simply reload the GUI.</span>
+The remaining items in this panel are model parameters. When a value differs from its default, a *Default* button appears under its label; click it to return that parameter to its default. When a value differs from the one used in the most recent simulation, a *Reset* button also appears; click it to return to that value (which is not necessarily the default). To return *all* parameters to their defaults at once, use *Restore defaults* at the top of the panel.
 
 * **ALPHA** (between-level gain) parameters: these are **if** (input to features), **fp**  (features to phonemes), **pw** (phonemes to words), **pf** (phonemes to features), and **wp** (words to phonemes).
 

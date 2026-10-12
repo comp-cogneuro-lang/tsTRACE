@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watchEffect } from 'vue';
+import { computed, defineComponent, ref, watch, watchEffect } from 'vue';
 import { getStore } from '../store';
 
 interface ContinuumSpec {
@@ -78,6 +78,14 @@ export default defineComponent({
       // update the config whenever spec is updated, or it is enabled/disabled
       store.config.continuumSpec = enabled.value ? compiledSpec.value : '';
     });
+
+    // uncheck when the spec is cleared elsewhere (e.g. Restore defaults)
+    watch(
+      () => store.config.continuumSpec,
+      (spec) => {
+        if (!spec) enabled.value = false;
+      }
+    );
 
     return {
       sortedPhons,

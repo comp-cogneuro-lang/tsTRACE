@@ -4,8 +4,17 @@
       <label class="label" style="width: 10rem">{{ label }}</label>
       <button
         class="button is-small"
+        v-if="defaultValue !== undefined && defaultValue !== modelValue"
+        @click="$emit('update:modelValue', defaultValue)"
+        title="Set to the default value"
+      >
+        Default
+      </button>
+      <button
+        class="button is-small"
         v-if="lastValue != null && lastValue !== modelValue"
         @click="$emit('update:modelValue', lastValue)"
+        title="Set to the value used in the last simulation"
       >
         Reset
       </button>
@@ -41,6 +50,11 @@ export default defineComponent({
     lastValue: {
       type: [String, Number] as PropType<string | number | null>,
       default: null,
+    },
+    // no Default button when left undefined
+    defaultValue: {
+      type: [String, Number] as PropType<string | number | null>,
+      default: undefined,
     },
     label: {
       type: String,
