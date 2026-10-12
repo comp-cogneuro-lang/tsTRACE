@@ -32,7 +32,7 @@ tsTRACE is a JavaScript (more precisely, TypeScript) re-implementation of the Ja
         *   [Simulation](#simulation)
         *   [Chart](#chart)
         *   [Data tabs](#data-tabs)
-            *   [Data-Chart data](#data-chart-data)
+            *   [Data-Chart](#data-chart)
             *   [Data-Input](#data-input)
             *   [Data-Features](#data-features)
             *   [Data-Phonemes](#data-phonemes)
@@ -282,8 +282,10 @@ The screenshot below shows the top part of the *Config-Parameters* sub-tab. The 
 Before going through the parameter that you can change, we simply note that the model input panel displays input corresponding to text in the *Model Input* text field. If you change the contents of that field, hit 'Enter' on your keyboard for it to register, and you will see the *Model Input* **panel** update.
 
 <p align="center">
-  <img src="image/tstrace-config-parameters.png"  />
+  <img src="image/tsTRACE-config-tab-parameters.png"  />
 </p>
+
+* *Load from JSON* / *Save JSON*. Save the entire current configuration (all parameters, the model input, and the current phonology and lexicon) to a JSON file, or load one you saved earlier. This is the easiest way to return to a known configuration.
 
 * *Model input* field. You can type directly into this field to change the input, and then press "Enter" on your keyboard to update.
 
@@ -297,7 +299,7 @@ Before going through the parameter that you can change, we simply note that the 
 #### *Model parameters*
 
 <mark>
-Note that more details about parameters are available in the companion document <a href="structure-of-trace.md" data-tstrace-doc="structure-of-trace">The Structure of TRACE</a>, which is shipped alongside tsTRACE.
+Note that more details about parameters are available in the companion document <a href="structure-of-trace.md" data-tstrace-doc="structure-of-trace">The Structure of TRACE</a>, available in the Docs tab.
 </mark>
 
 The remaining items in this panel are model parameters. If you change any of these, a 'reset' button will appear. Crucially, the 'reset' returns to the previously specified value for the feature, *not* the default. <span style="color:red">Currently, if you need a return to *all* defaults, you must change each one back manually or simply reload the GUI.</span>
@@ -312,7 +314,9 @@ The remaining items in this panel are model parameters. If you change any of the
 
 * **Input Noise**. Standard deviation of Gaussian noise with mean of 0.0 to add to all input nodes. See Magnuson et al. (2018) for an example.
 
-* **Stochasticity**. Standard deviation of Gaussian noise with mean of 0.0 to add to **all** nodes of the model at each time step. See McCelland (1991). McClelland reports that a value of 0.02 adds a substantial amount of noise.
+* **Stochasticity**. Standard deviation of Gaussian noise with mean of 0.0 added to the net input of every feature, phoneme, and word node (at every time slice) on each cycle, just before activations are updated. A fresh value is drawn for each node on each cycle. Input nodes are not affected (see **Input Noise**). Because noise passes through the usual activation update, positive noise moves a node farther than negative noise when the node is near its resting level. Noise is not seeded, so repeated runs with the same settings will differ. See McClelland (1991). McClelland reports that a value of 0.02 adds a substantial amount of noise.
+
+* **STOCH** (per-level stochasticity) parameters: there are separate values for **f** (feature level), **p** (phoneme level), and **w** (word level). Each is the standard deviation of additional Gaussian noise (mean 0.0) added to that level's net input on each cycle, on top of the global **Stochasticity** value. The two sources are independent, so their variances add: the noise SD at a level is √(Stochasticity² + STOCH²). For example, Stochasticity = 0.02 and STOCH[w] = 0.01 gives an SD of about 0.022 at the word level and 0.02 at the other levels. To add noise to only one level, leave Stochasticity at 0 and set that level's STOCH value. Defaults are 0.
 
 * **Attention (lexical gain).** Allows a type of lexical emphasis. See Mirman et al. (2014).
 
@@ -377,12 +381,14 @@ The remaining items in this panel are model parameters. If you change any of the
 At this tab, you will see a display as in this screenshot.
 
 <p align="center">
-  <img src="image/tstrace-config-phonology.png"  />
+  <img src="image/tsTRACE-config-tab-phonology.png"  />
 </p>
 
 * *Load from XML* allows you to replace the current phonology parameters with ones you read in from an XML file.
 
 * *Save XML* saves the current phonology parameters to an XML file with a ".jt" extension.
+
+* *Load from JSON* / *Save JSON* do the same with a JSON file.
 
 * Phoneme editor
     * Click on a phoneme and then you can change the label, or change its feature definitions.
@@ -401,7 +407,7 @@ At this tab, you will see a display as in this screenshot.
 
 #### Config-Lexicon
 
-The Lexicon window has 3 buttons (*add word*, *load from XML*, *save XML*). See screenshot below that shows just the first few rows of the lexicon.
+The Lexicon window has 5 buttons (*Add word*, *Load from XML*, *Save XML*, *Load from JSON*, *Save JSON*). See screenshot below that shows just the first few rows of the lexicon.
 
 * *Add word* adds a row at the top with the "Lexical Items" field blank and frequency and priming set to 0. Note that by default, frequency and priming are turned off; see relevant parameters in [Config-Parameters](#config-parameters).
 
@@ -409,8 +415,10 @@ The Lexicon window has 3 buttons (*add word*, *load from XML*, *save XML*). See 
 
 * *Save XML* saves the current lexicon to an XML file with a ".jt" extension.
 
+* *Load from JSON* / *Save JSON* do the same with a JSON file.
+
 <p align="center">
-  <img src="image/tstrace-config-lexicon.png"  />
+  <img src="image/tsTRACE-config-tab-lexicon.png"  />
 </p>
 
 If you save the lexicon, you will get a .XML like this, which has been edited to only include 2 words. To keep file size small, the value for Priming is only included if it is not 0. In this case, we have actually edited the XML file after saving it. If we read this in using *Load from XML*, we'll see that Priming = 1 for the first word, but 0 for the second, even though no Priming value was specified for the second word in the file (or rather, because no value was specified).
@@ -563,9 +571,9 @@ In the lexicon screen, there are 2 kinds of **Delete** buttons.
 
 The Data tab provides 6 subtabs, described below.
 
-### Data-Chart data
+### Data-Chart
 
-* The *Chart data* sub tab shows the exact data used at the moment to drive the chart on the *Chart* tab. In the example below, we see there is one column for 'cycle', and then 1 column for each word that is included in the plot. We can tell that the user has selected the 'Max (Post-Hoc)' alignment since we see words with a variety of alignments.
+* The *Chart* sub-tab shows the exact data used at the moment to drive the chart on the *Chart* tab. In the example below, we see there is one column for 'cycle', and then 1 column for each word that is included in the plot. We can tell that the user has selected the 'Max (Post-Hoc)' alignment since we see words with a variety of alignments.
 
 <p align="center">
   <img src="image/tsTRACE-data-chart.png"  />
@@ -573,7 +581,7 @@ The Data tab provides 6 subtabs, described below.
 
 * Note that you can trigger a simulation from here (by clicking *Simulate*), which you might want to do if you just want to tweak a parameter and then jump here to examine the raw chart data or save it.
 
-* You can *Save sim data*, which will allow you to download the data in the window to a CSV file. **CURRENTLY, THIS ACTUALLY JUST DOES THE SAME THING AS OTHER SAVE SIM DATA BUTTONS AND DOES NOT SAVE THE CHART DATA.**
+* The [*Save sim data* button](#save-sim-data-button) always does the same thing; the zip file it downloads includes these chart data as `chart-data.csv`.
 
 --------------
 [Return to *Table of Contents*](#table-of-contents)
@@ -582,7 +590,7 @@ The Data tab provides 6 subtabs, described below.
 
 ### Data-Input
 
-* This page displays the input pattern, which is a  features (+1 for the cycles column) x cycles matrix. Currently, this tab includes animation controls, but the input pattern is fixed. Although it is applied one row at a time to the Features layer, the input matrix is predefined and does not change. (This issue is noted as a desired future change.)
+* This page displays the input pattern, which is a  features (+1 for the cycles column) x cycles matrix. The input matrix is predefined and does not change during a simulation (it is applied one column at a time to the Features layer), so this tab has no *Current cycle* controls.
 
 * The [*Save sim data* button](#save-sim-data-button) always does the same thing.
 
@@ -662,39 +670,41 @@ The Data tab provides 6 subtabs, described below.
 
 **Data columns in flow data**
 
-1. FeatureSumAll: Sum of all units in the feature level.
+The names below are the column headers shown on the *Flow* sub-tab and used in `levels-and-flows.csv` (which also has an `input` column).
 
-2. FeatSumPos: Sum of positive activations in the feature level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state).
+1. `feature_sum_all`: Sum of all units in the feature level.
 
-3. FeatSumAbs: Sum of \|activation\| across the feature level (always non-negative; reflects total feature-layer activity magnitude).
+2. `feature_sum_pos`: Sum of positive activations in the feature level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state).
 
-4. FeatureCompetition: Sum of inhibition being transmitted within the feature level.
+3. `feature_sum_abs`: Sum of \|activation\| across the feature level (always non-negative; reflects total feature-layer activity magnitude).
 
-5. PhonSumAll: Sum of all units in the phoneme level.
+4. `feature_competition`: Sum of inhibition being transmitted within the feature level.
 
-6. PhonSumPos: Sum of positive activations in the phoneme level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state).
+5. `phon_sum_all`: Sum of all units in the phoneme level.
 
-7. PhonSumAbs: Sum of \|activation\| across the phoneme level.
+6. `phon_sum_pos`: Sum of positive activations in the phoneme level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state).
 
-8. PhonemeCompetition: Sum of inhibition being transmitted within the phoneme level.
+7. `phon_sum_abs`: Sum of \|activation\| across the phoneme level.
 
-9. WordSumAll: Sum of all units in the word level.
+8. `phon_competition`: Sum of inhibition being transmitted within the phoneme level.
 
-10. WordSumPos: Sum of positive activations in the word level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state).
+9. `word_sum_all`: Sum of all units in the word level.
 
-11. WordSumAbs: Sum of \|activation\| across the word level.
+10. `word_sum_pos`: Sum of positive activations in the word level (excludes zeroes and negative values, which one might want to do since nodes with negative values may still be at resting state).
 
-12. LexicalCompetition: Sum of inhibition being transmitted within the word level.
+11. `word_sum_abs`: Sum of \|activation\| across the word level.
 
-13. FeatToPhonSum: Total activity flowing from features to phonemes.
+12. `lexical_competition`: Sum of inhibition being transmitted within the word level.
 
-14. PhonToFeatSum: Total activity flowing from phonemes to features (is zero by default).
+13. `feat_to_phon`: Total activity flowing from features to phonemes.
 
-15. PhonToWordSum: Total activity flowing from phonemes to words.
+14. `phon_to_feat`: Total activity flowing from phonemes to features (is zero by default).
 
-16. WordToPhonSum: Total activity flowing from words to phonemes.
+15. `phon_to_word`: Total activity flowing from phonemes to words.
 
-The three Sum-of-absolute-values columns (`FeatSumAbs`, `PhonSumAbs`, `WordSumAbs`) match the *Absolute sums* option of the *Activation summation* dropdown in the *Chart* tab's [Flow Indices](#chart) view.
+16. `word_to_phon`: Total activity flowing from words to phonemes.
+
+The three sum-of-absolute-values columns (`feature_sum_abs`, `phon_sum_abs`, `word_sum_abs`) match the *Absolute sums* option of the *Activation summation* dropdown in the *Chart* tab's [Flow Indices](#chart) view.
 
 
 --------------
@@ -706,7 +716,7 @@ The three Sum-of-absolute-values columns (`FeatSumAbs`, `PhonSumAbs`, `WordSumAb
 
 * Several tabs include the *Save sim data* button.
 
-* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, and "flow" data. You can explore those data; they are explained in sections above.
+* If you click the *Save sim data* button, you will be able to download a zip file containing CSV records of the input, features, phonemes, words, "flow" data, and the current chart data. You can explore those data; they are explained in sections above.
 
 * One key difference between the descriptions above and the data in the CSV files is that the CSV files include an extra column showing what the *Model input* was for the simulation.
 
