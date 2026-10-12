@@ -4,6 +4,13 @@ import TraceConfig, { createDefaultConfig } from './trace-param';
 import TracePhones from './trace-phones';
 import * as util from './util';
 
+/** the input slices one phoneme of the model input contributes to (inclusive) */
+export interface InputPhonemeSpan {
+  label: string
+  start: number
+  end: number
+}
+
 export default class TraceNet {
   private config: TraceConfig;
   public phonemes: TracePhones;
@@ -41,6 +48,8 @@ export default class TraceNet {
   private __nreps: number = 1;
   // source of uniform random numbers for all noise; seeded when config.seed is set
   private random: () => number = Math.random;
+  // input slices each phoneme of the model input touches, filled by createInput
+  private inputPhonemeSpans: InputPhonemeSpan[] = [];
 
   constructor(config: TraceConfig = createDefaultConfig()) {
     this.config = config;
@@ -233,10 +242,24 @@ export default class TraceNet {
     // create the input layer.
     // loop over phoneme input. go to next phoneme and step 6 slices. until the end of the input is reached or
     // FSLICES is reached
+    this.inputPhonemeSpans = [];
+    // widen the current phoneme's span to include slice t if it adds anything there
+    let span: InputPhonemeSpan | null = null;
+    const touch = (t: number, value: number) => {
+      if (span && value !== 0) {
+        span.start = Math.min(span.start, t);
+        span.end = Math.max(span.end, t);
+      }
+    };
+    const finishSpan = () => {
+      if (span && span.start <= span.end) this.inputPhonemeSpans.push(span);
+    };
+
     let slice = this.config.deltaInput;
     for (let i = 0; i < phons.length && slice < this.config.fSlices; i++) {
       // if we encounter a 'splice' phone, proceed accordingly
       if (phons[i] == '{') {
+        span = { label: phons.slice(i, i + 5), start: Infinity, end: -Infinity };
         const p1 = this.phonemes.byLabel(phons[++i]);
         const splicePoint: number = +phons[++i];
         const p2 = this.phonemes.byLabel(phons[++i]);
@@ -260,6 +283,7 @@ export default class TraceNet {
           ) {
             if (t >= 0 && t < this.config.fSlices) {
               this.inputLayer[cont][t] += p1.spread[cont][phonOffset];
+              touch(t, p1.spread[cont][phonOffset]);
             }
           }
         }
@@ -277,13 +301,16 @@ export default class TraceNet {
           ) {
             if (t >= 0 && t < this.config.fSlices) {
               this.inputLayer[cont][t] += p2.spread[cont][phonOffset];
+              touch(t, p2.spread[cont][phonOffset]);
             }
           }
         }
 
+        finishSpan();
         slice += this.config.deltaInput;
       } else {
         // otherwise, we are dealing with a normal, or ambiguous phoneme input.
+        span = { label: phons[i], start: Infinity, end: -Infinity };
         const phon = this.phonemes.byLabel(phons[i]);
 
         if (!phon || !phon.spread || !phon.spreadOffset) {
@@ -305,9 +332,11 @@ export default class TraceNet {
           ) {
             if (t >= 0 && t < this.config.fSlices) {
               this.inputLayer[cont][t] += phon.spread[cont][phonOffset];
+              touch(t, phon.spread[cont][phonOffset]);
             }
           }
         }
+        finishSpan();
         // duration scaling!
         slice += Math.round(this.config.deltaInput * phon.durationScalar[0]);
       }
@@ -318,6 +347,21 @@ export default class TraceNet {
       for (let feat = 0; feat < this.config.numFeatures * this.config.continuaPerFeature; feat++) {
         for (let islice = 0; islice < this.config.fSlices; islice++) {
           this.inputLayer[feat][islice] += util.gauss(0.0, this.config.noiseSD, this.random);
+        }
+      }
+    }
+
+    // replace a stretch of input (every feature row) with noise, or a constant when SD is 0.
+    // done after input noise so the replaced region holds exactly the requested values.
+    const { replaceStart, replaceEnd } = this.config;
+    if (replaceStart != null && replaceEnd != null) {
+      const mean = this.config.replaceMean || 0;
+      const sd = this.config.replaceSD || 0;
+      const first = Math.max(0, Math.round(replaceStart));
+      const last = Math.min(this.config.fSlices - 1, Math.round(replaceEnd));
+      for (let feat = 0; feat < this.config.numFeatures * this.config.continuaPerFeature; feat++) {
+        for (let islice = first; islice <= last; islice++) {
+          this.inputLayer[feat][islice] = sd ? util.gauss(mean, sd, this.random) : mean;
         }
       }
     }
@@ -338,6 +382,11 @@ export default class TraceNet {
       }
     }
     this.featUpdate();
+  }
+
+  /** input slices touched by each phoneme of the model input, in input order */
+  public getInputPhonemeSpans(): InputPhonemeSpan[] {
+    return this.inputPhonemeSpans.map((s) => ({ ...s }));
   }
 
   // variable names taken from cTRACE.

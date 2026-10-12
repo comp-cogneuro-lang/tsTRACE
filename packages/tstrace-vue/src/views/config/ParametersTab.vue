@@ -26,6 +26,39 @@
         type="text"
       />
       <ContinuumSpecInput />
+      <ReplaceFromPhonemeInput />
+      <ConfigInput
+        v-model="config.replaceStart"
+        :last-value="lastConfig.replaceStart"
+        :default-value="defaults.replaceStart"
+        label="Replace start"
+        note="First input slice to replace (blank = off)"
+        :step="1"
+        nullable
+      />
+      <ConfigInput
+        v-model="config.replaceEnd"
+        :last-value="lastConfig.replaceEnd"
+        :default-value="defaults.replaceEnd"
+        label="Replace end"
+        note="Last input slice to replace (inclusive)"
+        :step="1"
+        nullable
+      />
+      <ConfigInput
+        v-model="config.replaceMean"
+        :last-value="lastConfig.replaceMean"
+        :default-value="defaults.replaceMean"
+        label="Replace mean"
+        note="Mean of replacement noise"
+      />
+      <ConfigInput
+        v-model="config.replaceSD"
+        :last-value="lastConfig.replaceSD"
+        :default-value="defaults.replaceSD"
+        label="Replace SD"
+        note="SD of replacement noise; 0 = constant mean (0 = silence)"
+      />
       <ConfigInput
         v-model="config.alpha.IF"
         :last-value="lastConfig.alpha.IF"
@@ -350,6 +383,7 @@ import ModelInputChart from '../../components/charts/ModelInputChart.vue';
 import ConfigInput from '../../components/ConfigInput.vue';
 import ContinuumSpecInput from '../../components/ContinuumSpecInput.vue';
 import FileUpload from '../../components/FileUpload.vue';
+import ReplaceFromPhonemeInput from '../../components/ReplaceFromPhonemeInput.vue';
 import { getStore } from '../../store';
 
 export default defineComponent({
@@ -359,6 +393,7 @@ export default defineComponent({
     ContinuumSpecInput,
     FileUpload,
     ModelInputChart,
+    ReplaceFromPhonemeInput,
   },
   setup() {
     const store = getStore();

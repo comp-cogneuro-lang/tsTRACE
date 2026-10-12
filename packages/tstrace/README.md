@@ -18,6 +18,7 @@ for scripting the model from Node.
 - [Batch scripting](#batch-scripting)
 - [Custom lexicons and phonologies](#custom-lexicons-and-phonologies)
 - [Phoneme continua](#phoneme-continua)
+- [Input replacement (noise or silence)](#input-replacement-noise-or-silence)
 - [Analysis helpers](#analysis-helpers)
 - [Substep integration (`nreps < 0`)](#substep-integration-nreps--0)
 - [The `tstrace` CLI](#the-tstrace-cli)
@@ -105,6 +106,7 @@ constructing a `TraceSim`. The fields you'll touch most:
 | `noiseSD`, `stochasticitySD` | 0, 0 | Input noise / McClelland (1991) activation noise |
 | `stochasticity` (F, P, W) | 0, 0, 0 | Extra per-layer activation noise (SD), combined with `stochasticitySD` as √(global² + layer²) |
 | `seed` | `null` | Integer seed for all noise (input noise and stochasticity); `null` = unseeded, different every run |
+| `replaceStart`, `replaceEnd`, `replaceMean`, `replaceSD` | `null`, `null`, 0, 0 | Replace input slices with noise or silence (see below) |
 | `freqNode`, `primeNode` | off | Frequency and priming (rest / weight / post-activation variants) |
 | `continuumSpec` | `''` | Build an ambiguous phoneme continuum (see below) |
 | `lengthNormalization` | 0 | Scale word-to-word inhibition by word length |
@@ -267,6 +269,29 @@ Continuum phonemes are **input-only**: they define feature patterns for
 its usual 15 rows. Read the outcome at the phoneme layer by comparing the
 endpoint phonemes (`b` vs. `p`) at the slot aligned with the ambiguous
 segment.
+
+## Input replacement (noise or silence)
+
+Replace input slices `replaceStart` … `replaceEnd` (inclusive, every feature
+row) with Gaussian noise of mean `replaceMean` and SD `replaceSD`. With
+`replaceSD: 0` every replaced value is `replaceMean`, so the defaults (0, 0)
+give true silence. Replacement is off while either end is `null`. It is
+applied after `noiseSD`, then the input is clamped to `[min, max]`, and it
+uses `seed`.
+
+To replace exactly the slices one phoneme of the input covers (including the
+slices it shares with its neighbors), read the spans from a `TraceNet`:
+
+```js
+const { TraceNet } = require('tstrace');
+config.modelInput = '-l^kSri-';
+const spans = new TraceNet(config).getInputPhonemeSpans();
+// [{ label: '-', start, end }, { label: 'l', start, end }, ...]
+config.replaceStart = spans[1].start;   // replace /l/
+config.replaceEnd = spans[1].end;
+config.replaceMean = 0.6;
+config.replaceSD = 0.15;
+```
 
 ## Analysis helpers
 

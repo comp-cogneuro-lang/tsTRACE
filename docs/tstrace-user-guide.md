@@ -298,6 +298,15 @@ Before going through the parameter that you can change, we simply note that the 
         * For example, if you choose 3 steps, 3 new phonemes will be created, with the labels 0, 1, and 2. 0 will be identical to 'from phoneme', 2 will be identical to 'to phoneme', and 1 will be a 50/50 combination of the two. If you ask for 4 steps, 0=from phoneme, 3=to phoneme, 1=67\% from and 33\% to, while 2=33\% from and 67\% 2.  
     * You specify continuum steps using the number labels. For example, if 'from phoneme' is /a/ and 'to phoneme' is /\^/, and number of steps is 3, you could specify a continuum from /rab/ (ROB) to /r\^b/ (RUB) as r0b, r1b, r2b.
 
+* *Input replacement* controls replace a stretch of the input with noise or silence, as in phoneme restoration experiments where part of a word is excised or covered by noise (see Magnuson, 2015, for TRACE simulations of phoneme restoration made this way).
+    * *Replace start* and *Replace end* give the first and last input slices to replace (inclusive; these are the slice numbers on the x axis of the Model Input chart). Every feature row in that range is replaced, including the rows that signal silence. Leave either blank (the default) to turn replacement off.
+    * *Replace phoneme* fills in *Replace start* and *Replace end* for you. Its menu lists each phoneme of the model input with the slices it spans, i.e., every slice where that phoneme contributes any input, including slices it shares with its neighbors. Choose one and the start and end are set to that span. You can still edit them afterward.
+    * *Replace mean* and *Replace SD* set the values that go into the replaced region: Gaussian noise with that mean and standard deviation. When *Replace SD* is 0, every replaced value equals *Replace mean*, so a mean of 0 with an SD of 0 gives true silence (all zeros). Magnuson (2015) used positive noise: a mean equal to the noise level (0.2 to 1.0) with an SD of 25% of the mean. Zero-mean noise pushes about half of the replaced values below 0.
+    * Replacement is applied after *Input Noise*, so the replaced region contains only the replacement values, and all input values are then limited to the *Min* to *Max* range. Replacement noise uses the *Random seed*, so seeded runs are repeatable.
+    * The Model Input chart shows the result as soon as you change these settings. The example below replaces /l/ in /-l^kSri-/ (*luxury*) with noise (mean 0.6, SD 0.15); note that the replaced region also covers the slices /l/ shares with the neighboring phonemes.
+
+  <img src="image/tsTRACE-config-replace-phoneme.png"  />
+
 #### *Model parameters*
 
 <mark>
@@ -832,6 +841,8 @@ A number of usability and analysis improvements have been added since the origin
 *   Magnuson, J.S., Strauss, T.J., Harris, H.D. (2005). Feedback in models of spoken word recognition : Feedback Helps. Proceedings of CogSci 2005, Stresa, Italia. Cognitive Science Society.
 
 *   Magnuson, J.S., Dahan, D., & Tanenhaus, M. K. (2001). On the interpretation of computational models: The case of TRACE. In J.S. Magnuson & K.M. Crosswhite (Eds.), University of Rochester Working Papers in the Language Sciences, 2(1), 71– 91.
+
+*   Magnuson, J. S. (2015). Phoneme restoration and empirical coverage of interactive activation and adaptive resonance models of human speech processing. Journal of the Acoustical Society of America, 137(3), 1481–1492. https://doi.org/10.1121/1.4904543
 
 *   McClelland, J.L., & Elman, J. L. (1986).The TRACE model of speech perception. Cognitive Psychology, 18, 1-86.
 

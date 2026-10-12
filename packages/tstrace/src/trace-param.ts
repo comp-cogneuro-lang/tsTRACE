@@ -123,6 +123,15 @@ export default interface TraceConfig {
   stochasticity: Stochasticity
   /** integer seed for input noise and stochasticity; null uses an unseeded (different every run) generator */
   seed: number | null
+  /**
+   * replace input slices replaceStart..replaceEnd (inclusive, all feature rows) with Gaussian
+   * noise (mean replaceMean, SD replaceSD; SD 0 gives the constant replaceMean). Off when either
+   * end is null.
+   */
+  replaceStart: number | null
+  replaceEnd: number | null
+  replaceMean: number
+  replaceSD: number
 
   //attention, phoneme learning rate params (cf. Mirman et al. 2005)
   atten: number
@@ -218,6 +227,10 @@ export const createDefaultConfig = (): TraceConfig => ({
     W: 0,
   },
   seed: null,
+  replaceStart: null,
+  replaceEnd: null,
+  replaceMean: 0,
+  replaceSD: 0,
   atten: 1.0,
   bias: 0.0,
   learningrate: 0.0,
