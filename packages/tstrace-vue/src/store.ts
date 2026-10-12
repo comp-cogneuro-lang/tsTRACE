@@ -116,7 +116,26 @@ class Store {
     const data = this.sim.value
       ?.getAllLevelsAndFlowData()
       .map(([flowData], index) => [index, ...flowData.map((num) => num.toFixed(13).padEnd(18, ' '))]);
-    const header = 'cycle\tfeature_sum_all\tfeature_sum_pos\tfeature_sum_abs\tfeature_competition\tphon_sum_all\tphon_sum_pos\tphon_sum_abs\tphon_competition\tword_sum_all\tword_sum_pos\tword_sum_abs\tlexical_competition\tfeat_to_phon\tphon_to_feat\tphon_to_word\tword_to_phon';
+    // pad names to the same width as the values so headers stay over their columns
+    const columns = [
+      'feature_sum_all',
+      'feature_sum_pos',
+      'feature_sum_abs',
+      'feature_competition',
+      'phon_sum_all',
+      'phon_sum_pos',
+      'phon_sum_abs',
+      'phon_competition',
+      'word_sum_all',
+      'word_sum_pos',
+      'word_sum_abs',
+      'lexical_competition',
+      'feat_to_phon',
+      'phon_to_feat',
+      'phon_to_word',
+      'word_to_phon',
+    ];
+    const header = ['cycle', ...columns.map((c) => c.padEnd(18, ' '))].join('\t');
     return formatData(data, header);
   });
   readonly analysisData = ref<any[]>([]);
