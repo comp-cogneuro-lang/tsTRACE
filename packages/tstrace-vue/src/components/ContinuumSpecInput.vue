@@ -54,15 +54,19 @@ interface ContinuumSpec {
 
 const specToString = (spec: ContinuumSpec) => `${spec.from}${spec.to}${spec.steps}`;
 
-const specFromString = (str: string) =>
-  str.length === 3 ? { from: str[0], to: str[1], steps: Number(str[3]) } : undefined;
+// same layout the engine reads: from phoneme, to phoneme, number of steps (e.g. "^a3")
+const specFromString = (str: string) => {
+  const spec = (str || '').trim();
+  return spec.length === 3 ? { from: spec[0], to: spec[1], steps: Number(spec[2]) } : undefined;
+};
 
 export default defineComponent({
   name: 'ContinuumSpecInput',
   setup() {
     const store = getStore();
-    const enabled = ref(false);
     const existingSpec = specFromString(store.config.continuumSpec);
+    // start checked when the config already has a spec (loaded JSON, or returning to this tab)
+    const enabled = ref(existingSpec != null);
     const sortedPhons = computed(() => store.sortedPhonemes.value.map((phon) => phon.label));
 
     const from = ref(existingSpec?.from ?? sortedPhons.value[0]);
@@ -79,11 +83,19 @@ export default defineComponent({
       store.config.continuumSpec = enabled.value ? compiledSpec.value : '';
     });
 
-    // uncheck when the spec is cleared elsewhere (e.g. Restore defaults)
+    // follow changes made elsewhere (Restore defaults, Load from JSON)
     watch(
       () => store.config.continuumSpec,
-      (spec) => {
-        if (!spec) enabled.value = false;
+      (str) => {
+        const spec = specFromString(str);
+        if (!spec) {
+          enabled.value = false;
+          return;
+        }
+        from.value = spec.from;
+        to.value = spec.to;
+        steps.value = spec.steps;
+        enabled.value = true;
       }
     );
 
