@@ -5,7 +5,8 @@ Reads results/decisions.csv (from simulate.js) and writes figures/:
                         B: SD of response cycles (variability within an item)
                         C: share of W2W1 responses triggered by W2
                         mean +/- 1 SE over items
-  stats.txt             the values behind the figure
+  stats.txt             the values behind the figure, for both parameter sets
+The figure uses the archived parameter set (see lib/items.js).
 
 Run:  python3 plot.py [resultsDir] [figuresDir]
 """
@@ -30,10 +31,16 @@ STYLE = {
 }
 
 apply_style()
-d = pd.read_csv(os.path.join(RESULTS, "decisions.csv"))
-# keep thresholds every item reaches on most runs in every condition
-reached = (d.responses / d.runs).groupby(d.threshold).min()
-d = d[d.threshold.isin(reached[reached >= 0.95].index)]
+everything = pd.read_csv(os.path.join(RESULTS, "decisions.csv"))
+
+
+def usable(d):
+    """Keep thresholds every item reaches on most runs in every condition."""
+    reached = (d.responses / d.runs).groupby(d.threshold).min()
+    return d[d.threshold.isin(reached[reached >= 0.95].index)]
+
+
+d = usable(everything[everything.params == "archive"])
 
 fig, axes = plt.subplots(1, 3, figsize=(DOUBLE, 2.4))
 for ax, col, label in [(axes[0], "mean_rt", "Mean response cycle"), (axes[1], "sd_rt", "SD of response cycle")]:
@@ -53,8 +60,11 @@ axes[0].legend(fontsize=6)
 fig.tight_layout()
 save(fig, FIGURES, "fig-lexical-decision")
 
-table = d.groupby(["threshold", "condition"])[["mean_rt", "sd_rt", "share_w2"]].mean().round(2).unstack("condition")
-lines = ["Means over items (response cycle; share of responses triggered by W2):", table.to_string()]
+lines = []
+for params in ["archive", "me86"]:
+    p = usable(everything[everything.params == params])
+    table = p.groupby(["threshold", "condition"])[["mean_rt", "sd_rt", "share_w2"]].mean().round(2).unstack("condition")
+    lines += [f"{params}: means over items (response cycle; share of responses triggered by W2):", table.to_string(), ""]
 os.makedirs(FIGURES, exist_ok=True)
 with open(os.path.join(FIGURES, "stats.txt"), "w") as fh:
     fh.write("\n".join(lines) + "\n")

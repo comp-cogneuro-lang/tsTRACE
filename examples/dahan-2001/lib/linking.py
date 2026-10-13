@@ -10,7 +10,8 @@ Import with:  from linking import luce, amt_scale, to_frames
                           gets 1/n, which fits displays where participants could be
                           fixating any picture at word onset.
   amt_scale(acts, ...)    Allopenna et al.'s (1998) scaling ("AMT"), for tasks
-                          where fixations start off the pictures
+                          where fixations start off the pictures (activations
+                          shifted so that rest = 0, as in the archived scripts)
   to_frames(series, ...)  map cycles to 33.12-ms eye-tracking frames
 """
 
@@ -28,14 +29,18 @@ def luce(acts, k=7.0, weights=None):
     return strength / strength.sum(axis=0, keepdims=True)
 
 
-def amt_scale(acts, extra=None):
+def amt_scale(acts, extra=None, offset=0.3):
     """Allopenna et al.'s scaling factor for each item and time.
 
     Delta_t = max over displayed items of a(t) / max over the whole trial
-    (Eq. 7), floored at 0. With `extra` (one value per item), the frequency
-    variant of Eq. 8: (max_t a + extra_i) / (max a + extra_i), so it differs by item.
+    (Eq. 7), floored at 0. As in the archived simulation scripts
+    (ComputeTraceProb_SubCat_1.pl, "restdefault"), activations are first
+    shifted by `offset` = 0.3, the negative of the word resting level (-0.3),
+    so a unit at rest counts as 0. With `extra` (one value per item), the
+    frequency variant of Eq. 8: (max_t a + extra_i) / (max a + extra_i), so it
+    differs by item.
     """
-    acts = np.asarray(acts, float)
+    acts = np.asarray(acts, float) + offset
     top = acts.max(axis=0)  # max over displayed items at each time
     if extra is None:
         return np.clip(top / top.max(), 0, None)[None, :].repeat(len(acts), axis=0)

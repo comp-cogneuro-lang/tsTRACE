@@ -15,50 +15,94 @@ predicts this, and TRACE simulated it.
 
 ## Simulation
 
-- **Items.** The paper's 15 triplets, in its TRACE transcriptions (*net* /git/,
-  *neck* /gik/, *nep* /gip/), with default parameters and 100 cycles.
-- **Splicing.** As in the paper, input slices up to 23 come from the first
-  token and slices from 24 on (the final consonant's peak) from W1. In tsTRACE
-  this is a splice of the final consonant, e.g. W2W1 = `-gi{k6t}-`.
-- **Lexicon.** The default lexicon plus every W1 and W2 (239 entries; the paper
-  had 257).
-- **Readout.** Each word's most active copy. Predicted fixations use the Luce
-  choice rule (k = 7) over the four pictures: W1, W2 and two unrelated
-  distractors. The paper's curves start at 0.25, which shows it used this
-  unscaled form.
+The design follows the paper and the archived simulation code
+(`SubCatSims_2k0325`, final version "Try3"; see `../README.md`).
+
+- **Items.** The 15 triplets in their TRACE transcriptions (*net* /git/,
+  *neck* /gik/, *nep* /gip/). *carp* is /krp/, as in the archived files; the
+  printed appendix's /kup/ is a typo. 100 cycles.
+- **Splicing.** Input slices up to 23 come from the first token and slices from
+  24 on (the final consonant's peak) from W1, as in the paper and the
+  archive's splicing script. In tsTRACE this is a splice of the final
+  consonant, e.g. W2W1 = `-gi{k9t}-` (`{k6t}` with M&E's phonemes, whose
+  features spread 6 slices instead of 9).
+- **Lexicon.** Built as in the archive: the 235-word lexicon of the Unix
+  distribution of TRACE (`../items/distribution-lexicon.txt`), minus /bab/,
+  /babi/ and /bat^l/, plus every W1, W2 and cohort-absent competitor. That
+  gives 263 words; the paper reports 257.
+- **Display.** W1, W2 and the two unrelated distractors of the archived
+  displays (e.g. *net*: /par/, /b^s/).
+- **Readout.** As in the archived code: each word's most active copy, and a
+  plain Luce choice (k = 7) over the four displayed words, with no scaling and
+  no delay. The paper's curves start at 0.25, which confirms this form.
+- **Two parameter sets.**
+  - `archive`: what the archived code ran. It uses the feature set of the Unix
+    distribution of TRACE (`../items/distribution-phonemes.json`), whose
+    dimensions spread 3, 6, 9, 9, 9, 3 and 9 slices. Word-to-phoneme excitation
+    is 0.015 and phoneme inhibition 0.05; everything else is as in M&E (1986).
+  - `me86`: what the paper's text describes, M&E's parameters and phonemes.
 
 ## Run
 
 ```
-node simulate.js        # 45 simulations, ~3 s
+node simulate.js        # 90 simulations, ~6 s
 python3 plot.py
 ```
 
 ## Figures
 
 - `fig04-subcategorical`: activation (A) and predicted fixations (B) for W1
-  and W2 in the three conditions, mean ± 1 SE over the 15 items.
-- `stats.txt`: peaks and crossing times.
+  and W2 in the three conditions, with the archived parameters, mean ± 1 SE
+  over the 15 items.
+- `fig04-subcategorical-me86`: the same with M&E's parameters.
+- `stats.txt`: peaks and crossing times for both parameter sets.
 
 ## Results
 
 | | W1W1 | N3W1 | W2W1 |
 |---|---|---|---|
-| W2 peak activation | 0.174 (cycle 34) | 0.189 (cycle 36) | 0.251 (cycle 42) |
-| W1 activation, cycle 99 | 0.549 | 0.532 | 0.528 |
-| W2 peak predicted fixations | 0.381 | 0.396 | 0.431 |
-| W1 predicted fixations reach 0.5 | cycle 31 | cycle 33 | cycle 36 |
+| Paper's Fig. 4 (read from the figure): W2 peak | ≈0.15 (cycle ≈36) | ≈0.165 (≈40) | ≈0.23 (≈44) |
+| `archive`: W2 peak activation | 0.151 (cycle 35) | 0.164 (cycle 39) | 0.259 (cycle 54) |
+| `me86`: W2 peak activation | 0.175 (cycle 34) | 0.191 (cycle 36) | 0.256 (cycle 43) |
+| Paper: W1 peak | ≈0.51 | ≈0.50 | ≈0.475 |
+| `archive`: W1, cycle 99 | 0.549 | 0.523 | 0.495 |
+| `me86`: W1, cycle 99 | 0.547 | 0.531 | 0.527 |
+| Paper: W1 predicted fixations reach 0.5 | cycle ≈34 | ≈36 | ≈40 |
+| `archive`: W1 predicted fixations reach 0.5 | cycle 33 | 35 | 43 |
+| `me86`: W1 predicted fixations reach 0.5 | cycle 31 | 33 | 36 |
 
-- **The paper's pattern reproduces.** W2 is most active given W2W1, less given
-  N3W1, least given W1W1. The target rises fastest given W1W1, a little slower
-  given N3W1, and slowest given W2W1.
-- **The mismatch only delays the target.** W1 reaches nearly the same level in
-  all three conditions. This is the paper's point against Marslen-Wilson and
-  Warren's (1994) simulations, in which W1 stayed low.
-- **Activations are close to the paper's Fig. 4.** The paper prints them ×100;
-  read from its figure, W2 peaks at about 0.14, 0.16 and 0.23, and W1 at about
-  0.50.
-- **Predicted fixations rise somewhat earlier than in the paper's figure,**
-  where W1 crosses 0.5 at about cycles 40–48.
-- **Activations go below zero here.** After the target wins, W2 falls below
-  zero, to −0.08 given W1W1. The paper's TRACE printed only positive values.
+- **The paper's pattern reproduces with both parameter sets.** W2 is most
+  active given W2W1, less given N3W1, and least given W1W1. The target rises
+  fastest given W1W1, slower given N3W1, and slowest given W2W1. The mismatch
+  only delays the target, which reaches a similar level in all three
+  conditions. This is the paper's point against Marslen-Wilson and Warren's
+  (1994) simulations, in which W1 stayed low.
+- **The archived parameters match the paper's figure more closely.** The W2
+  peaks for W1W1 and N3W1 agree with the figure to within 0.002 and one
+  cycle. M&E's parameters put them 0.025 higher.
+- **What still differs.**
+  - Given W2W1, W2 here peaks a little higher and later than in the paper.
+  - The paper's W1 peaks near cycle 70 and then sags to about 0.47, so its
+    predicted target fixations end near 0.90; here W1 keeps rising, to
+    0.50–0.55, and fixations end at 0.88–0.97.
+  - The archive has no surviving outputs for these runs, so the cause can't be
+    traced.
+- **Activations go below zero here.** After the target wins, W2 falls to
+  −0.07 given W1W1 (archive). The paper's figure shows no negative values.
+
+## What the original code settled
+
+- **Splice point.** Slices 0–23 come from the first token and slices 24 on
+  from W1, which is what tsTRACE's final-consonant splice does.
+- ***carp*.** It is /krp/.
+- **Lexicon.** It was built from the 235-word distribution lexicon.
+- **Displays.** The distractors and cohort-absent competitors are listed.
+- **Readout.** Post-hoc max copy, plain Luce with k = 7 over the four pictures,
+  no scaling.
+- **The parameters actually compiled.** These were the distribution phonemes
+  and spreads, word-to-phoneme excitation 0.015, and phoneme inhibition 0.05,
+  not the M&E set the paper names.
+
+One caution: the archived C code has a bug in its phoneme→word loop (see
+`../README.md`). It shifts each word's bottom-up input one phoneme slot early.
+tsTRACE reproduces the corrected C code to within 0.012, not the buggy build.

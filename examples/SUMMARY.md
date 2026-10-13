@@ -52,7 +52,7 @@ Sources of difference that recur across the examples:
 | [03-intrinsic-noise](mcclelland-1991/03-intrinsic-noise/) | Fig. 8: intrinsic noise | Close |
 | [04-stochastic-trace](mcclelland-1991/04-stochastic-trace/) | Fig. 9: stochastic TRACE | Close |
 | **Dahan et al. (2001)** | [dahan-2001/](dahan-2001/) | |
-| [01-subcategorical-eyetracking](dahan-2001/01-subcategorical-eyetracking/) | Dahan, Magnuson, Tanenhaus & Hogan (2001), Fig. 4 | Close |
+| [01-subcategorical-eyetracking](dahan-2001/01-subcategorical-eyetracking/) | Dahan, Magnuson, Tanenhaus & Hogan (2001), Fig. 4 (checked against the original code) | Close |
 | [02-subcategorical-lexical-decision](dahan-2001/02-subcategorical-lexical-decision/) | same paper, lexical-decision simulation (pp. 529–530) | Qualitative |
 | [03-frequency-cohorts](dahan-2001/03-frequency-cohorts/) | Dahan, Magnuson & Tanenhaus (2001), Exp. 1 (Figs. 5–7) | Partial |
 | [04-frequency-targets](dahan-2001/04-frequency-targets/) | same paper, Exp. 2 (Figs. 9–12) | Qualitative |
@@ -213,48 +213,80 @@ jTRACE gallery's inputs where they exist.
 
 ### Dahan et al. (2001)
 
-These examples use the papers' items, transcribed into TRACE phonemes from
-their appendices (*net* /git/, *cone* /kud/). Cross-spliced items use
-tsTRACE's splice syntax; for example, W2W1 for *net* is `-gi{k6t}-`.
-Distractors are not listed in the papers and are chosen at random (seeded).
-The papers started from a 235-word lexicon that isn't available, so their
-lexicons are rebuilt from the default lexicon plus the stimuli (239 and 281
-words, against the papers' 257 and 303).
+The user's archive of the original subcategorical-mismatch simulations
+(`SubCatSims_2k0325`, final version "Try3", March 2000) settled most of what
+the paper leaves out:
+- **Splicing** is done on the feature input at slice 24, which tsTRACE's
+  splice syntax reproduces exactly (`-gi{k9t}-` for *net*, W2W1).
+- **Parameters.** The compiled defaults were used, not the M&E values the
+  paper states: word→phoneme excitation 0.015, phoneme inhibition 0.05, and
+  the "distribution" phoneme set with its own feature spreads.
+- **Lexicon.** The 235-word distribution lexicon plus the stimuli.
+- **Readout.** The most active copy of each word, a plain Luce rule (k = 7
+  over the four pictures) with no scaling or delay, and 100 cycles.
 
-- **01 subcategorical mismatch, eye tracking.**
-  - The competitor W2 peaks at 0.174, 0.189 and 0.251 for W1W1, N3W1 and
-    W2W1; the paper's figure reads about 0.14, 0.16 and 0.23.
-  - The target reaches 0.53–0.55 (paper about 0.50).
-  - Predicted target fixations reach 0.5 in the paper's order (W1W1 < N3W1 <
-    W2W1), but earlier: cycles 31–36 against about 40–48.
-- **02 subcategorical mismatch, lexical decision.**
-  - W2W1 and N3W1 latencies stay within 0.7 cycles of each other and above
-    W1W1 up to a threshold of 0.25, then diverge, the pattern the paper
-    describes.
-  - The paper only outlines the decision rule, so the noisy-threshold rule is
-    a reconstruction.
-- **03 frequency, cohort competitors.**
-  - With resting levels and post-activation biases, the high- vs low-frequency
-    difference is present before any input (0.12 and 0.10).
-  - With connection weights it starts at 0 and builds up, the contrast the
-    paper emphasizes.
-  - But the weight method's difference comes later (above 0.02 only at about
-    400 ms) and grows larger (peak 0.21 at about 600 ms) than the paper
-    describes.
-  - The likely reason is a mechanism difference. tsTRACE, following jTRACE,
-    applies frequency to both phoneme→word and word→phoneme connections, with
-    a different formula from the paper's Eq. 4. The engine was not changed.
-- **04 frequency, targets.**
+With those settings, tsTRACE matches a compiled copy of the archived C code to
+within 0.012 for every word unit and cycle on a test item.
+
+The archived C code also contains a bug: the phoneme→word loop advances the
+weight pointer twice. The examples follow the intended computation. The
+corrected C build agrees with tsTRACE; the build as written differs.
+
+The archive also holds some frequency-paper material:
+- The resting-level formula, rest + s·log10(1 + f), commented out in the
+  archived code.
+- A weight method computed from `wfrq` = s·log10(1 + f), but through the
+  buggy line above.
+- The AMT script's +0.30 activation shift.
+- One averaged Experiment 1 prediction (`FrqE1.PROBDATA`), compared in 03.
+
+jTRACE supplied the rest of the frequency setup: its `slex_dahan2001` lexicon
+is the distribution lexicon plus the stimuli, as the paper describes, and its
+`freq-eye-track.jt` template lists the Experiment 1 distractors. Strauss,
+Harris & Magnuson (2007) report that jTRACE matched the paper's Fig. 6 with an
+RMS error of about 0.01, using the weight formula tsTRACE inherited.
+
+Neither the archive nor the paper has the lexical-decision code.
+
+- **01 subcategorical mismatch, eye tracking.** Close.
+  - With the archived settings, the competitor (W2) peaks at 0.151, 0.164 and
+    0.259 for W1W1, N3W1 and W2W1; the published Fig. 4 reads about 0.15,
+    0.165 and 0.23. The first two match almost exactly, and the order and
+    timing match.
+  - The published fixations start at exactly 0.25, confirming the unscaled
+    readout.
+  - **Not reproduced by any setting:** the published target sags after about
+    cycle 70 (to about 0.47) and its fixations end near 0.90; here they end at
+    0.88–0.97. The published figure probably came from a later run than the
+    archived one.
+  - A second figure shows the same simulation with the M&E parameters the
+    paper states.
+- **02 subcategorical mismatch, lexical decision.** Qualitative.
+  - W2W1 and N3W1 latencies stay close and above W1W1 up to a moderate
+    threshold, then diverge, as described.
+  - The decision rule is still a reconstruction (no code survives).
+- **03 frequency, cohort competitors.** Partial.
+  - Resting levels and post-activation biases give a frequency difference
+    before any input. Connection weights build it up gradually, the paper's
+    key contrast.
+  - Built on the paper's lexicon (the distribution lexicon plus the stimuli)
+    with jTRACE's distractors.
+  - The resting-level run is within RMS 0.020 of an archived TRACE prediction
+    for this experiment (0.011 allowing a 2-cycle shift). That prediction
+    seems to come from an earlier fit with a scale of about 0.04.
+  - But the weight method's difference comes later and grows larger than the
+    paper describes.
+  - Three versions of the weight method disagree:
+    - the paper's Eq. 4: a·[1 + a·s·log10(1 + f)], phoneme→word only;
+    - the archived C code: s·log10(1 + f), through the buggy line;
+    - tsTRACE (following jTRACE): input × (1 + s·log10 f), in both directions.
+  - jTRACE matched the paper with tsTRACE's form, and changing the lexicon
+    made no difference, so the cause is still open. The phoneme set is one
+    candidate.
+- **04 frequency, targets.** Qualitative.
   - Every frequency method favors high-frequency targets.
-  - With Allopenna et al.'s scaled choice rule, only the post-activation
-    variant still shows a difference before any input (0.083), as the paper
-    notes.
-  - Without frequency the difference is essentially 0 (0.002). The paper found
-    a slight one, which it attributed to its items' neighborhoods.
-  - The papers' fits to the human data (RMS, r²) need the eye-tracking data and
-    are not reproduced.
-
-The original simulation code would settle four things: the connection-weight
-formula, the lexical-decision rule, exactly how the scaled rule was applied,
-and the base lexicon and distractors.
-
+  - With the scaled choice rule (including the archived +0.30 shift), the
+    difference before any input is small for resting levels (0.010) and
+    larger for post-activation (0.080), as the paper notes for its Eq. 8.
+  - The papers' fits to the human data need the eye-tracking data and are not
+    reproduced.

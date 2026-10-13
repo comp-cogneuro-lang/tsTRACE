@@ -1,4 +1,8 @@
-Means over 15 items
-  W1W1: W2 peak activation 0.174 (cycle 34), W1 peak 0.549, W1 at cycle 99 0.549; W2 fixation peak 0.381; W1 fixations reach 0.5 at cycle 31
-  N3W1: W2 peak activation 0.189 (cycle 36), W1 peak 0.532, W1 at cycle 99 0.532; W2 fixation peak 0.396; W1 fixations reach 0.5 at cycle 33
-  W2W1: W2 peak activation 0.251 (cycle 42), W1 peak 0.528, W1 at cycle 99 0.528; W2 fixation peak 0.431; W1 fixations reach 0.5 at cycle 36
+archived parameters: means over 15 items
+  W1W1: W2 peak activation 0.151 (cycle 35), W1 peak 0.550, W1 at cycle 99 0.549; W2 fixation peak 0.366; W1 fixations reach 0.5 at cycle 33, end at 0.970
+  N3W1: W2 peak activation 0.164 (cycle 39), W1 peak 0.523, W1 at cycle 99 0.523; W2 fixation peak 0.382; W1 fixations reach 0.5 at cycle 35, end at 0.959
+  W2W1: W2 peak activation 0.259 (cycle 54), W1 peak 0.495, W1 at cycle 99 0.495; W2 fixation peak 0.436; W1 fixations reach 0.5 at cycle 43, end at 0.884
+M&E (1986) parameters: means over 15 items
+  W1W1: W2 peak activation 0.175 (cycle 34), W1 peak 0.547, W1 at cycle 99 0.547; W2 fixation peak 0.379; W1 fixations reach 0.5 at cycle 31, end at 0.973
+  N3W1: W2 peak activation 0.191 (cycle 36), W1 peak 0.531, W1 at cycle 99 0.531; W2 fixation peak 0.395; W1 fixations reach 0.5 at cycle 33, end at 0.967
+  W2W1: W2 peak activation 0.256 (cycle 43), W1 peak 0.527, W1 at cycle 99 0.527; W2 fixation peak 0.431; W1 fixations reach 0.5 at cycle 36, end at 0.955

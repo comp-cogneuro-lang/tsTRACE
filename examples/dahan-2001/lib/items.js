@@ -6,37 +6,86 @@
 // symbols mapped to TRACE labels (ɒ -> a, ʌ -> ^, ʃ -> S, ɹ -> r).
 // Frequencies are the Francis & Kučera (1982) counts the papers list.
 
+const fs = require('fs');
+const path = require('path');
 const { createDefaultConfig } = require('tstrace');
 
-// --- Subcategorical mismatch (Dahan et al., 2001, LCP), Appendix A -------------
-// [name, W1 (target), W2 (word competitor), N3 (nonword competitor)]
+// --- Subcategorical mismatch (Dahan et al., 2001, LCP) ----------------------
+// Appendix A of the paper, checked against the archived simulation files
+// (SubCatSims_2k0325, final version "Try3"). The archive transcribes carp,
+// cart, *cark as /krp/, /krt/, /krk/ (like fort /srt/ and harp /lrp/); the
+// printed appendix's /kup/, /kut/, /kuk/ is a typo.
+// [name, W1 (target), W2 (word competitor), N3 (nonword competitor),
+//  W2b (cohort-absent competitor of the paper's second experiment: e.g. nurse
+//  for net), D1, D2 (the two unrelated distractors in the archived displays)]
 const SUBCAT = [
-  ['net', 'git', 'gik', 'gip'],
-  ['tap', 'tap', 'tak', 'tat'],
-  ['bud', 'bud', 'bug', 'bub'],
-  ['butt', 'b^t', 'b^k', 'b^p'],
-  ['carp', 'kup', 'kut', 'kuk'],
-  ['fort', 'srt', 'srk', 'srp'],
-  ['harp', 'lrp', 'lrt', 'lrk'],
-  ['cat', 'kat', 'kab', 'kag'],
-  ['bat', 'bat', 'bag', 'bab'],
-  ['road', 'rid', 'rip', 'rik'],
-  ['pit', 'pit', 'pig', 'pib'],
-  ['hood', 'sud', 'suk', 'sup'],
-  ['knot', 'gut', 'gub', 'gug'],
-  ['beak', 'bik', 'bid', 'bib'],
-  ['rod', 'rud', 'ruk', 'rup'],
+  ['net', 'git', 'gik', 'gip', 'g^rs', 'par', 'b^s'],
+  ['tap', 'tap', 'tak', 'tat', 'tr^bk', 'lup', 'b^s'],
+  ['bud', 'bud', 'bug', 'bub', 'bi', 'gis', 'par'],
+  ['butt', 'b^t', 'b^k', 'b^p', 'brid', 'gis', 'lup'],
+  ['carp', 'krp', 'krt', 'krk', 'kub', 'sid', 'b^s'],
+  ['fort', 'srt', 'srk', 'srp', 'slag', 'blu', 'gal'],
+  ['harp', 'lrp', 'lrt', 'lrk', 'lis', 'sid', 'b^s'],
+  ['cat', 'kat', 'kab', 'kag', 'krip', 'pul', 'b^s'],
+  ['bat', 'bat', 'bag', 'bab', 'bus', 'gis', 'lup'],
+  ['road', 'rid', 'rip', 'rik', 'r^g', 'sut', 'b^s'],
+  ['pit', 'pit', 'pig', 'pib', 'put', 'lup', 'glu'],
+  ['hood', 'sud', 'suk', 'sup', 'sis', 'blu', 'gal'],
+  ['knot', 'gut', 'gub', 'gug', 'git', 'par', 'b^s'],
+  ['beak', 'bik', 'bid', 'bib', 'b^bS', 'par', 'lup'],
+  ['rod', 'rud', 'ruk', 'rup', 'r^k', 'par', 'b^s'],
 ];
 
 /**
- * Model input for one splicing condition. All items are CVC, so the input is
- * silence, C, V, C, silence, with the final consonant peaking at slice 24. The
- * paper put the splice point just before that peak: slices up to 23 come from
- * the first token, slices from 24 on from W1. In tsTRACE that is a splice of the
- * final consonant, "{x6y}": phoneme x for the first 6 slices of its 12-slice
- * span (up to its peak), phoneme y from the peak on.
+ * The subcategorical simulations' lexicon, built as in the archive: the
+ * 235-word lexicon of the Unix distribution of TRACE (items/distribution-
+ * lexicon.txt), without /bab/, /babi/ and /bat^l/ (removed so that *bab, the
+ * nonword competitor of bat, is not a word and has no close neighbors), plus
+ * every W1, W2 and W2b. That gives 263 words (the paper reports 257). Frequency
+ * plays no role in these simulations.
  */
-const spliced = (pre, w1) => (pre === w1 ? `-${w1}-` : `-${w1.slice(0, 2)}{${pre[2]}6${w1[2]}}-`);
+const subcatLexicon = () => {
+  const file = path.join(__dirname, '..', 'items', 'distribution-lexicon.txt');
+  const base = fs.readFileSync(file, 'utf8').trim().split('\n').map((l) => l.trim().split(/\s+/)[0]);
+  const words = [...base.filter((w) => !['bab', 'babi', 'bat^l'].includes(w)), ...SUBCAT.flatMap((r) => [r[1], r[2], r[4]])];
+  return [...new Set(words)].map((phon) => ({ phon, freq: 1, prime: 0 }));
+};
+
+/**
+ * Configuration for the subcategorical simulations.
+ *   'archive' (default): what the archived code actually ran: the feature set of
+ *     the Unix distribution of TRACE (items/distribution-phonemes.json, with
+ *     different spreads per dimension), word-to-phoneme excitation 0.015 and
+ *     phoneme inhibition 0.05; other parameters as in M&E (1986).
+ *   'me86': what the paper's text describes: M&E's parameters and phonemes.
+ */
+const subcatConfig = (params = 'archive') => {
+  const config = createDefaultConfig();
+  config.lexicon = subcatLexicon();
+  if (params === 'archive') {
+    const dist = require('../items/distribution-phonemes.json');
+    config.phonology = config.phonology.map((p) => ({ ...p, features: [...dist.features[p.label]] }));
+    config.spread = [...dist.spread];
+    config.alpha = { ...config.alpha, WP: 0.015 };
+    config.gamma = { ...config.gamma, P: 0.05 };
+  }
+  return config;
+};
+
+/**
+ * Model input for one splicing condition. All items are CVC: silence, C, V, C,
+ * silence, with the final consonant peaking at slice 24. As in the paper and
+ * the archive, slices up to 23 come from the first token and slices from 24 on
+ * from W1. Only the final consonants differ, so in tsTRACE this is a splice of
+ * the final consonant, "{x n y}": phoneme x over the first n slices of its span
+ * (up to its peak; n is its widest feature spread, 6 with M&E's phonemes and 9
+ * with the distribution's), phoneme y from the peak on.
+ */
+const spliced = (pre, w1, config) => {
+  if (pre === w1) return `-${w1}-`;
+  const n = Math.max(...config.spread);
+  return `-${w1.slice(0, 2)}{${pre[2]}${n}${w1[2]}}-`;
+};
 
 // --- Frequency (Dahan, Magnuson & Tanenhaus, 2001, Cogn Psych) ------------------
 // Experiment 1, Appendix A: [name, target, f, HF cohort, f, LF cohort, f]
@@ -61,6 +110,27 @@ const FREQ_EXP1 = [
   ['trumpet', 'tr^b^t', 6, 'truck', 'tr^k', 80, 'trunk', 'tr^bk', 13],
   ['whistle', 'Sus^l', 3, 'window', 'Subdu', 172, 'windmill', 'Subdbil', 1],
 ];
+// Experiment 1 distractors, one per display, from jTRACE's template for this
+// simulation (templates/freq-eye-track.jt, by item). The paper doesn't list them.
+const FREQ_EXP1_DISTRACTORS = {
+  'band aid': 'krip',
+  bench: 'slip',
+  cane: 'spak',
+  cannon: 'piktr',
+  carpet: 'S^ir',
+  cellist: 'kard',
+  chimney: 'pubsil',
+  clover: 'sapd',
+  coconut: 'tr^st',
+  hanger: 'pubsil',
+  mountain: 'spak',
+  pizza: 'spak',
+  pepper: 'tr^k',
+  pillow: 'kard',
+  snowman: 'kard',
+  trumpet: 'duti',
+  whistle: 'piktr',
+};
 // Experiment 2, Appendix C: [LF name, transcription, f, HF name, transcription, f].
 // (The appendix's two TRACE columns are headed "HF" and "LF" but list the
 // low-frequency word first, e.g. bell /bil/, bed /bid/.)
@@ -89,12 +159,16 @@ const FREQ_EXP2 = [
 ];
 
 /**
- * Default lexicon plus the given words (phon -> Kučera-Francis frequency). Words
- * already in the lexicon get the papers' frequencies. As in the papers,
- * frequencies above 1000 count as 1000.
+ * The original TRACE distribution's lexicon (items/distribution-lexicon.txt,
+ * 235 lines, 230 distinct words) with its Kučera-Francis frequencies, plus the
+ * given words (phon -> frequency): the papers' "235-word lexicon included with
+ * the distribution" plus their stimuli. jTRACE's slex_dahan2001 is built the same
+ * way. Words already in the lexicon get the papers' frequencies. Frequencies
+ * below 1 count as 1 ("items not included in that corpus were given
+ * frequencies of 1"); the 1000 ceiling is applied in frequencyConfig.
  */
 const buildLexicon = (words) => {
-  const lexicon = createDefaultConfig().lexicon.map((w) => ({ ...w }));
+  const lexicon = distributionLexicon();
   const index = new Map(lexicon.map((w, i) => [w.phon, i]));
   for (const [phon, freq] of words) {
     if (index.has(phon)) lexicon[index.get(phon)].freq = freq;
@@ -103,10 +177,28 @@ const buildLexicon = (words) => {
       lexicon.push({ phon, freq, prime: 0 });
     }
   }
+  return lexicon.map((w) => ({ ...w, freq: Math.max(w.freq, 1) }));
+};
+
+/** The distribution lexicon, one entry per distinct word, with frequencies. */
+const distributionLexicon = () => {
+  const file = path.join(__dirname, '..', 'items', 'distribution-lexicon.txt');
+  const seen = new Set();
+  const lexicon = [];
+  for (const line of fs.readFileSync(file, 'utf8').trim().split('\n')) {
+    const [phon, freq] = line.trim().split(/\s+/);
+    if (seen.has(phon)) continue;
+    seen.add(phon);
+    lexicon.push({ phon, freq: Number(freq), prime: 0 });
+  }
   return lexicon;
 };
 
-/** The frequency simulations' lexicon: default + every Experiment 1 and 2 stimulus. */
+/**
+ * The frequency simulations' lexicon: distribution + every Experiment 1 and 2
+ * stimulus. Where both appendices list a word, Experiment 2's frequency is kept
+ * (only picture differs: 227 in Appendix A, 277 in Appendix C).
+ */
 const frequencyLexicon = () =>
   buildLexicon([
     ...FREQ_EXP1.flatMap((r) => [[r[1], r[2]], [r[4], r[5]], [r[7], r[8]]]),
@@ -146,14 +238,14 @@ const mulberry32 = (seed) => () => {
 
 /**
  * Phonologically unrelated distractors, as the papers chose them "from
- * unrelated items in the lexicon": n default-lexicon words of 3-5 phonemes that
+ * unrelated items in the lexicon": n distribution-lexicon words of 3-5 phonemes that
  * begin with a different phoneme from every word in `avoid`, optionally within
  * a frequency range. The papers do not list their picks, so these are drawn
  * with a seeded generator.
  */
 const pickDistractors = (random, n, avoid, { minFreq = 0, maxFreq = Infinity } = {}) => {
   const firsts = new Set(avoid.map((w) => w[0]));
-  const pool = createDefaultConfig().lexicon.filter(
+  const pool = distributionLexicon().filter(
     (w) => w.phon.length >= 3 && w.phon.length <= 5 && !firsts.has(w.phon[0]) && w.freq >= minFreq && w.freq <= maxFreq
   );
   const picks = [];
@@ -166,10 +258,14 @@ const pickDistractors = (random, n, avoid, { minFreq = 0, maxFreq = Infinity } =
 
 module.exports = {
   SUBCAT,
+  subcatLexicon,
+  subcatConfig,
   spliced,
   FREQ_EXP1,
+  FREQ_EXP1_DISTRACTORS,
   FREQ_EXP2,
   buildLexicon,
+  distributionLexicon,
   frequencyLexicon,
   frequencyConfig,
   mulberry32,

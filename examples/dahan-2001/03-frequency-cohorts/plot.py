@@ -8,7 +8,11 @@ Reads results/activations.csv (from simulate.js) and writes figures/:
                       choice over the four pictures, k = 7): no frequency, rest,
                       weights, and post-activation (S = exp(k a) log10(15 + f))
   fig07-hf-minus-lf   predicted HF - LF cohort fixations over time, all methods
-  stats.txt           the HF - LF difference by window, and its onset
+  fig06-archive       per-cycle choice probabilities (no delay) for resting levels
+                      and post-activation, against the archived TRACE prediction
+                      in ../items/archive-FrqE1-probdata.txt
+  stats.txt           the HF - LF difference by window, and its onset; RMS
+                      differences from the archived prediction
 
 Time: 1 cycle = 12.4 ms (the paper's mapping from stimulus duration), sampled in
 33.12-ms frames, after the paper's fitted delays (3 frames for no frequency
@@ -124,6 +128,43 @@ ax.set_xlabel("Time from target onset (ms)")
 ax.set_ylabel("HF - LF predicted fixations")
 ax.legend(fontsize=6)
 save(fig, FIGURES, "fig07-hf-minus-lf")
+
+# --- Archived prediction (SubCatSims_2k0325/Try2/FrqE1.PROBDATA) --------------------
+arch = np.loadtxt(os.path.join(HERE, "..", "items", "archive-FrqE1-probdata.txt"))
+arch_cycles = arch[:, 0].astype(int)
+
+
+def per_cycle(method):
+    """Mean choice probabilities per cycle, no delay: array (roles, cycles)."""
+    act_method, post, _ = METHODS[method]
+    out = []
+    for item in items:
+        f = d[(d.method == act_method) & (d.item == item)]
+        acts = np.vstack([f[f.role == r].sort_values("cycle").activation for r in ROLES])
+        weights = [np.log10(POST_C + f[f.role == r].freq.iloc[0]) for r in ROLES] if post else None
+        out.append(luce(acts, K, weights))
+    return np.mean(out, axis=0)
+
+
+lines.append("\nRMS difference from the archived prediction (cycles 2-80, all four roles)")
+fig, axes = plt.subplots(1, 2, figsize=(DOUBLE, 2.4), sharey=True)
+for method in METHODS:
+    p = per_cycle(method)[:, arch_cycles].T
+    lines.append(f"  {method}: {np.sqrt(((p - arch[:, 1:]) ** 2).mean()):.3f}")
+for ax, method in zip(axes, ["Resting levels", "Post-activation"]):
+    p = per_cycle(method)
+    for r, role in enumerate(ROLES):
+        ax.plot(np.arange(p.shape[1]), p[r], color=STYLE[role]["color"], label=f"{role} (here)")
+        ax.plot(arch_cycles, arch[:, r + 1], ls="none", marker=STYLE[role]["marker"], ms=3,
+                color=STYLE[role]["color"], label=f"{role} (archive)")
+    ax.set_title(f"{method} vs archived prediction", fontsize=7)
+    ax.set_xlabel("Cycle")
+    ax.set_xlim(0, 80)
+axes[0].set_ylabel(f"Choice probability (Luce, k = {K})")
+axes[0].set_ylim(0, 1)
+axes[1].legend(fontsize=5, ncol=2, loc="center right")
+fig.tight_layout()
+save(fig, FIGURES, "fig06-archive")
 
 os.makedirs(FIGURES, exist_ok=True)
 with open(os.path.join(FIGURES, "stats.txt"), "w") as fh:

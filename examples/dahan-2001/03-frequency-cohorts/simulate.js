@@ -8,10 +8,12 @@
 // or applied after activation in the choice rule (as in the NAM)?
 //
 // Design (pp. 333-339): 17 target / HF cohort / LF cohort triplets plus one
-// unrelated distractor each; each target presented alone (-target-), all words
+// unrelated distractor each (from jTRACE's template for this simulation; the
+// paper doesn't list them); each target presented alone (-target-), all words
 // competing, 100 cycles.
-//   lexicon:  default + every Experiment 1 and 2 stimulus (as in the paper's
-//             303-word lexicon), with Kučera-Francis frequencies (lib/items.js)
+//   lexicon:  the original TRACE distribution's lexicon + every Experiment 1 and
+//             2 stimulus (the paper's 303-word lexicon), with Kučera-Francis
+//             frequencies (lib/items.js)
 //   parameters: M&E defaults except word resting level -0.3 (Appendix B)
 //   methods:  none, rest (s = 0.06), wt (s = 0.13); the post-activation method
 //             uses the 'none' activations and is applied in plot.py
@@ -26,20 +28,18 @@
 const path = require('path');
 const { TraceSim } = require('tstrace');
 const { maxCopy, outputDir, isSmoke, writeCsv, writeMetadata } = require('../../lib/sim-utils');
-const { FREQ_EXP1, frequencyLexicon, frequencyConfig, mulberry32, pickDistractors } = require('../lib/items');
+const { FREQ_EXP1, FREQ_EXP1_DISTRACTORS, frequencyLexicon, frequencyConfig } = require('../lib/items');
 
 const CYCLES = 100;
-const SEED = 2001;
 const METHODS = ['none', 'rest', 'wt'];
 const ITEMS = isSmoke() ? FREQ_EXP1.slice(0, 2) : FREQ_EXP1;
 
 const dir = outputDir(__dirname);
 const lexicon = frequencyLexicon();
 const freqOf = new Map(lexicon.map((w) => [w.phon, w.freq]));
-const random = mulberry32(SEED);
 const displays = ITEMS.map(([name, target, , hf, hfPhon, , lf, lfPhon]) => ({
   name,
-  words: { target, HF: hfPhon, LF: lfPhon, distractor: pickDistractors(random, 1, [target, hfPhon, lfPhon])[0] },
+  words: { target, HF: hfPhon, LF: lfPhon, distractor: FREQ_EXP1_DISTRACTORS[name] },
 }));
 const rows = [];
 
@@ -63,7 +63,6 @@ writeMetadata(dir, {
   cycles: CYCLES,
   items: ITEMS.length,
   lexiconSize: lexicon.length,
-  seed: SEED,
   displays,
   parameters: 'defaults, except rest.W -0.3; rest: freqNode.RDL_rest_s 0.06; wt: freqNode.RDL_wt_s 0.13',
 });

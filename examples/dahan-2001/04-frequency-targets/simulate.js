@@ -8,7 +8,7 @@
 // Design (pp. 348-351): 21 low/high-frequency pairs; each word presented alone
 // (-word-) for 100 cycles; three unrelated distractors per pair, the same for
 // both members, "with similar frequencies to those for the distractors used in
-// the experiment" (picked here, seeded, from default-lexicon words with
+// the experiment" (picked here, seeded, from distribution-lexicon words with
 // frequencies 10-150, since the paper doesn't list them).
 //   lexicon, parameters, methods and readout as in example 03 (lib/items.js)
 //
