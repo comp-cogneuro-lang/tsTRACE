@@ -1,0 +1,128 @@
+Failures 18 cycles after the last phoneme's center
+set  first + second  ->  rival (act)  [first act, second act]  type
+1  pap^ + ar  ->  pap (0.29)  [0.52, 0.23]  alternative parse
+1  s^ksid + art  ->  dart (0.37)  [0.76, 0.28]  alternative parse
+3  Si + tar  ->  Sit (0.46)  [0.29, 0.32]  alternative parse
+3  sis + tr^k  ->  str^k (0.50)  [0.44, 0.44]  alternative parse
+3  pik + lak  ->  klak (0.46)  [0.49, 0.27]  alternative parse
+3  bar + kr^S  ->  bark (0.58)  [0.30, 0.45]  alternative parse
+4  kar + p^t  ->  karp^t (0.71)  [0.24, 0.02]  alternative parse
+4  si + klak  ->  sik (0.47)  [0.29, 0.39]  alternative parse
+4  ark + lak  ->  klak (0.46)  [0.49, 0.28]  alternative parse
+5  ^ + plat  ->  ^p (0.38)  [0.22, 0.44]  alternative parse
+7  s^ksid + art  ->  dart (0.37)  [0.76, 0.28]  alternative parse
+8  pap + ^  ->  pap^ (0.45)  [0.37, 0.11]  alternative parse
+1  tru + p^t  ->  trup (0.56)  [0.38, 0.37]  rival in no valid parse
+1  ar + star  ->  art (0.44)  [0.40, 0.40]  rival in no valid parse
+1  stap + lat  ->  plat (0.40)  [0.64, 0.32]  rival in no valid parse
+1  dip + ark  ->  park (0.36)  [0.54, 0.27]  rival in no valid parse
+1  ki + stap  ->  ist (0.44)  [0.44, 0.42]  rival in no valid parse
+1  start + ^  ->  start^l (0.58)  [0.48, 0.09]  rival in no valid parse
+1  st^did + si  ->  st^di (0.35)  [0.73, 0.29]  rival in no valid parse
+1  Si + partli  ->  Sip (0.49)  [0.28, 0.57]  rival in no valid parse
+1  p^t + tr^sti  ->  tr^st (0.58)  [0.54, 0.68]  rival in no valid parse
+1  tu + labi  ->  tul (0.47)  [0.33, 0.47]  rival in no valid parse
+1  ^s + tu  ->  d^st (0.33)  [0.35, 0.23]  rival in no valid parse
+1  st^di + did  ->  st^did (0.71)  [0.37, 0.38]  rival in no valid parse
+1  Sr^g + rul  ->  gru (0.35)  [0.63, 0.34]  rival in no valid parse
+2  start + bi  ->  star (0.37)  [0.62, 0.22]  rival in no valid parse
+2  du + it  ->  duti (0.32)  [0.39, 0.31]  rival in no valid parse
+2  st^di + ^p  ->  st^did (0.40)  [0.65, 0.29]  rival in no valid parse
+2  part + du  ->  par (0.29)  [0.49, 0.18]  rival in no valid parse
+2  si + ad  ->  sid (0.31)  [0.38, 0.19]  rival in no valid parse
+2  tar + ki  ->  targ^t (0.36)  [0.47, 0.19]  rival in no valid parse
+2  star + pis  ->  start (0.43)  [0.59, 0.36]  rival in no valid parse
+2  kul + ist  ->  list (0.43)  [0.49, 0.36]  rival in no valid parse
+2  kip + ^s  ->  ki (0.27)  [0.49, 0.25]  rival in no valid parse
+2  kru + Sild  ->  kruS^l (0.62)  [0.37, 0.24]  rival in no valid parse
+2  krip + tul  ->  pul (0.30)  [0.57, 0.26]  rival in no valid parse
+2  truli + pi  ->  tru (0.29)  [0.62, 0.26]  rival in no valid parse
+2  pis + lid  ->  pi (0.33)  [0.49, 0.30]  rival in no valid parse
+2  b^s + kul  ->  skul (0.35)  [0.51, 0.33]  rival in no valid parse
+2  bab + ar  ->  babi (0.28)  [0.47, 0.19]  rival in no valid parse
+2  trit + bit  ->  triti (0.31)  [0.53, 0.31]  rival in no valid parse
+2  parti + su  ->  part (0.36)  [0.55, 0.24]  rival in no valid parse
+3  lak + lus  ->  klu (0.37)  [0.55, 0.33]  rival in no valid parse
+3  kap + lat  ->  plat (0.41)  [0.52, 0.30]  rival in no valid parse
+3  s^k + sis  ->  s^ksid (0.59)  [0.30, 0.10]  rival in no valid parse
+3  rak + stup^d  ->  rak^t (0.49)  [0.45, 0.69]  rival in no valid parse
+3  tu + ^  ->  tul (0.23)  [0.35, 0.11]  rival in no valid parse
+3  park + du  ->  par (0.38)  [0.52, 0.24]  rival in no valid parse
+3  star + trit  ->  start (0.64)  [0.38, 0.36]  rival in no valid parse
+3  r^g^d + ark  ->  dark (0.36)  [0.67, 0.32]  rival in no valid parse
+3  k^t + tr^st  ->  tr^sti (0.58)  [0.54, 0.62]  rival in no valid parse
+3  sil + ki  ->  si (0.34)  [0.42, 0.33]  rival in no valid parse
+3  d^k + art  ->  kar (0.29)  [0.54, 0.26]  rival in no valid parse
+4  par + k^p^l  ->  park (0.56)  [0.38, 0.54]  rival in no valid parse
+4  Sarp + tul  ->  pul (0.28)  [0.61, 0.28]  rival in no valid parse
+4  ar + ^s  ->  r^s^l (0.31)  [0.39, 0.20]  rival in no valid parse
+4  tri + ^  ->  trit (0.24)  [0.43, 0.11]  rival in no valid parse
+4  tr^sti + Sip  ->  tr^st (0.40)  [0.71, 0.36]  rival in no valid parse
+4  art + Si  ->  ar (0.28)  [0.46, 0.20]  rival in no valid parse
+4  bust + dru  ->  tru (0.36)  [0.64, 0.30]  rival in no valid parse
+4  b^s + park  ->  spark (0.42)  [0.54, 0.31]  rival in no valid parse
+4  pap + ^br^pt  ->  pap^ (0.55)  [0.34, 0.68]  rival in no valid parse
+4  pis + st^di  ->  st^did (0.55)  [0.50, 0.58]  rival in no valid parse
+4  ^ + pat  ->  ^p (0.35)  [0.19, 0.28]  rival in no valid parse
+5  part + rab  ->  par (0.33)  [0.54, 0.29]  rival in no valid parse
+5  truli + du  ->  tru (0.29)  [0.62, 0.27]  rival in no valid parse
+5  strik + r^S  ->  kr^S (0.43)  [0.72, 0.33]  rival in no valid parse
+5  dart + rul  ->  truli (0.36)  [0.61, 0.31]  rival in no valid parse
+5  tu + bat^l  ->  tub (0.50)  [0.30, 0.54]  rival in no valid parse
+5  trit + su  ->  triti (0.29)  [0.51, 0.19]  rival in no valid parse
+5  Si + stil  ->  ist (0.46)  [0.39, 0.41]  rival in no valid parse
+5  blak + ^  ->  k^p (0.18)  [0.62, 0.13]  rival in no valid parse
+5  lup + tr^sti  ->  tr^st (0.56)  [0.56, 0.64]  rival in no valid parse
+5  kap + b^t  ->  p^t (0.35)  [0.50, 0.34]  rival in no valid parse
+5  start + Si  ->  star (0.37)  [0.62, 0.18]  rival in no valid parse
+5  par + triti  ->  part (0.50)  [0.30, 0.45]  rival in no valid parse
+5  tru + ad  ->  trup (0.27)  [0.49, 0.22]  rival in no valid parse
+5  rak + ^pil  ->  rak^t (0.53)  [0.39, 0.36]  rival in no valid parse
+5  pap + pi  ->  pap^ (0.34)  [0.51, 0.31]  rival in no valid parse
+5  kar + pak^t  ->  karp^t (0.52)  [0.42, 0.47]  rival in no valid parse
+5  d^k + art  ->  kar (0.29)  [0.54, 0.26]  rival in no valid parse
+5  stap + ar  ->  par (0.27)  [0.62, 0.21]  rival in no valid parse
+6  d^l + tr^sti  ->  tr^st (0.49)  [0.52, 0.44]  rival in no valid parse
+6  bi + trit  ->  bit (0.49)  [0.31, 0.37]  rival in no valid parse
+6  ^ + pul  ->  ^p (0.35)  [0.18, 0.27]  rival in no valid parse
+6  pul + tru  ->  part (0.37)  [0.36, 0.32]  rival in no valid parse
+6  strik + rut  ->  kru (0.34)  [0.73, 0.33]  rival in no valid parse
+6  pap + ar  ->  pap^ (0.34)  [0.45, 0.18]  rival in no valid parse
+6  gru + pl^g  ->  grup (0.58)  [0.34, 0.43]  rival in no valid parse
+6  Si + strik  ->  ist (0.46)  [0.40, 0.50]  rival in no valid parse
+6  kip + lus  ->  pl^s (0.29)  [0.51, 0.29]  rival in no valid parse
+6  si + s^t^l  ->  sis (0.45)  [0.35, 0.55]  rival in no valid parse
+6  pi + sari  ->  pis (0.49)  [0.33, 0.44]  rival in no valid parse
+6  d^st + dru  ->  tru (0.36)  [0.63, 0.30]  rival in no valid parse
+6  tru + pas^b^l  ->  trup (0.62)  [0.29, 0.69]  rival in no valid parse
+6  kap + lip  ->  kapi (0.37)  [0.49, 0.33]  rival in no valid parse
+6  lus + ^  ->  s^k (0.20)  [0.47, 0.14]  rival in no valid parse
+6  par + si  ->  parti (0.30)  [0.48, 0.20]  rival in no valid parse
+6  tr^sti + k^p  ->  tr^st (0.41)  [0.70, 0.39]  rival in no valid parse
+7  l^ki + du  ->  l^k (0.36)  [0.52, 0.27]  rival in no valid parse
+7  ^p + ^  ->  ^part (0.18)  [0.34, 0.10]  rival in no valid parse
+7  tr^sti + blu  ->  tr^st (0.41)  [0.70, 0.41]  rival in no valid parse
+7  tru + pl^s  ->  trup (0.57)  [0.38, 0.43]  rival in no valid parse
+7  dark + lup  ->  klu (0.36)  [0.61, 0.35]  rival in no valid parse
+7  tub + rul  ->  brud (0.32)  [0.53, 0.32]  rival in no valid parse
+7  truli + pi  ->  tru (0.29)  [0.62, 0.26]  rival in no valid parse
+7  rili + Si  ->  ril (0.32)  [0.51, 0.25]  rival in no valid parse
+7  ist + it  ->  stip (0.26)  [0.55, 0.21]  rival in no valid parse
+7  ar + star  ->  art (0.44)  [0.40, 0.40]  rival in no valid parse
+8  Sit + ark  ->  tar (0.32)  [0.49, 0.28]  rival in no valid parse
+8  gard + art  ->  dart (0.37)  [0.63, 0.27]  rival in no valid parse
+8  kar + tul  ->  kard (0.30)  [0.49, 0.29]  rival in no valid parse
+8  sid + Si  ->  si (0.33)  [0.43, 0.25]  rival in no valid parse
+8  p^lis + pik  ->  spik (0.37)  [0.70, 0.32]  rival in no valid parse
+8  ^ + pas^b^l  ->  ^p (0.37)  [0.21, 0.58]  rival in no valid parse
+8  Si + ti  ->  Sit (0.44)  [0.28, 0.26]  rival in no valid parse
+8  tr^sti + si  ->  tr^st (0.47)  [0.69, 0.30]  rival in no valid parse
+8  tu + st^did  ->  st^di (0.50)  [0.46, 0.60]  rival in no valid parse
+8  strit + ril  ->  tri (0.32)  [0.73, 0.31]  rival in no valid parse
+8  skru + tr^sti  ->  tr^st (0.52)  [0.65, 0.49]  rival in no valid parse
+8  k^p + bar  ->  par (0.30)  [0.51, 0.25]  rival in no valid parse
+8  pap^ + par  ->  ^part (0.35)  [0.55, 0.29]  rival in no valid parse
+8  par + slit  ->  partli (0.40)  [0.49, 0.34]  rival in no valid parse
+8  sik + ^s  ->  si (0.30)  [0.45, 0.23]  rival in no valid parse
+8  babi + ar  ->  bab (0.32)  [0.52, 0.30]  rival in no valid parse
+8  pi + kru^l  ->  pik (0.48)  [0.32, 0.52]  rival in no valid parse

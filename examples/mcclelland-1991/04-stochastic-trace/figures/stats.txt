@@ -1,0 +1,29 @@
+Stochastic TRACE, 500 trials per condition: P(/r/)
+target   l-like  neutral  r-like
+context                         
+p         0.042    0.630   0.994
+s         0.004    0.196   0.910
+t         0.298    0.936   1.000
+
+z(P(/r/)) (SE):
+  p l-like   z = -1.728 (0.100)
+  p neutral  z =  0.332 (0.057)
+  p r-like   z =  2.512 (0.203)
+  s l-like   z = -2.652 (0.238)
+  s neutral  z = -0.856 (0.064)
+  s r-like   z =  1.341 (0.079)
+  t l-like   z = -0.530 (0.059)
+  t neutral  z =  1.522 (0.087)
+  t r-like   z =  3.090 (0.420)
+
+Parallel lines with the neutral liquid at x = 0.50 (between /l/-like 0 and /r/-like 1):
+  slope 3.951; intercepts p -1.601, s -2.695, t -0.612
+  variance explained 99.45% (paper: 99.94%)
+
+Deterministic, Luce readout (k = 10): P(/r/)
+target   l-like  neutral  r-like
+context                         
+p         0.047    0.732   0.979
+s         0.018    0.143   0.863
+t         0.388    0.936   0.989
+  parallel lines (fixed spacing) explain 96.01%

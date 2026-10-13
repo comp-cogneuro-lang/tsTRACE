@@ -9,14 +9,14 @@ const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-// numbered example folders, here and in the original-trace-replications/ subfolder
+// numbered example folders, here and in the replication subfolders
 const numbered = (dir) =>
   fs
     .readdirSync(path.join(__dirname, dir))
     .filter((name) => /^\d\d[a-z]?-/.test(name))
     .sort()
     .map((name) => path.join(dir, name));
-const examples = [...numbered(''), ...numbered('original-trace-replications')];
+const examples = [...numbered(''), ...numbered('original-trace-replications'), ...numbered('mcclelland-1991'), ...numbered('dahan-2001')];
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'tstrace-examples-'));
 const hasPython = spawnSync('python3', ['-c', 'import matplotlib, pandas, scipy'], { stdio: 'ignore' }).status === 0;
 let failures = 0;

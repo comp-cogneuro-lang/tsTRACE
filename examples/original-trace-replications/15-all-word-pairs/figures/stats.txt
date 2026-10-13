@@ -1,0 +1,10 @@
+Proportion of pairs parsed correctly (mean over sets, SE, range):
+  lag  6: 0.554 (SE 0.004; 0.538-0.571)
+  lag 12: 0.827 (SE 0.011; 0.778-0.868)
+  lag 18: 0.926 (SE 0.004; 0.910-0.948)
+  lag 24: 0.947 (SE 0.004; 0.939-0.972)
+  lag 36: 0.961 (SE 0.003; 0.953-0.981)
+M&E: 0.896 (189 / 211)
+Failures at lag 18: 126 of 1696
+  rival in no valid parse: 114
+  alternative parse: 12

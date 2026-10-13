@@ -1,0 +1,15 @@
+P(/k/) at cycle 60 (rows: F1OF value, columns: VOT value)
+vot       1      2      3      4      5
+f1of                                   
+1     0.005  0.023  0.085  0.254  0.473
+2     0.024  0.080  0.223  0.486  0.704
+3     0.090  0.228  0.494  0.762  0.901
+4     0.275  0.500  0.767  0.914  0.972
+5     0.500  0.725  0.907  0.973  0.994
+
+VOT value giving P(/k/) = 0.5 (linear interpolation), by F1OF value:
+  F1OF 1: nan
+  F1OF 2: 4.07
+  F1OF 3: 3.02
+  F1OF 4: 2.00
+  F1OF 5: nan

@@ -1,0 +1,4 @@
+Means over 15 items
+  W1W1: W2 peak activation 0.174 (cycle 34), W1 peak 0.549, W1 at cycle 99 0.549; W2 fixation peak 0.381; W1 fixations reach 0.5 at cycle 31
+  N3W1: W2 peak activation 0.189 (cycle 36), W1 peak 0.532, W1 at cycle 99 0.532; W2 fixation peak 0.396; W1 fixations reach 0.5 at cycle 33
+  W2W1: W2 peak activation 0.251 (cycle 42), W1 peak 0.528, W1 at cycle 99 0.528; W2 fixation peak 0.431; W1 fixations reach 0.5 at cycle 36

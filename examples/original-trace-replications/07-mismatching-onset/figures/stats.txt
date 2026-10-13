@@ -1,0 +1,4 @@
+Cycle from which the expected word leads every other word (most active copies):
+  /lig^l/ (legal): /lig^l/ leads from cycle 40; final activation 0.71
+  /l^g^d/ (lugged, a nonword): /r^g^d/ leads from cycle 65; final activation 0.63
+  /r^g^d/ (rugged, intact): /r^g^d/ leads from cycle 33; final activation 0.71

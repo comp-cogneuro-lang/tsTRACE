@@ -1,0 +1,5 @@
+HF - LF cohort fixations (means over 17 items)
+  No frequency: at 0 ms 0.000; mean 200-500 ms 0.002; mean 0-1000 ms 0.002; peak 0.019 at 530 ms; first > .02 at nan ms
+  Resting levels: at 0 ms 0.116; mean 200-500 ms 0.123; mean 0-1000 ms 0.083; peak 0.147 at 530 ms; first > .02 at 0 ms
+  Connection weights: at 0 ms 0.000; mean 200-500 ms 0.039; mean 0-1000 ms 0.063; peak 0.214 at 596 ms; first > .02 at 397 ms
+  Post-activation: at 0 ms 0.099; mean 200-500 ms 0.119; mean 0-1000 ms 0.067; peak 0.135 at 464 ms; first > .02 at 0 ms

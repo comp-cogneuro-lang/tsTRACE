@@ -1,0 +1,9 @@
+Relative strength (k = 10) falls below 0.5 for good at cycle:
+  /trat/ (trot): cycle 24, 12 cycles after its mismatch peaked
+  /pas^b^l/ (possible): cycle 27, 9 cycles after its mismatch peaked
+  /prist/ (priest): cycle 34, 10 cycles after its mismatch peaked
+  /pragr^s/ (progress): cycle 38, 8 cycles after its mismatch peaked
+  /pradus/ (produce): cycle 49, 13 cycles after its mismatch peaked
+/pradus/ (produce) is ahead of product (ratio > 1) at cycles 17-46; peak ratio 1.88 at cycle 39
+/prist/ (priest) peak ratio 1.04 at cycle 26
+product's final activation: 0.82

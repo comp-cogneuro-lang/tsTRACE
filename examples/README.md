@@ -20,6 +20,19 @@ simulation of McClelland & Elman (1986), in 15 examples, including displays of
 the whole Trace drawn as in their figures. Its README has the full inventory.
 Examples 05 and 06 need an engine build that includes `config.inputPhonemes`.
 
+[mcclelland-1991/](mcclelland-1991/) replicates McClelland (1991), the paper
+that introduced stochastic TRACE: a small interactive activation network
+(deterministic, with input noise, with intrinsic noise) and full TRACE with
+processing noise.
+
+[dahan-2001/](dahan-2001/) replicates the TRACE simulations of Dahan et al.
+(2001) on subcategorical mismatch (eye tracking and lexical decision) and on
+word frequency (resting-level, connection-weight and post-activation
+implementations).
+
+[SUMMARY.md](SUMMARY.md) lists every example with its source and how closely
+it matches the original.
+
 ## Running an example
 
 From the repository root, after building the engine (`yarn workspace tstrace build`):

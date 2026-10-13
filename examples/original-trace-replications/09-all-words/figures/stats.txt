@@ -1,0 +1,25 @@
+Words: 212
+Correct at readout (12 cycles after the last phoneme's peak): 203/212 (95.8%)
+Correct at the last cycle: 212/212
+Words that never lead for good: 0
+Lead cycle relative to the last phoneme's peak: mean 1.67 (SE 0.39), median 2, range -24 to 15; 61 words lead before their last phoneme peaks
+Misses at the readout (word: stronger word at readout, lead cycle relative to offset):
+  /kard/: /kar/, +13
+  /sis/: /si/, +13
+  /park/: /par/, +15
+  /part/: /par/, +14
+  /parti/: /part/, +15
+  /sil/: /si/, +14
+  /sid/: /si/, +14
+  /start/: /star/, +14
+  /tr^sti/: /tr^st/, +15
+By length: n, proportion correct at readout, mean (SE) lead relative to offset
+  1: 1, 1.00, 5.00 (nan)
+  2: 14, 1.00, 0.64 (0.63)
+  3: 75, 0.96, 2.64 (0.52)
+  4: 65, 0.95, 2.48 (0.69)
+  5: 31, 0.94, 0.55 (1.15)
+  6: 15, 0.93, 1.27 (1.92)
+  7: 8, 1.00, -2.62 (1.73)
+  8: 2, 1.00, -5.00 (0.00)
+  9: 1, 1.00, -24.00 (nan)
