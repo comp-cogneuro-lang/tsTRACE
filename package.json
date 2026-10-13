@@ -8,6 +8,7 @@
   "scripts": {
     "build": "yarn workspaces foreach -pit run build",
     "cli": "node packages/tstrace/bin/cli.js",
+    "examples:smoke": "node examples/smoke-test.js",
     "lint": "prettier --prose-wrap=always --write '*.md' && yarn workspace tstrace lint && yarn workspace tstrace-vue lint",
     "vue-build": "yarn workspace tstrace-vue build",
     "vue-dev": "yarn workspace tstrace-vue dev"

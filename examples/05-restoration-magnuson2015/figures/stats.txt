@@ -1,0 +1,28 @@
+Fig. 13: early peak (before 50 cycles after onset) of the replaced phoneme, noise 1.0, revised phonemes
+  length 3, initial: 0.043
+  length 5, initial: 0.043
+  length 7, initial: 0.043
+  length 3, medial: 0.054
+  length 5, medial: 0.064
+  length 7, medial: 0.080
+  length 3, final: 0.063
+  length 5, final: 0.103
+  length 7, final: 0.137
+
+Lexicon checks (paper: 4 words begin /r^/ vs 3 /l^/; /r^/ in 17 words vs /l^/ in 10)
+  begin r^: 4, begin l^: 3
+  contain r^: 17, contain l^: 10
+  3/5/7-phoneme words simulated: {3: 75, 5: 31, 7: 8} (paper: 73/31/8)
+
+Noise 1.0: is the replaced phoneme the most active in the early window? (paper, original phonemes: not in ~75%, mostly /k/ or /g/)
+  original: replaced phoneme NOT most active in 293/342 = 86% of simulations (initial 107, medial 110, final 76)
+    most frequent winners: /k/ 206, /g/ 86, /t/ 23, /p/ 9
+  revised: replaced phoneme NOT most active in 270/342 = 79% of simulations (initial 109, medial 91, final 70)
+    most frequent winners: /r/ 56, /t/ 48, /a/ 38, /i/ 36
+
+Revised phonemes, noise 1.0: is the next-most-active phoneme backed by more frequent bigrams?
+  initial: replaced phoneme lost in 109 words; next phoneme's bigram more frequent in 12, equally frequent in 14, less frequent in 83
+  medial: replaced phoneme lost in 91 words; next phoneme's bigram more frequent in 38, equally frequent in 2, less frequent in 51
+
+Clustering of original vs revised definitions (paper: virtually indistinguishable)
+  correlation of cophenetic distances: r = 0.988

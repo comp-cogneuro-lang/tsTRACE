@@ -1,0 +1,7 @@
+Cycle at which P(/t/) first reaches 0.9 (k = 10):
+  /targ^t/: 22
+  /tr^g^s/: 22
+  /sikr^t/: 52
+  /g^ld^t/: 55
+  word advantage, /targ^t/ vs /tr^g^s/: 0 cycles (0 ms at 25 ms/cycle)
+  word advantage, /sikr^t/ vs /g^ld^t/: 3 cycles (75 ms at 25 ms/cycle)

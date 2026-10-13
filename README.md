@@ -15,6 +15,8 @@ This is a Yarn workspaces monorepo:
 - `packages/playground/` — Scratch / development workspace (not part of the
   build)
 - `docs/` — Quick start, user guide, and reference images
+- `examples/` — Scripts that replicate published TRACE results, from
+  simulation to publication-ready figures
 - `TEST_SUITE_GUIDE.md` — How the regression test suite works
 
 ## Local development
@@ -62,6 +64,9 @@ only happens if the regression tests pass on `main`. See
 - `docs/QUICKSTART.md` — Install, build, and run locally in five minutes
 - `docs/tstrace-user-guide.md` — Walkthrough of the simulation GUI
 - `packages/tstrace/README.md` — Scripting the model from Node (API, batch runs, custom lexicons)
+- `examples/README.md` — Worked replications (Ganong, Allopenna et al. 1998,
+  length effects, phoneme restoration, and every simulation of McClelland &
+  Elman 1986) with simulation and plotting scripts
 
 ## Live demo
 
