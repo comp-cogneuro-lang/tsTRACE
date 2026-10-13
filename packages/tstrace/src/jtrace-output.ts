@@ -37,6 +37,8 @@ export const serializeJtPhonology = (phonology: TracePhone[]) => {
         `      <symbol>${phon.label}</symbol>`,
         `      <features>${serializeNumberArray(phon.features)}</features>`,
         `      <durationScalar>${serializeNumberArray(phon.durationScalar)}</durationScalar>`,
+        // tsTRACE extension; written only when it differs from the default of 1
+        ...(phon.strength != null && phon.strength !== 1 ? [`      <strength>${phon.strength}</strength>`] : []),
         `    </phoneme>`,
       ])
     ),

@@ -33,6 +33,7 @@ export const parseJtPhonology = (xmlString: string): TracePhone[] => {
       label: phon.symbol,
       features: parseNumberArray(phon.features),
       durationScalar: parseNumberArray(phon.durationScalar),
+      ...(phon.strength != null && { strength: Number(phon.strength) }),
       phonologicalRole: TracePhoneRole.NORMAL,
     })
   );
@@ -43,6 +44,7 @@ const isPhonology = t.isArray(
     label: t.isString(),
     features: t.isArray(t.isNumber()),
     durationScalar: t.isArray(t.isNumber()),
+    strength: t.isOptional(t.isNumber()),
     phonologicalRole: t.isOneOf([
       t.isLiteral(TracePhoneRole.NORMAL),
       t.isLiteral(TracePhoneRole.AMBIG),

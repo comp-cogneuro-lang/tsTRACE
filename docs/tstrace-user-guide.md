@@ -289,7 +289,7 @@ Before going through the parameter that you can change, we simply note that the 
 
 * *Restore defaults*. Set every parameter on this tab to its default value. The model input, phonology, and lexicon are left as they are (use the Phonology and Lexicon tabs to change those).
 
-* *Model input* field. You can type directly into this field to change the input, and then press "Enter" on your keyboard to update.
+* *Model input* field. You can type directly into this field to change the input, and then press "Enter" on your keyboard to update. After any phoneme you can add its input *strength* and *rate* in square brackets, as in the original TRACE: `-b[0.5]at-` presents a weak /b/ (features at half strength), `-b[,2]at-` a slow /b/ (stretched to twice its width, pushing its neighbors apart), and `-b[0.5,2]at-` both. Both default to 1.
 
 * *Continuum spec* (continuum specification) controls:
     * Click the checkbox to enable this function.  
@@ -408,6 +408,7 @@ At this tab, you will see a display as in this screenshot.
     * In the screenshot, the silence phoneme (/-/) is selected, which would allow you to change its label or features.
     * *Add phoneme* creates a new phoneme, with a 'null' label and all zeroes for all features. Edit to create the new phoneme.
     * *Duration scalar* fields: <span style="color:red">these currently do not work properly. We recommend not using them. They will be repaired in a future release.</span>.
+    * *Strength* scales this phoneme's input everywhere it occurs in the model input (1 = full strength; 0.5 = half). To weaken a single occurrence instead, use the `[strength]` suffix in the *Model input* field (see the Parameters section).
 
     * *Delete selected* does exactly what it implies!
         * Note that there is not an 'undo' function here; you could simply reload the webpage to go back to defaults, though note that you would destroy any other changes you have made.

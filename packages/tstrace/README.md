@@ -90,7 +90,7 @@ constructing a `TraceSim`. The fields you'll touch most:
 
 | Field | Default | Meaning |
 |---|---|---|
-| `modelInput` | `'-^br^pt-'` | Phoneme string to present. Use `-` for silence. |
+| `modelInput` | `'-^br^pt-'` | Phoneme string to present. Use `-` for silence; optional per-token `[strength,rate]` (see below). |
 | `lexicon` | 213 words | `TraceWord[]`: `{ phon, freq, prime, label? }` |
 | `phonology` | 15 phonemes | `TracePhone[]`: `{ label, features, durationScalar, phonologicalRole }` |
 | `alpha.IF / FP / PW / WP / PF` | 1.0 / 0.02 / 0.05 / 0.03 / 0.0 | Excitatory rates: input→feature, feature→phoneme, phoneme→word, word→phoneme (feedback), phoneme→feature |
@@ -109,6 +109,7 @@ constructing a `TraceSim`. The fields you'll touch most:
 | `replaceStart`, `replaceEnd`, `replaceMean`, `replaceSD` | `null`, `null`, 0, 0 | Replace input slices with noise or silence (see below) |
 | `freqNode`, `primeNode` | off | Frequency and priming (rest / weight / post-activation variants) |
 | `continuumSpec` | `''` | Build an ambiguous phoneme continuum (see below) |
+| `inputPhonemes` | absent | Extra input-only phonemes with any feature pattern (see below) |
 | `lengthNormalization` | 0 | Scale word-to-word inhibition by word length |
 | `wordInhBuProtect` | 0 | Experimental: cap net inhibition on a word at k × its current activation. 0 = original TRACE. |
 
@@ -269,6 +270,55 @@ Continuum phonemes are **input-only**: they define feature patterns for
 its usual 15 rows. Read the outcome at the phoneme layer by comparing the
 endpoint phonemes (`b` vs. `p`) at the slot aligned with the ambiguous
 segment.
+
+### Input-only phonemes with any feature pattern
+
+A continuum moves every feature together along a straight line between two
+phonemes. To present any other pattern (for example a segment that is
+/g/-like on one feature dimension and /k/-like on another), list it in
+`config.inputPhonemes`. Each entry is a phoneme definition like those in
+`config.phonology`, with a single-character label that the phonology and any
+continuum don't use. Like continuum steps, these phonemes can appear in
+`modelInput` but get no phoneme units:
+
+```js
+const g = config.phonology.find((p) => p.label === 'g');
+const x = { ...g, label: 'X', features: [...g.features] };
+x.features[5 * 9 + 1] = 0.5; // e.g. weaken /g/'s voicing value
+config.inputPhonemes = [x];
+config.modelInput = '-Xa-';
+```
+
+`examples/lib/ga-ka.js` uses this to rebuild the trading-relations and
+categorical-perception stimuli of McClelland & Elman (1986).
+
+## Input strength and rate (per phoneme and per token)
+
+As in the original C TRACE, each phoneme in the input can have its own
+**strength** (how strongly its features are input) and **rate** (how
+stretched in time it is). Both default to 1, which gives the usual input.
+
+Per token, add `[strength]`, `[strength,rate]` or `[,rate]` right after a
+phoneme (or a splice) in `modelInput`:
+
+```js
+config.modelInput = '-b[0.5]at-';    // a weak /b/: its features at half strength
+config.modelInput = '-b[,2]at-';     // a slow /b/: its feature ramps twice as wide
+config.modelInput = '-b[0.5,2]at-';  // both
+```
+
+- **Strength** multiplies the token's feature input (before input noise and clamping).
+- **Rate** multiplies the width of the token's feature ramps. Peaks are spaced as
+  in C TRACE: the gap between two successive tokens is `deltaInput ×
+  durationScalar × (rate₁ + rate₂) / 2`, so a slow token pushes both
+  neighbors away. A splice cannot have its own rate.
+- Each token still counts as one input position, so slot arithmetic and
+  `getInputPhonemeSpans()` work as before.
+
+Per phoneme, set `strength` on its definition in `config.phonology` (in the GUI,
+Config → Phonology → *Strength*). It applies to every token of that phoneme
+and multiplies any per-token strength. `parseModelInput()` returns the parsed
+tokens if you need them.
 
 ## Input replacement (noise or silence)
 
