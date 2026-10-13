@@ -12,6 +12,12 @@ export interface TracePhone {
   label: string
   features: number[]
   durationScalar: number[]
+  /**
+   * Input strength: scales this phoneme's feature input wherever it occurs in
+   * modelInput (C TRACE's per-phoneme STRENGTH). Absent means 1. A token in
+   * modelInput can scale it further, e.g. "b[0.5]".
+   */
+  strength?: number
   phonologicalRole: TracePhoneRole
 }
 
@@ -170,6 +176,14 @@ export default interface TraceConfig {
   primeNode: RdlNode
   /** ambiguous phoneme continuum parameters. three character mnemonic specify the current phoneme continuum. */
   continuumSpec: string
+  /**
+   * Extra phonemes that can be used in modelInput but have no phoneme units,
+   * like the steps of a continuum. They let a simulation present any feature
+   * pattern, e.g. a segment that is /g/-like on one feature dimension and
+   * /k/-like on another. Labels must be single characters not used by the
+   * phonology or by a continuum.
+   */
+  inputPhonemes?: TracePhone[]
   phonology: TracePhone[]
   allophoneRelations: TraceAllophoneRelation[]
 }

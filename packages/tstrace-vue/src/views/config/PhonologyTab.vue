@@ -82,6 +82,10 @@
             </tr>
           </tbody>
         </table>
+
+        <h1 class="title is-5 is-marginless">Strength</h1>
+        <p class="help">Scales this phoneme's input wherever it occurs (1 = full strength).</p>
+        <input class="input" style="width: 5rem" type="number" step="0.1" min="0" v-model="strength" />
       </div>
     </div>
   </div>
@@ -95,7 +99,7 @@ import {
   parseJtPhonology,
   serializeJtPhonology,
 } from 'tstrace';
-import { defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import FileUpload from '../../components/FileUpload.vue';
 import { CONTINUA, NUM_FEATURES } from '../../constants';
 import { getStore } from '../../store';
@@ -111,6 +115,15 @@ export default defineComponent({
 
     const sortedPhonemes = store.sortedPhonemes;
     const activePhoneme = ref(sortedPhonemes.value[0]);
+
+    // input strength of the active phoneme; phonemes without one use 1
+    const strength = computed({
+      get: () => activePhoneme.value.strength ?? 1,
+      set: (value: number | string) => {
+        const n = Number(value);
+        activePhoneme.value.strength = value !== '' && isFinite(n) && n >= 0 ? n : 1;
+      },
+    });
 
     const addPhoneme = () => {
       const phoneme = createDefaultPhoneme({
@@ -152,6 +165,7 @@ export default defineComponent({
       numFeatures: NUM_FEATURES,
       sortedPhonemes,
       activePhoneme,
+      strength,
       addPhoneme,
       deleteSelected,
       loadJtPhonology(xmlText: string) {

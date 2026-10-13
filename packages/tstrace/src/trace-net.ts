@@ -225,8 +225,10 @@ export default class TraceNet {
    * Create the input layer
    *  loop through all the phonemes, and copy the corresponding features to it.
    *  the offset for the phoneme should be used inorder to center
-   * Variables which have been left out from original trace, M&E did not use them:
-   *  WEIGHTp(i),c,fs   STRENGTHp(i)   PEAKp(i)   SUSp(i)   RATEp(i)
+   * Per-token STRENGTH and RATE from original trace are supported through
+   * modelInput suffixes such as "b[0.5,2]" (see parseModelInput), and per-phoneme
+   * strength through TracePhone.strength. Left out (M&E did not use them):
+   *  WEIGHTp(i),c,fs   PEAKp(i)   SUSp(i)
    * converts the model input into a pseudo-spectral input representation, store in inputLayer
    */
   public createInput() {
@@ -255,19 +257,26 @@ export default class TraceNet {
       if (span && span.start <= span.end) this.inputPhonemeSpans.push(span);
     };
 
-    let slice = this.config.deltaInput;
-    for (let i = 0; i < phons.length && slice < this.config.fSlices; i++) {
-      // if we encounter a 'splice' phone, proceed accordingly
-      if (phons[i] == '{') {
-        span = { label: phons.slice(i, i + 5), start: Infinity, end: -Infinity };
-        const p1 = this.phonemes.byLabel(phons[++i]);
-        const splicePoint: number = +phons[++i];
-        const p2 = this.phonemes.byLabel(phons[++i]);
-        i += 1; // skip the } character
+    const tokens = parseModelInput(phons);
+    const rateOf = (i: number) => tokens[i]?.rate ?? 1;
+    // Successive peaks are deltaInput * duration apart. With per-token rates the gap
+    // between two tokens scales with the mean of their rates, as in C TRACE; with all
+    // rates at 1 this is the usual spacing.
+    let slice = Math.round(this.config.deltaInput * rateOf(0));
+    for (let i = 0; i < tokens.length && slice < this.config.fSlices; i++) {
+      const token = tokens[i];
+      span = { label: token.text, start: Infinity, end: -Infinity };
+      let duration = 1;
+      if (token.splice) {
+        const p1 = this.phonemes.byLabel(token.splice.from);
+        const splicePoint = token.splice.at;
+        const p2 = this.phonemes.byLabel(token.splice.to);
 
         if (!p1 || !p2 || !p1.spread || !p1.spreadOffset || !p2.spread || !p2.spreadOffset) {
           throw new ModelInputError();
         }
+        const s1 = token.strength * (p1.strength ?? 1);
+        const s2 = token.strength * (p2.strength ?? 1);
 
         // first half of the spliced phoneme
         const inputOffset = slice - p1.spreadOffset;
@@ -282,7 +291,7 @@ export default class TraceNet {
             cont++
           ) {
             if (t >= 0 && t < this.config.fSlices) {
-              this.inputLayer[cont][t] += p1.spread[cont][phonOffset];
+              this.inputLayer[cont][t] += s1 * p1.spread[cont][phonOffset];
               touch(t, p1.spread[cont][phonOffset]);
             }
           }
@@ -300,24 +309,22 @@ export default class TraceNet {
             cont++
           ) {
             if (t >= 0 && t < this.config.fSlices) {
-              this.inputLayer[cont][t] += p2.spread[cont][phonOffset];
+              this.inputLayer[cont][t] += s2 * p2.spread[cont][phonOffset];
               touch(t, p2.spread[cont][phonOffset]);
             }
           }
         }
-
-        finishSpan();
-        slice += this.config.deltaInput;
       } else {
         // otherwise, we are dealing with a normal, or ambiguous phoneme input.
-        span = { label: phons[i], start: Infinity, end: -Infinity };
-        const phon = this.phonemes.byLabel(phons[i]);
-
-        if (!phon || !phon.spread || !phon.spreadOffset) {
+        const base = this.phonemes.byLabel(token.text);
+        if (!base || !base.spread || !base.spreadOffset) {
           throw new ModelInputError();
         }
+        // a token with its own rate is stretched in time (wider feature ramps)
+        const phon = this.phonemes.atRate(base, token.rate);
+        const strength = token.strength * (base.strength ?? 1);
+        if (!phon.spread || !phon.spreadOffset) throw new ModelInputError();
 
-        //System.out.println("phon->char "+phons.charAt(i+syntactic_incr)+"->"+phon);
         const inputOffset = slice - Math.round(phon.spreadOffset);
         // copy the spread phonemes onto the input layer (aligned correctly)
         for (
@@ -331,15 +338,15 @@ export default class TraceNet {
             cont++
           ) {
             if (t >= 0 && t < this.config.fSlices) {
-              this.inputLayer[cont][t] += phon.spread[cont][phonOffset];
+              this.inputLayer[cont][t] += strength * phon.spread[cont][phonOffset];
               touch(t, phon.spread[cont][phonOffset]);
             }
           }
         }
-        finishSpan();
-        // duration scaling!
-        slice += Math.round(this.config.deltaInput * phon.durationScalar[0]);
+        duration = base.durationScalar[0]; // duration scaling!
       }
+      finishSpan();
+      slice += Math.round(this.config.deltaInput * duration * ((rateOf(i) + rateOf(i + 1)) / 2));
     }
 
     // apply input noise here.
@@ -1087,3 +1094,55 @@ export default class TraceNet {
     this.inputSlice += this.__nreps;
   }
 }
+
+/** One token of modelInput: a phoneme (or splice) with its per-token strength and rate. */
+export interface InputToken {
+  /** the token as written, without any [strength,rate] suffix */
+  text: string
+  strength: number
+  rate: number
+  splice?: { from: string; at: number; to: string }
+}
+
+/**
+ * Splits modelInput into tokens. Each token is one phoneme label, or a splice
+ * "{p1 n p2}" (p1 up to slice n, then p2), optionally followed by
+ * "[strength]", "[strength,rate]" or "[,rate]" for that token only (C TRACE's
+ * per-token STRENGTH and RATE; both default to 1). Example: "-b[0.5,2]^t-".
+ */
+export const parseModelInput = (input: string): InputToken[] => {
+  const tokens: InputToken[] = [];
+  let i = 0;
+  while (i < input.length) {
+    let token: InputToken;
+    if (input[i] == '{') {
+      const text = input.slice(i, i + 5);
+      if (text.length < 5 || text[4] != '}') throw new ModelInputError(`bad splice "${text}" in model input`);
+      token = { text, strength: 1, rate: 1, splice: { from: text[1], at: +text[2], to: text[3] } };
+      i += 5;
+    } else {
+      token = { text: input[i], strength: 1, rate: 1 };
+      i += 1;
+    }
+    if (input[i] == '[') {
+      const close = input.indexOf(']', i);
+      if (close < 0) throw new ModelInputError('unclosed "[" in model input');
+      const [strength, rate, extra] = input.slice(i + 1, close).split(',').map((x) => x.trim());
+      const num = (x: string | undefined, name: string) => {
+        if (x === undefined || x === '') return 1;
+        const n = Number(x);
+        if (!isFinite(n) || n < 0 || (name == 'rate' && n == 0)) {
+          throw new ModelInputError(`bad ${name} "${x}" in model input`);
+        }
+        return n;
+      };
+      if (extra !== undefined) throw new ModelInputError('use "[strength,rate]" in model input');
+      token.strength = num(strength, 'strength');
+      token.rate = num(rate, 'rate');
+      if (token.splice && token.rate != 1) throw new ModelInputError('a splice cannot have its own rate');
+      i = close + 1;
+    }
+    tokens.push(token);
+  }
+  return tokens;
+};

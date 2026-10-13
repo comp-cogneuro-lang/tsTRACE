@@ -21,7 +21,7 @@
         :last-value="lastConfig.modelInput"
         :default-value="defaults.modelInput"
         label="Model Input"
-        note=""
+        note="Optional per-token strength and rate after a phoneme: b[0.5] (strength), b[0.5,2], b[,2] (rate)"
         :error="isModelInputValid ? '' : 'Model input contains invalid characters'"
         type="text"
       />

@@ -12,10 +12,24 @@ export default class TracePhones {
   private static readonly MAX_STEPS = 9;
   private phonemes: TracePhoneInternal[];
   private ambiguousPhonemes: TracePhoneInternal[] = [];
+  /** input-only phonemes from config.inputPhonemes; kept when a continuum is (re)made */
+  private extraInputPhonemes: TracePhoneInternal[];
+  /** arguments of the last spreadPhons() call, reused by atRate() */
+  private spreadArgs?: { spread: number[]; scale: number[]; min: number; max: number };
+  private maxspread = 0;
 
   constructor(private config: TraceConfig) {
     // create a copy of the phonemes
     this.phonemes = config.phonology.map((x: TracePhone): TracePhoneInternal => ({ ...x }));
+    this.extraInputPhonemes = (config.inputPhonemes || []).map(
+      (x: TracePhone): TracePhoneInternal => ({ ...x, phonologicalRole: TracePhoneRole.AMBIG })
+    );
+    for (const phon of this.extraInputPhonemes) {
+      if (phon.label.length != 1 || this.phonemes.some((p) => p.label == phon.label)) {
+        throw new Error(`input phoneme label "${phon.label}" must be one character not used by the phonology`);
+      }
+    }
+    this.ambiguousPhonemes = [...this.extraInputPhonemes];
     // sort the phonemes by label
     this.sortPhonemes();
   }
@@ -66,65 +80,78 @@ export default class TracePhones {
 
     // this appears to be how C trace is implemented.
     min = Math.max(min, 0);
+    this.spreadArgs = { spread, scale, min, max };
 
     // spread offset
-    let maxspread = 0;
-    const computeSpreadOffset = (phons: TracePhoneInternal[]) => {
-      for (const phon of phons) {
-        phon.spreadOffset = 0;
-        for (let i = 0; i < spread.length; i++) {
-          const n = spread[i] * scale[i] * phon.durationScalar[0];
-          if (n > phon.spreadOffset) {
-            phon.spreadOffset = Math.ceil(n);
-          }
-          maxspread = Math.max(Math.ceil(n), maxspread);
-        }
-      }
-    };
-    computeSpreadOffset(this.phonemes);
-    computeSpreadOffset(this.ambiguousPhonemes);
+    this.maxspread = 0;
+    for (const phon of [...this.phonemes, ...this.ambiguousPhonemes]) {
+      this.maxspread = Math.max(this.computeSpreadOffset(phon), this.maxspread);
+    }
 
     // spread
     // NOTE: in the code for jTRACE, when it computes the normalization info, the ambiguous phonemes
     // calculation sets the norm value in the corresponding "phonemes" object. i.e., it adds to
     // this.phonemes[n].norm instead of this.ambiguousPhonemes[n].norm. Not sure if this is intentional
-    const computeSpread = (phons: TracePhoneInternal[]) => {
-      // loop over phonemes
-      for (const phon of phons) {
-        phon.spread = util.zeros2D(
-          this.config.numFeatures * this.config.continuaPerFeature,
-          maxspread * 4
-        );
-        phon.norm = 0;
+    for (const phon of [...this.phonemes, ...this.ambiguousPhonemes]) {
+      this.computeSpread(phon, this.maxspread);
+    }
+  }
 
-        // loop over continuum
-        for (
-          let cont = 0;
-          cont < this.config.numFeatures * this.config.continuaPerFeature;
-          cont++
-        ) {
-          if (phon.features[cont] > 0) {
-            const spreadSteps = Math.floor(cont / this.config.numFeatures);
+  /**
+   * A copy of a phoneme stretched in time by `rate` (C TRACE's per-token RATE):
+   * its feature ramps are `rate` times as wide. Used for modelInput tokens that
+   * set their own rate. spreadPhons() must have been run first.
+   */
+  public atRate(phon: TracePhoneInternal, rate: number): TracePhoneInternal {
+    if (rate === 1) return phon;
+    if (!this.spreadArgs) throw new Error('spreadPhons() must run before atRate()');
+    const copy: TracePhoneInternal = { ...phon, durationScalar: phon.durationScalar.map((d) => d * rate) };
+    const offset = this.computeSpreadOffset(copy);
+    this.computeSpread(copy, Math.max(offset, this.maxspread));
+    return copy;
+  }
 
-            // delta is the amount to ramp up/down
-            const delta =
-              (phon.features[cont] * max - phon.features[cont] * min) /
-              (spread[spreadSteps] * phon.durationScalar[0]);
+  /** Sets phon.spreadOffset (half the widest feature ramp, in slices) and returns it. */
+  private computeSpreadOffset(phon: TracePhoneInternal): number {
+    const { spread, scale } = this.spreadArgs!;
+    let widest = 0;
+    phon.spreadOffset = 0;
+    for (let i = 0; i < spread.length; i++) {
+      const n = spread[i] * scale[i] * phon.durationScalar[0];
+      if (n > phon.spreadOffset) {
+        phon.spreadOffset = Math.ceil(n);
+      }
+      widest = Math.max(Math.ceil(n), widest);
+    }
+    return widest;
+  }
 
-            const n = Math.floor(spread[spreadSteps] * phon.durationScalar[0]);
-            for (let i = 0; i < n; i++) {
-              // compute spread (should these be the same?)
-              phon.spread[cont][phon.spreadOffset! + i] = phon.features[cont] * max - delta * i;
-              phon.spread[cont][phon.spreadOffset! - i] = phon.spread[cont][phon.spreadOffset! + i];
-              // and normalization info
-              phon.norm += 2 * Math.pow(phon.spread[cont][phon.spreadOffset! + i], 2);
-            }
-          }
+  /** Fills phon.spread (each feature's ramp over time) and phon.norm. */
+  private computeSpread(phon: TracePhoneInternal, maxspread: number) {
+    const { spread, min, max } = this.spreadArgs!;
+    phon.spread = util.zeros2D(this.config.numFeatures * this.config.continuaPerFeature, maxspread * 4);
+    phon.norm = 0;
+
+    // loop over continuum
+    for (let cont = 0; cont < this.config.numFeatures * this.config.continuaPerFeature; cont++) {
+      if (phon.features[cont] > 0) {
+        const spreadSteps = Math.floor(cont / this.config.numFeatures);
+
+        // delta is the amount to ramp up/down
+        const delta =
+          (phon.features[cont] * max - phon.features[cont] * min) /
+          (spread[spreadSteps] * phon.durationScalar[0]);
+
+        const n = Math.floor(spread[spreadSteps] * phon.durationScalar[0]);
+        for (let i = 0; i < n; i++) {
+          // compute spread (should these be the same?)
+          phon.spread[cont][phon.spreadOffset! + i] = phon.features[cont] * max - delta * i;
+          phon.spread[cont][phon.spreadOffset! - i] = phon.spread[cont][phon.spreadOffset! + i];
+          // and normalization info
+          phon.norm += 2 * Math.pow(phon.spread[cont][phon.spreadOffset! + i], 2);
         }
       }
-    };
-    computeSpread(this.phonemes);
-    computeSpread(this.ambiguousPhonemes);
+    }
   }
 
   /**
@@ -156,7 +183,7 @@ export default class TracePhones {
     }
 
     // now create the ambiguous phoneme arrays, i.e. the data used to create the phon objects
-    this.ambiguousPhonemes = [];
+    this.ambiguousPhonemes = [...this.extraInputPhonemes];
     for (let i = 0; i < steps; i++) {
       // loop over continuoum
       const features: number[] = [];
