@@ -202,12 +202,17 @@ jTRACE gallery's inputs where they exist.
   - The noise is added after the 0.1 input scaling, the reading that reproduces
     the paper's probability range.
 - **04 stochastic TRACE.**
-  - With 500 trials per condition, parallel lines explain 99.45% of the
+  - With 500 trials per condition, parallel lines explain 99.63% of the
     variance (paper: 99.94%).
-  - The fitted spacing puts the neutral liquid exactly midway, and the contexts
-    are in the paper's order. The deterministic Luce version explains 96.0%.
-  - The liquids are somewhat more discriminable than the paper's (z from −2.65
-    to 3.09 vs about −1.5 to 2.2), and one cell is at ceiling.
+  - It uses the phoneme–word gains of McClelland's code (0.03, 0.015), not the
+    paper's printed 0.05 and 0.02 (Strauss et al., 2007, footnote 7). With
+    them the context effect matches the paper's (about 1.0 z unit vs 1.2),
+    evenly spaced; the printed gains double it.
+  - The fitted spacing puts the neutral liquid midway, and the contexts are in
+    the paper's order. The deterministic Luce version explains 98.1%.
+  - The liquid effect is about 30% larger than the paper's (4.2 vs about
+    3.2 z units). The features, noise and timing were checked against the
+    paper; the cause is unexplained.
   - The liquids follow footnote 4. The neutral liquid's diffuseness, which the
     paper doesn't give, is the average of /r/ and /l/.
 

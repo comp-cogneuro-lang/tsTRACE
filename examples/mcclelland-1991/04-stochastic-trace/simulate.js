@@ -17,7 +17,7 @@
 //            their average (a choice made here; the paper doesn't say).
 //   changes to the M&E parameters (pp. 23-25): feature spread 3 on every
 //            dimension (so phonemes don't overlap), word resting level -0.1,
-//            phoneme-to-word excitation 0.05, word-to-phoneme excitation 0.02,
+//            phoneme-to-word and word-to-phoneme excitation (GAINS, below),
 //            feature decay 0.02, and processing noise SD 0.02 (stochasticitySD)
 //   response: running averages (lambda 0.05) of the /l/ and /r/ units at slice
 //            24 (slot 8); the larger one at cycle 90 is the response
@@ -29,9 +29,15 @@
 //   trials.csv         one row per noisy trial: final running averages and response
 //   deterministic.csv  final running averages for the 9 conditions without noise
 //
-// Run:  WORKERS=8 node simulate.js [outputDir]   (4,500 trials; ~18 min on one
-//       worker, ~3 min on 8). Keep WORKERS at or below ~70% of physical cores.
+// Run:  WORKERS=8 node simulate.js [outputDir]   (4,500 trials; ~16 min on one
+//       worker, ~2 min on 8). Keep WORKERS at or below ~70% of physical cores.
 //       TRIALS=100 node simulate.js                (fewer trials per condition)
+//       GAINS=paper node simulate.js               (the paper's printed gains, below)
+//
+// GAINS selects the phoneme-word gains: 'code' (default) uses alpha.PW 0.03 and
+// alpha.WP 0.015, the values in McClelland's own code; 'paper' uses the 0.05
+// and 0.02 printed in the paper, which give larger lexical effects (Strauss, Harris & Magnuson, 2007, footnote 7; also
+// jTRACE's replication file, extra/mcclellend-1991.jt).
 
 const os = require('os');
 const path = require('path');
@@ -51,6 +57,9 @@ const ACUTENESS = {
 };
 const TRIALS = isSmoke() ? 3 : Number(process.env.TRIALS) || 500;
 const SEED = 1991;
+const GAINS = { paper: { PW: 0.05, WP: 0.02 }, code: { PW: 0.03, WP: 0.015 } };
+const GAIN_SET = process.env.GAINS || 'code';
+if (!GAINS[GAIN_SET]) throw new Error(`GAINS must be one of: ${Object.keys(GAINS).join(', ')}`);
 const DIF = 2; // feature dimensions: diffuseness ...
 const ACU = 3; // ... and acuteness
 
@@ -73,7 +82,7 @@ const makeConfig = (context, target, noiseSD, seed) => {
   const config = createDefaultConfig();
   config.spread = Array(config.continuaPerFeature).fill(3);
   config.rest = { ...config.rest, W: -0.1 };
-  config.alpha = { ...config.alpha, PW: 0.05, WP: 0.02 };
+  config.alpha = { ...config.alpha, ...GAINS[GAIN_SET] };
   config.decay = { ...config.decay, F: 0.02 };
   config.stochasticitySD = noiseSD;
   config.seed = seed;
@@ -145,7 +154,8 @@ if (!isMainThread) {
       lambda: LAMBDA,
       acuteness: ACUTENESS,
       seed: SEED,
-      parameters: 'defaults, except spread 3 (all dimensions), rest.W -0.1, alpha.PW 0.05, alpha.WP 0.02, decay.F 0.02',
+      gains: GAIN_SET,
+      parameters: `defaults, except spread 3 (all dimensions), rest.W -0.1, alpha.PW ${GAINS[GAIN_SET].PW}, alpha.WP ${GAINS[GAIN_SET].WP}, decay.F 0.02`,
     });
   });
 }

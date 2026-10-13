@@ -24,12 +24,19 @@ and 90 cycles per trial.
 - **Parameters.** The paper's changes to M&E's parameters:
   - feature spread 3 on every dimension, so the phonemes don't overlap;
   - word resting level −0.1;
-  - phoneme→word excitation 0.05 and word→phoneme excitation 0.02;
+  - phoneme→word excitation 0.03 and word→phoneme excitation 0.015 (see
+    below);
   - feature decay 0.02;
   - processing noise SD 0.02 (`stochasticitySD`, which adds noise to every
     unit's net input before each update, as the paper describes).
 - **Response.** Running averages (λ = 0.05) of the /l/ and /r/ units at slice
   24 (slot 8); the larger one at cycle 90 is the response.
+- **Gains.** The paper prints phoneme→word 0.05 and word→phoneme 0.02, but
+  McClelland's own code used 0.03 and 0.015. Strauss, Harris & Magnuson
+  (2007, footnote 7) report that the printed values give larger lexical effects
+  than the paper's, and jTRACE's replication file (`extra/mcclellend-1991.jt`)
+  uses the code's values. They are the default here; `GAINS=paper` runs the
+  printed ones.
 - **Seeds.** Each trial has its own seed, so the results don't depend on the
   number of workers.
 - **Deterministic comparison.** The 9 conditions are also run once without
@@ -42,12 +49,12 @@ The stimuli use `config.inputPhonemes`, so the engine must be built
 (`yarn workspace tstrace build`).
 
 ```
-WORKERS=8 node simulate.js   # 4,500 trials: ~14 min on 1 worker, ~2 min on 8
+WORKERS=8 node simulate.js   # 4,500 trials: ~16 min on 1 worker, ~2 min on 8
 python3 plot.py
 ```
 
 Keep `WORKERS` at or below about 70% of your physical cores. `TRIALS=100` runs
-fewer trials per condition.
+fewer trials per condition, and `GAINS=paper` uses the paper's printed gains.
 
 ## Figures
 
@@ -67,20 +74,36 @@ values are in `stats.txt`.
 
 | Context | /l/-like | neutral | /r/-like |
 |---|---|---|---|
-| s | 0.004 | 0.196 | 0.910 |
-| p | 0.042 | 0.630 | 0.994 |
-| t | 0.298 | 0.936 | 1.000 |
+| s | 0.010 | 0.386 | 0.960 |
+| p | 0.022 | 0.538 | 0.994 |
+| t | 0.096 | 0.758 | 0.996 |
 
-- **The classical pattern holds in full TRACE.** Parallel lines explain 99.45%
+Compared with the paper's Fig. 9 (values read off the figure, ±0.05 z):
+
+| | Paper | Here (code's gains) | Here (printed gains) |
+|---|---|---|---|
+| Variance explained by parallel lines | 99.94% | 99.63% | 99.45% |
+| Context effect, /t/ − /s/ (z) | ≈ 1.2 | 0.97 | 2.08 |
+| Liquid effect, /r/-like − /l/-like (z) | ≈ 3.2 | 4.19 | 3.95 |
+
+- **The classical pattern holds in full TRACE.** Parallel lines explain 99.63%
   of the variance in z (paper: 99.94%). The best spacing puts the neutral
-  liquid at 0.50, exactly midway between the /l/-like and /r/-like ones.
-- **The context effect is in the paper's order.** /t/ (favoring /r/ through
+  liquid at 0.49, almost exactly midway between the /l/-like and /r/-like ones.
+- **The context effect matches the paper's.** /t/ (favoring /r/ through
   *tree*) is above /p/, which is above /s/ (favoring /l/ through *sleep* and
-  *sleet*). The intercepts are −0.61, −1.60 and −2.70.
+  *sleet*), evenly spaced as in the paper. The intercepts are −1.40, −1.88
+  and −2.37. With the printed gains, the context effect is about twice the
+  paper's and unevenly spaced (−0.61, −1.60, −2.70), with one cell at ceiling.
 - **The deterministic original is distorted.** With the Luce readout and no
-  noise, parallel lines explain only 96.0%.
-- **The liquids are a little more discriminable than in the paper.** z runs
-  from −2.65 to 3.09 here, against about −1.5 to 2.2 in the paper's Fig. 9.
-  One cell (/t/, /r/-like) is at ceiling (500 of 500), so its z rests on the
-  clipping rule. The paper's liquids were presumably a little more confusable,
-  for reasons it doesn't record.
+  noise, parallel lines explain only 98.1%.
+- **The liquids are more discriminable than in the paper.** The liquid effect
+  is about 30% larger than the paper's, with either set of gains. The causes
+  checked and ruled out:
+  - the liquids' features, which follow M&E's Table 1 and footnote 4;
+  - the noise, which perturbs every unit's net input just before its update,
+    as the paper describes;
+  - the input timing (12 slices of silence on each side, target peaking at
+    slice 24).
+  The remaining difference is unexplained. jTRACE's replication was also only
+  moderately close (RMS error about 0.16, against about 0.08 between repeated
+  runs of McClelland's code).
